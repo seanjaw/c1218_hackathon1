@@ -4,6 +4,13 @@
 
 ### requirements
 - must be OOP
+- must have a customized theme
+- must have a README.md file with
+  - link to figma wireframe
+  - link to spreadsheet with features for board and order rankings
+  - link to trello board with feature sets
+  - gh-pages link
+  - all requirements met by 6pm Thursday, January 17th
 - multiple players ( up to 4 )
 - monopoly game board
   - properties as per monopoly <a href="https://en.wikipedia.org/wiki/Monopoly_(game)" target="_blank">rules and specs</a>
