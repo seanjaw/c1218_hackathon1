@@ -3,7 +3,6 @@
 ## Topic - monopoly
 
 ### requirements
-- must be OOP
 - must have a customized theme
 - properties as per monopoly <a href="https://en.wikipedia.org/wiki/Monopoly_(game)" target="_blank">rules and specs</a>
 - must have a README.md file with
@@ -66,23 +65,4 @@
   - Karen King
   - Danika Quinteros
   
-#### game objects suggested
-- game
-  - properties
-    - players
-    - properties
-    - cards
-      - community
-      - chance
-    - dice
-  - methods
-    - addPlayer
-  - player
-    - properties:
-      - name
-      - color
-      - piece
-      - locat
-  - dice
-  - property
-  - card
+
