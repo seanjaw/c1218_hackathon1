@@ -66,31 +66,7 @@
     - three times in a row puts you in jail
 
 ### teams
-- team 1
-  - Alejandro Carrillo
-  - Christopher Sulayao
-  - Matthew Staniszewski
-  - Christine Than
-  
-- team 2
-  - Hannel Gwak
-  - Diana Curtis
-  - Sean Jaw
-  - Charu Benjawal
 
-- team 3
-  - Anthony Boccino
-  - Edgar Padilla
-  - Joshua Garcia
-  - John Holman
-  
-- Team 4
-  - Xiaoyun(Stella) Hsin
-  - Bill Darnall
-  - Karen King
-  - Danika Quinteros
-
-#### alt teams?
 - team1
   - Edgar Padilla
   - Alejandro Carrillo
@@ -112,25 +88,39 @@
   - Karen King
   - Xiaoyun(Stella) Hsin
   
-#### alt mix talent teams
-- team 1
-  - Edgar Padilla
-  - Joshua Garcia
-  - John Holman
-  - Matthew Staniszewski
-- team 2
-  - Alejandro Carrillo
-  - Bill Darnall
-  - Danika Quinteros
-  - Sean Jaw
-- team 3
-  - Christopher Sulayao
-  - Charu Benjawal
-  - Diana Curtis	
-  - Karen King
-- team 4
-  - Anthony Boccino	
-  - Christine Than
-  - Hannel Gwak	
-  - Xiaoyun(Stella) Hsin
+### example milestones 
+
+#### 0.1
+- basic html + css
+- basic player layout
+- 1 player able to roll dice and move
+- basic money on player
+- players can choose name
+#### 0.5
+- basic ability to buy property and add to player
+- basic ability to see deeds to property
+- can be charged rent for landing on property owned by other player
+- passing go (or the first property) rewards money
+#### 0.75
+- special property ability functionality (railroad multiplier, waterworks + electric company multiplier)
+- special squares start to work (luxury tax, etc)
+- rent varies depending on property count
+- CSS polish pass 1
+#### 1.0
+- corner square functionality
+- community chest and chance functionality
+  - get cards when landing on square
+  - only cards that are used immediately
+- can lose game when reduced to 0 money
+- CSS polish pass 2
+- players can choose icons rather than being assigned
+#### 1.50
+- build houses
+- build hotels
+- rent varies based on houses/hotels
+- ability to sell houses/hotels
+#### 2.0
+- community chest and chance functionality with cards that can be kept (eg: get out of jail free)
+- mortgage properties
+- unmortgage properties
 
