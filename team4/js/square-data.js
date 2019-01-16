@@ -1,42 +1,40 @@
-const SQUARE_DATA = {
-    'Go': new Square('go', 'Go', 'Mediterranean'),
-    'Mediterranean': new Square('property', 'Mediterranean', 'Community Chest 1'),
-    'Community Chest 1': new Square('community-chest', 'Community Chest 1', 'Baltic'),
-    'Baltic': new Square('property', 'Baltic', 'Income Tax'),
-    'Income Tax': new Square('income-tax', 'Income Tax', 'Reading Railroad'),
-    'Reading Railroad': new Square('railroad', 'Reading Railroad', 'Oriental'),
-    'Oriental': new Square('property', 'Oriental', 'Chance 1'),
-    'Chance 1': new Square('chance', 'Chance 1', 'Vermont'),
-    'Vermont': new Square('property', 'Vermont', 'Connecticut'),
-    'Connecticut': new Square('property', 'Connecticut', 'Jail'),
-    'Jail': new Square('jail', 'Jail', 'St Charles'),
-    'St Charles': new Square('property', 'St Charles', 'Electric Company'),
-    'Electric Company': new Square('utility', 'Electric Company', 'States'),
-    'States': new Square('property', 'States', 'Virginia'),
-    'Virginia': new Square('property', 'Virginia', 'Pennsylvania Railroad'),
-    'Pennsylvania Railroad': new Square('railroad', 'Pennsylvania Railroad', 'St James'),
-    'St James': new Square('property', 'St James', 'Community Chest 2'),
-    'Community Chest 2': new Square('community-chest', 'Community Chest 2', 'Tennessee'),
-    'Tennessee': new Square('property', 'Tennessee', 'New York'),
-    'New York': new Square('property', 'New York', 'Parking'),
-    'Parking': new Square('parking', 'Parking', 'Kentucky'),
-    'Kentucky': new Square('property', 'Kentucky', 'Chance 2'),
-    'Chance 2': new Square('chance', 'Chance 2', 'Indiana'),
-    'Indiana': new Square('property', 'Indiana', 'Illinois'),
-    'Illinois': new Square('property', 'Illinois', 'B&O Railroad'),
-    'B&O Railroad': new Square('property', 'B&O Railroad', 'Atlantic'),
-    'Atlantic': new Square('property', 'Atlantic', 'Ventnor'),
-    'Ventnor': new Square('property', 'Ventnor', 'Water Works'),
-    'Water Works': new Square('utility', 'Water Works', 'Marvin Gardens'),
-    'Marvin Gardens': new Square('property', 'Marvin Gardens', 'Go To Jail'),
-    'Go To Jail': new Square('go-to-jail', 'Go To Jail', 'Pacific'),
-    'Pacific': new Square('property', 'Pacific', 'North Carolina'),
-    'North Carolina': new Square('property', 'North Carolina', 'Community Chest 3'),
-    'Community Chest 3': new Square('community-chest', 'Community Chest 3', 'Pennsylvania'),
-    'Pennsylvania': new Square('property', 'Pennsylvania', 'Short Line Railroad'),
-    'Short Line Railroad': new Square('railroad', 'Short Line Railroad', 'Chance 3'),
-    'Chance 3': new Square('chance', 'Chance 3', 'Park Place'),
-    'Park Place': new Square('property', 'Park Place', 'Luxury Tax'),
-    'Luxury Tax': new Square('luxury-tax', 'Luxury Tax', 'Boardwalk'),
-    'Boardwalk': new Square('property', 'Boardwalk', 'Go')
-};
+const SQUARE_DATA = `go	Go
+property	Mediterranean
+community-chest	Community Chest 1
+property	Baltic
+income-tax	Income Tax
+railroad	Reading Railroad
+property	Oriental
+chance	Chance 1
+property	Vermont
+property	Connecticut
+jail	Jail
+property	St Charles
+utility	Electric Company
+property	States
+property	Virginia
+railroad	Pennsylvania Railroad
+property	St James
+community-chest	Community Chest 2
+property	Tennessee
+property	New York
+parking	Parking
+property	Kentucky
+chance	Chance 2
+property	Indiana
+property	Illinois
+property	B&O Railroad
+property	Atlantic
+property	Ventnor
+utility	Water Works
+property	Marvin Gardens
+go-to-jail	Go To Jail
+property	Pacific
+property	North Carolina
+community-chest	Community Chest 3
+property	Pennsylvania
+railroad	Short Line Railroad
+chance	Chance 3
+property	Park Place
+luxury-tax	Luxury Tax
+property	Boardwalk`;

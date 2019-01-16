@@ -1,8 +1,8 @@
 class Game{
     constructor(){
         this.players = [];
-        Square.initSquareData();
-        let go = SQUARE_DATA['Go'];
+        let squares = Square.initSquareData();
+        let go = squares[0];
         let player1 = new Player(go);
         this.players.push(player1);
         for (let i = 0; i < 8; i++) {

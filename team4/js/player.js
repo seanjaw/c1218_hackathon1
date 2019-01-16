@@ -13,7 +13,7 @@ class Player{
     }
     move( amount ){
         for (let i = 0; i < amount; i++) {
-            this.square = SQUARE_DATA[this.square.next];
+            this.square = this.square.next;
         }
         console.log('After move: ', this.square.title);
     }
