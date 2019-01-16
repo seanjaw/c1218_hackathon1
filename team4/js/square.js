@@ -27,9 +27,23 @@ class Square {
         //     let side = sides[sideIndex];
         //     $(side).;
         // }
+    //     <div class="prop1">
+    //     <div class="propInfo square">
+    //         <div class="text"></div>
+    //         <div class="image"></div>
+    //         <div class="text"></div>
+    //     </div>
+    //     <div class="propcolor"></div>
+    // </div>
 
 
 
 
     }
+    // static createSquareDOM(){
+    //     let textDiv = $('<div>', {'class':'text'});
+    //     let imageDiv = $('<div>', {'class':'image'});
+    //     let text2Div = $('<div>', {'class':'text'});
+        
+    // }
 }
