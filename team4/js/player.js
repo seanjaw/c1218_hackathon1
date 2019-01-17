@@ -17,9 +17,13 @@ class Player{
 
         this.buyProperty = this.buyProperty.bind(this);
         this.rolldice = this.rolldice.bind(this);
+        this.addMoney = this.addMoney.bind(this);
+        this.removeMoney = this.removeMoney.bind(this);
 
         this.diceArray = null;
         this.diceTotal = null;
+
+
     }
 
     rolldice(){
@@ -45,6 +49,12 @@ class Player{
             this.showBuyModal();
         } else if (PROPERTY_TYPES.indexOf(this.square.type) !== -1 && this.square.owner !== null) {
             this.showRentModal();
+        } else if (this.square.type === 'community-chest') {
+            let card = game.communityChestCards.pop();
+            this.showCardModal( 'Community Chest', card);
+        } else if (this.square.type === 'chance') {
+            let card = game.chanceCards.pop();
+            this.showCardModal( 'Chance', card);
         } else {
             this.showLocationModal();
         }       
@@ -66,8 +76,28 @@ class Player{
         // Currently basic rent only
         let rent = 0;
         var count = 0;
+        var totalColorCount = {
+            brown: 2,
+            blue: 3,
+            orange: 3,
+            yellow: 3,
+            redCount: 3,
+            greenCount: 3,
+            greyCount: 2,
+        };
         if (property.type === 'street') {
-            rent = property.rentCosts[0];
+            var propertyColor = property.color;
+            for(var index = 0; index < this.properties.length; index++){
+                if(this.properties[index].type === 'street' && propertyColor === this.properties[index].color){
+                    count++;
+                }
+            }
+            if(count === totalColorCount[propertyColor]){
+                rent = parseInt(property.rentCosts[0]) * 2;
+            } else {
+                rent = parseInt(property.rentCosts[0]);
+            }
+
         } else if (property.type === 'railroad') {
             for(var index = 0; index < this.properties.length; index++){
                 if(this.properties[index].type === 'railroad'){
@@ -83,7 +113,6 @@ class Player{
             // TODO: Store current die rolls for players
             // TODO: Calculte this rent based on renter's dice roll & 
             //       number of utilities in this player's properties
-            var count = 0;
             for(var index=0; index<this.properties.length; index++){
                 if(this.properties[index].type === 'utility'){
                     count++;
@@ -96,7 +125,7 @@ class Player{
             }
         }
 
-        console.log('rent', rent);
+
         return rent;
     }
 
@@ -114,16 +143,37 @@ class Player{
         }
         this.money -= amountToPay;
         square.owner.money += amountToPay;
-        console.log('renter dice', this.diceTotal);
-        console.log('owner dice', this.square.owner.diceTotal);
-        console.log('renter', this.money);
-        console.log('owner', this.square.owner.money);
         for(var i = 0; i < this.square.owner.properties.length; i++){
             console.log(this.square.owner.properties[i].type);
         }
         this.turnEndCallback();
 
 
+    }
+
+    /**
+     * Add money to this user
+     * TODO: Potentially trigger animation here
+     * @param {number} amount - Amount of money to add 
+     */
+    addMoney( amount ) {
+        this.money += amount;
+    }
+
+    /**
+     * Remove money from this user, only up to this player's current amount
+     * TODO: Potentially trigger animation here
+     * @param {number} amount - Amount of money to add 
+     * @return {number} - Amount actually removed
+     */
+    removeMoney( amount ) {
+        let amountToRemove = amount;
+        if (amount > this.money) {
+            amountToRemove = this.money;
+        }
+        this.money -= amountToRemove;
+
+        return amountToRemove;
     }
 
     /*
@@ -185,6 +235,36 @@ class Player{
         });
     }
 
+    showCardModal(deckName, card) {
+        let message =  `${deckName}: ${card.text}`;
+        let dialog = $('<div>').text(message);
+
+        let okCallback;
+        if (card.type === 'pay-bank') {
+            okCallback = () => {
+                dialog.dialog('close');
+                this.removeMoney(card.amount);
+            };
+        } else if (card.type === 'receive-bank') {
+            okCallback = () => {
+                dialog.dialog('close');
+                this.addMoney(card.amount);
+            };            
+        } else if (card.type === 'pay-players') {
+            okCallback = () => {
+                dialog.dialog('close');
+                console.log('Need to pay players');
+            }; 
+        }
+
+        dialog.dialog({
+            modal: true, 
+            dialogClass: "no-close", 
+            height: 300,
+            buttons: [{text: "OK", click: okCallback}]
+        });
+    }
+
     showRentModal() {
         let square = this.square;
         let rent = square.owner.calculateRent(square, this);
@@ -208,7 +288,10 @@ class Player{
     showBuyModal() {
         let message =  `Buy '${this.square.title}' for \$${this.square.price}?`;
         let dialog = $('<div>').text(message);
-
+        if(this.square.type === 'street'){
+            let deed = Square.createDeed(this.square);
+            dialog.append(deed);
+        }
         let buyCallback = () => {
             dialog.dialog('close');
             this.buyProperty();
@@ -223,7 +306,7 @@ class Player{
         dialog.dialog({
             modal: true, 
             dialogClass: "no-close", 
-            height: 300,
+            height: 520,
             buttons: [
                 {text: "Buy", click: buyCallback},
                 {text: "Auction", click: auctionCallback}
