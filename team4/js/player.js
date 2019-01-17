@@ -15,7 +15,6 @@ class Player{
         for (let i = 0; i < amount; i++) {
             this.square = this.square.next;
         }
-        console.log('After move: ', this.square.title);
+        console.log('After move: ', this.square.title);       
     }
-
 }
