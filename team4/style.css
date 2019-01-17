@@ -208,9 +208,15 @@ body {
 }
 #modalMessage{
 	margin: auto auto;
-  position: absolute;
-  top: 70%;
-  left: 40%;
+    position: absolute;
+    top: 70%;
+    left: 40%;
+}
+#submitPlayers {
+    background-color: green;
+}
+h1 {
+    color: white;
 }
 
 .goStart {
@@ -355,6 +361,7 @@ body {
 .sidePropContainer .propInfo {
     display: flex;
     flex-direction: row-reverse;
+
 }
 
 .chibiusa .leftImg {
@@ -406,6 +413,7 @@ body {
     position: relative;
     left: 30%;
 }
+
 
 
 /* Modal Dialog - Transparent Overlay */

@@ -39,19 +39,21 @@ class Modal{
         this.playerNumber = 0;
         this.submitPlayers = submitPlayers;
         this.submitPlayers = this.submitPlayers.bind(this);
+        this.clickHandle = this.clickHandle.bind(this);
     }
   
 	show(){
 
 		$(this.modalShadow).show();
         $(this.modalBody).show();
+        // $(this.submitPlayers).show();
     }
     
-	hide(){
+	hideModal(){
 
-        console.log("Clicked hide");
 		$(this.modalShadow).hide();
         $(this.modalBody).hide();
+        // $(this.submitPlayers).hide();
 	}
 	
 	init(){
@@ -61,21 +63,26 @@ class Modal{
         this.show();
     }
     
-    clickHandle(event){ // Fix clickhandle
+    // class SomeClass extends React.Component {
+    //     handleInputChange = (val) => {
+    //       console.log('selectionMade: ', val);
+    //     }
+    //   }
 
+    clickHandle() { // Fix clickhandle
 
-        this.playerNumber = $(".numberOfPeopleInput").text();
-
-        this.hide();
-		$(this.modalMessage).off("click");
-        $(this.modalMessage).click(this.hide);
-        return event;
+        this.playerNumber = $("input").val();
+        this.hideModal();
+        $(this.submitPlayers).off("click");
+        this.displayPlayers();
     }
 
     displayPlayers(){ 
-        console.log("Can dipslay players");
-        // while (this.playerNumber > 0){
-
-        // }
+        let temp = new Player;
+        while (this.playerNumber > 0){
+            temp.createNewPlayer();
+            this.playerNumber--;
+        }
+        temp.setPlayerList();
     }
 }
