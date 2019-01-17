@@ -1,9 +1,11 @@
 class Player{
-    constructor( square, avatar, name, turnEndCallback ){
+    constructor( square, avatar, name, turnEndCallback, domElmPlayerInfo){
+
         this.square = square;
         this.avatar = avatar;
         this.name = name;
         this.turnEndCallback = turnEndCallback;
+        this.domElmPlayerInfo = domElmPlayerInfo;
 
         this.createPlayer = null;
         this.playerColor = ["red", "blue", "green", "yellow"];
@@ -15,6 +17,8 @@ class Player{
 
         this.buyProperty = this.buyProperty.bind(this);
         this.rolldice = this.rolldice.bind(this);
+        this.addMoney = this.addMoney.bind(this);
+        this.removeMoney = this.removeMoney.bind(this);
 
         this.diceArray = null;
         this.diceTotal = null;
@@ -45,11 +49,20 @@ class Player{
             this.showBuyModal();
         } else if (PROPERTY_TYPES.indexOf(this.square.type) !== -1 && this.square.owner !== null) {
             this.showRentModal();
+        } else if (this.square.type === 'community-chest') {
+            let card = game.communityChestCards.pop();
+            this.showCardModal( 'Community Chest', card);
+        } else if (this.square.type === 'chance') {
+            let card = game.chanceCards.pop();
+            this.showCardModal( 'Chance', card);
         } else {
             this.showLocationModal();
         }       
     }
 
+    getCurrentMoney() {
+        return this.money;
+    }
     /*
      * Buy property for current square
      */
@@ -138,6 +151,31 @@ class Player{
 
     }
 
+    /**
+     * Add money to this user
+     * TODO: Potentially trigger animation here
+     * @param {number} amount - Amount of money to add 
+     */
+    addMoney( amount ) {
+        this.money += amount;
+    }
+
+    /**
+     * Remove money from this user, only up to this player's current amount
+     * TODO: Potentially trigger animation here
+     * @param {number} amount - Amount of money to add 
+     * @return {number} - Amount actually removed
+     */
+    removeMoney( amount ) {
+        let amountToRemove = amount;
+        if (amount > this.money) {
+            amountToRemove = this.money;
+        }
+        this.money -= amountToRemove;
+
+        return amountToRemove;
+    }
+
     /*
      * Player will manage bi-directional Player:Property relationship
      */
@@ -155,10 +193,11 @@ class Player{
     }
 
     createDOM() {
+        
         let dom = $('<div>');
         dom.addClass('player');
         dom.css({
-            'background-image': `url(images/${this.avatar}.png)`,
+            'background-image': `url(${this.avatar})`,
             'background-size': 'contain',
             'background-repeat': 'no-repeat'
         });
@@ -193,6 +232,36 @@ class Player{
             dialogClass: "no-close", 
             height: 300,
             buttons: [{text: "Roll Dice", click: rollDiceCallback}]
+        });
+    }
+
+    showCardModal(deckName, card) {
+        let message =  `${deckName}: ${card.text}`;
+        let dialog = $('<div>').text(message);
+
+        let okCallback;
+        if (card.type === 'pay-bank') {
+            okCallback = () => {
+                dialog.dialog('close');
+                this.removeMoney(card.amount);
+            };
+        } else if (card.type === 'receive-bank') {
+            okCallback = () => {
+                dialog.dialog('close');
+                this.addMoney(card.amount);
+            };            
+        } else if (card.type === 'pay-players') {
+            okCallback = () => {
+                dialog.dialog('close');
+                console.log('Need to pay players');
+            }; 
+        }
+
+        dialog.dialog({
+            modal: true, 
+            dialogClass: "no-close", 
+            height: 300,
+            buttons: [{text: "OK", click: okCallback}]
         });
     }
 
@@ -276,6 +345,7 @@ class Player{
 
         this.createPlayer = $("<h1>")
             .css("background-color", this.playerColor[$("h1").length])
+            .addClass("player" + numOfPlayers)
             .text("Player" + numOfPlayers);        
         $("#accordion").append(this.createPlayer);
         $(this.createPlayer).after(divToAppend);
