@@ -3,11 +3,12 @@ class Square {
         this.type = type;
         this.title = title;
         this.next = null;
-        this.squareDom= null;
+        this.squareDom= this.createSquareDOM();
 
     }
 
     static initSquareData (){
+        //set up link list
         let squares = [];
         let neighbor = null;
         let lines = SQUARE_DATA.split('\n');
@@ -20,30 +21,88 @@ class Square {
             neighbor= square; 
         }
         squares[squares.length-1].next = squares[0];
+        
+        //add to DOM
+
+        console.log ("got in here");
+        let sides = ['.bottomPropContainer', '.sidePropContainer', '.propContainer', '.rightPropContainer'];
+
+        let squareIndex = 1;
+        for (let sideIndex =0 ; sideIndex< sides.length ; sideIndex++ ){
+            let side = sides[sideIndex];
+            $(side).empty();
+            for (let i = 0; i < 9; i++, squareIndex++) {
+                let square = squares[squareIndex];
+                $(side).append(square.squareDom);
+            }
+            squareIndex++;
+        }
+        //add corners
+        $('.goStart').replaceWith(squares[0].squareDom);
+        $('.jail.square').parent().parent().replaceWith(squares[10].squareDom);
+        $('.freeParking').replaceWith(squares[20].squareDom);
+        $('.goToJail').replaceWith(squares[30].squareDom);
+
         return squares;
-        //console.log ("got in here");
-        // let sides = ['.bottomProp', '.sidePropContainer', '.topProp', '.rightPropContainer'];
-        // for (let sideIndex =0 ; sideIndex< length.sides ; sideIndex++ ){
-        //     let side = sides[sideIndex];
-        //     $(side).;
-        // }
-    //     <div class="prop1">
-    //     <div class="propInfo square">
-    //         <div class="text"></div>
-    //         <div class="image"></div>
-    //         <div class="text"></div>
-    //     </div>
-    //     <div class="propcolor"></div>
-    // </div>
+    }
 
-
-
+    
+    createGoDOM(){
+        let html =`<div class="goStart square">
+            <div class="startArea">
+                <p class="startCollect">COLLECT $200 SALARY AS YOU PASS</p>
+                <P class="startGo">GO</P>
+            </div>
+            <div class="arrowImage">
+                <img src="images/Arrow-Free-Download-PNG.png">
+            </div>
+        </div>`;
+        return $(html);
 
     }
-    // static createSquareDOM(){
-    //     let textDiv = $('<div>', {'class':'text'});
-    //     let imageDiv = $('<div>', {'class':'image'});
-    //     let text2Div = $('<div>', {'class':'text'});
-        
-    // }
+
+    createJailDOM(){
+        let html = `<div class="jail">
+            <div class="jailImageContainer">
+                <div class="jail square"></div>
+            </div>
+            <div class="justLeft"></div>
+            <div class="vistingBottom"></div>
+        </div>`;
+        return $(html);
+    }
+
+    createParkingDOM(){
+        let html = ` <div class="freeParking">
+            <div class="parking"></div>
+            <div class="image square"></div>
+            <div class="free"></div>
+        </div>`;
+        return $(html);
+    }
+
+    createGoToJailDOM(){
+        let html = ` <div class="goToJail square">
+            <div class="jail"></div>
+            <div class="image square"></div>
+            <div class="goTo"></div>
+        </div>`;
+        return $(html);
+    }
+    createSquareDOM(){
+        if (this.type === 'go') return this.createGoDOM();
+        if (this.type === 'jail') return this.createJailDOM();
+        if (this.type === 'go-to-jail') return this.createGoToJailDOM();
+        if (this.type === 'parking') return this.createParkingDOM();
+
+        let textDiv = $('<div>', {'class':'text'}).text(this.title);
+        let imageDiv = $('<div>', {'class':'image'});
+        let text2Div = $('<div>', {'class':'text'});
+        let squareDiv = $('<div>', {'class': "propInfo square"})
+            .append([textDiv, imageDiv, text2Div]);
+        let prop1Div = $('<div>' , {'class' : "prop1"})
+            .append(squareDiv);
+        return prop1Div;
+    }
+
 }
