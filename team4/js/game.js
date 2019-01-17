@@ -1,6 +1,8 @@
 class Game{
     constructor(){
         this.players = [];
+        this.communityChestCards = Card.initCards(COMMUNITY_CHEST_DATA);
+        this.chanceCards = Card.initCards(CHANCE_DATA);
         this.currentPlayerIndex = 0;
         this.squares = Square.initSquareData();
 
@@ -18,7 +20,7 @@ class Game{
 
         this.players = [player1, player2];
         
-        this.players[0].rolldice();
+        // this.players[0].rolldice();
     }
 
     handlePlayerTurnEnd() {
