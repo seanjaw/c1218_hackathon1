@@ -20,7 +20,7 @@ class Game{
         this.players = [player1, player2];
 
         
-        this.players[0].rolldice();
+        // this.players[0].rolldice();
 
     }
 

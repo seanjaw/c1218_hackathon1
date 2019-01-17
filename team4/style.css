@@ -98,7 +98,13 @@ body {
     height: 100%;
 }
 
-.topProp > .propContainer,
+.topProp > .propContainer {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
 .bottomPropContainer {
     width: 70%;
     height: 100%;
