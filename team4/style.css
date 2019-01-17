@@ -401,3 +401,16 @@ body {
     position: relative;
     left: 30%;
 }
+
+/* Modal Dialog - Transparent Overlay */
+.ui-widget-overlay {
+    background: transparent;
+    background-image: none;
+    opacity: 0;
+    z-index: 400;
+}
+
+/* Modal Dialog - No Close Button */
+.no-close .ui-dialog-titlebar-close {
+    display: none;
+}
