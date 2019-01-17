@@ -3,11 +3,15 @@
 <head>
     <title>Sailor Moon Monopoly</title>
     <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
+
     <link href="https://fonts.googleapis.com/css?family=Coiny" rel="stylesheet">
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+    <link rel="stylesheet" href="css/jquery-ui.css">
+
     <link rel="stylesheet" href="style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
     <script src="js/square.js"></script>
     <script src="js/square-data.js"></script>
     <script src="js/player.js" type="text/javascript" ></script>
@@ -16,6 +20,13 @@
 </head>
 <body>
     <div class="frame">
+        <div id="modalShadow"></div>
+        
+        <div id="modalBody">
+            <div id="modalMessage">Choose The Number of Players</div>
+            <button class="submitPlayers">Start</button>
+            <input type="number" class="numberOfPeopleInput" min="2" max="4">
+        </div>
         <div class="boardFrame">
             <div class="topProp">
                 <div class="freeParking">
@@ -45,9 +56,9 @@
                         <div class="propcolor yellow"></div>
                     </div>
                     <div class="prop1">
-                        <div class="propInfo square">
+                        <div class="propInfo square utility">
                             <div class="text topTaxContainer">
-                                <p>Pay Tax</p>
+                                <p>Utility</p>
                             </div>
                             <div class="image"></div>
                         </div>
@@ -81,9 +92,9 @@
                         <div class="propcolor yellow"></div>
                     </div>
                     <div class="prop1">
-                        <div class="propInfo square">
+                        <div class="propInfo square railroad">
                             <div class="text topTaxContainer">
-                                <p>Pay Tax</p>
+                                <p>Railroad</p>
                             </div>
                             <div class="image"></div>
                         </div>
@@ -168,9 +179,9 @@
                         <div class="propcolor pink"></div>
                     </div>
                     <div class="prop1">
-                        <div class="propInfo square">
+                        <div class="propInfo square utility">
                             <div class="text sideTaxContainer">
-                                <p>Pay Tax</p>
+                                <p>Waterworks</p>
                             </div>
                             <div class="image"></div>
                         </div>
@@ -204,9 +215,9 @@
                         <div class="propcolor pink"></div>
                     </div>
                     <div class="prop1">
-                        <div class="propInfo square">
+                        <div class="propInfo square utility">
                             <div class="text sideTaxContainer">
-                                <p>Pay Tax</p>
+                                <p>Waterworks</p>
                             </div>
                             <div class="image"></div>
                         </div>
@@ -333,9 +344,9 @@
                         </div>
                     </div>
                     <div class="prop1">
-                        <div class="propInfo square">
+                        <div class="propInfo square utility">
                             <div class="text rightTaxContainer">
-                                <p>Pay Tax</p>
+                                <p>Utility</p>
                             </div>
                             <div class="image"></div>
                         </div>
@@ -366,6 +377,7 @@
                         <div class="propInfo square rightAttackContainer">
                             <div class="text rightAttackText">
                                 <p>Attack</p>
+                                <p>-$200</p>
                             </div>
                             <div class="image">
 
@@ -439,6 +451,7 @@
                         <div class="propInfo square attackContainer">
                             <div class="text attackText">
                                 <p>Attack</p>
+                                <p>-$200</p>
                             </div>
                             <div class="image">
                                 <img src="images/Wicked_Lady_Manga.jpg" class="attack">
@@ -446,9 +459,9 @@
                         </div>
                     </div>
                     <div class="prop1">
-                        <div class="propInfo square taxTextContainer">
+                        <div class="propInfo square taxTextContainer railroad">
                             <div class="text taxText">
-                                <p>Pay Tax</p>
+                                <p>Railroad</p>
                             </div>
                             <div class="image"></div>
                         </div>

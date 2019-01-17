@@ -4,6 +4,7 @@ class Player{
         this.createPlayer = null;
         this.playerColor = ["red", "blue", "green", "yellow"];
         this.playerDom = this.createDOM();
+        this.money = 1500;
     }
 
     rolldice(){
@@ -23,6 +24,7 @@ class Player{
         console.log('After move: ', this.square.title); 
         this.updateDisplay();      
     }
+    
     createDOM() {
         let dom = $('<div>');
         dom.addClass('player');
@@ -33,18 +35,19 @@ class Player{
         this.square.squareDom.append(this.playerDom);
 
     }
-
+    //Creating new player with accordion settings
     createNewPlayer(){ 
         if ($("h1").length > 3){
-            console.error("Can only have 4 players!")
-        } else { //Creating new player with accordion settings
+
+            console.error("Can only have 4 players!");
+            
+        } else { 
+
         let numOfPlayers = $("h1").length + 1;
         
         this.createPlayer = $("<h1>")
             .css("background-color", this.playerColor[$("h1").length])
-            .text("Player" + numOfPlayers);
-        // this.createNewPlayer.append(spanElem);
-        
+            .text("Player" + numOfPlayers);        
         $("#accordion").append(this.createPlayer);
         }
     }

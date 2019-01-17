@@ -182,9 +182,35 @@ body {
 
 .arrowImage {
     display: inline-block;
-    position: absolute;
-    top: 70%;
-    left: 40%;
+    position: relative;
+    top: 60%;
+    left: 20%;
+}
+
+#modalShadow{
+	position: fixed;
+	left: 0;
+	top: 0;
+	height: 100vh;
+	width: 100vw;
+	background-color: black;
+	opacity: .4;
+}
+#modalBody{
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	min-height: 30vmin;
+	min-width: 30vmin;
+	transform: translate(-50%, -50%);
+	background-color: white;
+	display: flex;
+}
+#modalMessage{
+	margin: auto auto;
+  position: absolute;
+  top: 70%;
+  left: 40%;
 }
 
 .goStart {
@@ -382,14 +408,14 @@ body {
 }
 
 .player {
-    background-image: url(images/icon1.png);
+    background-image: url('images/sailor moon.png');
     position: relative;
-    background-position: contain;
-    border: 5px solid red;
+    background-size: contain;
+    background-repeat: no-repeat;
     top: 5%;
     left: 5%;
-    height: 10px;
-    width: 10px;
+    height: 55px;
+    width: 55px;
     z-index: 9999;
 }
 
@@ -674,6 +700,8 @@ body {
     color: white;
     position: absolute;
     transform: rotate(-90deg);
+    left: 20%;
+    bottom: -24%;
 }
 
 
@@ -738,3 +766,6 @@ body {
     top: 30%;
 }
 
+.sideTaxContainer > p {
+    font-size: 80%;
+}
