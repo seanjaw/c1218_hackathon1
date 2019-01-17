@@ -351,13 +351,7 @@ body {
 .sidePropContainer .propInfo {
     display: flex;
     flex-direction: row-reverse;
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 3b7eb0c6be1f9e554eb6030f2fadedcc8c84b865
-}
-=======
-=======
->>>>>>> 650cc6c1e196052369fbb13db09711a1e007bac9
+
 }
 
 .chibiusa .leftImg {
@@ -408,7 +402,4 @@ body {
     position: relative;
     left: 30%;
 }
-<<<<<<< HEAD
->>>>>>> b4ba99bdea48027b244e35dba48f56a2a7eb3d9e
-=======
->>>>>>> 650cc6c1e196052369fbb13db09711a1e007bac9
+

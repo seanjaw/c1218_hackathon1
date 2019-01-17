@@ -47,9 +47,9 @@ class Modal{
     clickHandle(event){ // Fix clickhandle
 
 
-        this.playerNumber = $("input").text();
+        this.playerNumber = $("input").val  ();
 
-        this.hide();
+        // this.hide();
 		$(this.submitPlayers).off("click");
         $(this.submitPlayers).click(this.hide);
         return event;
