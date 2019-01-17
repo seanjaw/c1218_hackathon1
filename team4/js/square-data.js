@@ -1,40 +1,40 @@
 const SQUARE_DATA = `go	Go	
-property	Mediterranean	60
+street	Mediterranean	60
 community-chest	Community Chest 1	
-property	Baltic	60
+street	Baltic	60
 income-tax	Income Tax	
 railroad	Reading Railroad	200
-property	Oriental	100
+street	Oriental	100
 chance	Chance 1	
-property	Vermont	100
-property	Connecticut	120
+street	Vermont	100
+street	Connecticut	120
 jail	Jail	
-property	St Charles	140
+street	St Charles	140
 utility	Electric Company	150
-property	States	140
-property	Virginia	160
+street	States	140
+street	Virginia	160
 railroad	Pennsylvania Railroad	200
-property	St James	180
+street	St James	180
 community-chest	Community Chest 2	
-property	Tennessee	180
-property	New York	200
+street	Tennessee	180
+street	New York	200
 parking	Parking	
-property	Kentucky	220
+street	Kentucky	220
 chance	Chance 2	
-property	Indiana	220
-property	Illinois	240
-property	B&O Railroad	200
-property	Atlantic	260
-property	Ventnor	260
+street	Indiana	220
+street	Illinois	240
+street	B&O Railroad	200
+street	Atlantic	260
+street	Ventnor	260
 utility	Water Works	150
-property	Marvin Gardens	280
+street	Marvin Gardens	280
 go-to-jail	Go To Jail	
-property	Pacific	300
-property	North Carolina	300
+street	Pacific	300
+street	North Carolina	300
 community-chest	Community Chest 3	
-property	Pennsylvania	320
+street	Pennsylvania	320
 railroad	Short Line Railroad	200
 chance	Chance 3	
-property	Park Place	350
+street	Park Place	350
 luxury-tax	Luxury Tax	
-property	Boardwalk	400`;
+street	Boardwalk	400`;

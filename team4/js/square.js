@@ -1,9 +1,12 @@
+const PROPERTY_TYPES = ['street','railroad','utility'];
+
 class Square {
     constructor( type, title, price ) {
         this.type = type;
         this.title = title;
         this.price = price;
 
+        this.owner = null;
         this.next = null;
         this.squareDom= this.createSquareDOM();
     }

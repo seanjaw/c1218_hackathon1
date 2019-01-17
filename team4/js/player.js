@@ -3,8 +3,12 @@ class Player{
         this.square = square;
         this.createPlayer = null;
         this.playerColor = ["red", "blue", "green", "yellow"];
-        this.playerDom = this.createDOM();
         this.money = 1500;
+        this.properties = [];
+
+        this.playerDom = this.createDOM();
+
+        this.buyProperty = this.buyProperty.bind(this);
     }
 
     rolldice(){
@@ -13,7 +17,7 @@ class Player{
             let roll = Math.floor(Math.random()*5) + 1;
             rollArray.push(roll);
         }
-        console.log(rollArray);
+
         return rollArray;
     }
 
@@ -21,23 +25,40 @@ class Player{
         for (let i = 0; i < amount; i++) {
             this.square = this.square.next;
         }
-        console.log('After move: ', this.square.title); 
 
-        if (this.square.type === 'property') {
-            let prompt = `Buy property ${this.square.title} for ${this.square.price}?`;
-
-            if (confirm(prompt)) {
-                console.log('Chose to buy property');
-            } else {
-                console.log('Chose not to buy property');
-            }
-        } else {
-            console.log('This is not a property');
+        const {square} = this;
+        if (PROPERTY_TYPES.indexOf(square.type) !== -1 && square.owner === null && this.money >= square.price) {
+            this.showBuyModal();
         }
 
         this.updateDisplay();      
     }
-    
+
+    /*
+     * Buy property for current square
+     */
+    buyProperty() {
+        this.money -= this.square.price;
+        this.addProperty(this.square);
+        console.log('Buy property: ', this.square.title, ' for $', this.square.price);
+    }
+
+    /*
+     * Player will manage bi-directional Player:Property relationship
+     */
+    addProperty( square ) {
+        this.properties.push( square );
+        square.owner = this;
+    }
+
+    /*
+     * Player will manage bi-directional Player:Property relationship
+     */
+    removeProperty( square ) {
+        this.properties = this.properties.filter(property => property !== square);
+        square.owner = null;
+    }
+
     createDOM() {
         let dom = $('<div>');
         dom.addClass('player');
@@ -61,6 +82,31 @@ class Player{
             'z-index': 9999
         });
     }
+
+    showBuyModal() {
+        let message =  `Buy '${this.square.title}' for \$${this.square.price}?`;
+        let dialog = $('<div>').text(message);
+
+        let buyCallback = () => {
+            dialog.dialog('close');
+            this.buyProperty();
+        };
+
+        let auctionCallback = () => {
+            dialog.dialog('close');
+        };
+
+        dialog.dialog({
+            modal: true, 
+            dialogClass: "no-close", 
+            height: 300,
+            buttons: [
+                {text: "Buy", click: buyCallback},
+                {text: "Auction", click: auctionCallback}
+            ]
+        });
+    }
+
     //Creating new player with accordion settings
     createNewPlayer(){ 
         if ($("h1").length > 3){
