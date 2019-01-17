@@ -50,6 +50,9 @@ class Player{
         }       
     }
 
+    getCurrentMoney() {
+        return this.money;
+    }
     /*
      * Buy property for current square
      */

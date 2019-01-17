@@ -21,9 +21,10 @@ class Game{
     }
 
     play(addPlayers) {
+        
         this.domElmPlayersList = addPlayers;
         let go = this.squares[0];
-<<<<<<< HEAD
+
         for (var playerIndex = 0; playerIndex < this.domElmPlayersList.length; playerIndex++){
             let tempName = "player"+(playerIndex + 1);
             let iconName = this.iconArray[playerIndex];
@@ -31,18 +32,7 @@ class Game{
             this.players.push(newPlayer);
             newPlayer.updateDisplay();
         }
-        // this.players[0].rolldice(); 
-=======
-        let player1 = new Player(go, 'icon1', 'Player1', this.handlePlayerTurnEnd);
-        let player2 = new Player(go, 'icon2', 'Player2', this.handlePlayerTurnEnd);
-
-        // TODO: attach players created in this section. 
-        this.players = [player1, player2];
-
-        
         this.players[0].rolldice();
-
->>>>>>> c71980e34909dfb1f0192e2215df9956bcdfc137
     }
 
     handlePlayerTurnEnd() {
