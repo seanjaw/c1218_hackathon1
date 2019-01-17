@@ -18,6 +18,8 @@ class Player{
 
         this.diceArray = null;
         this.diceTotal = null;
+
+
     }
 
     rolldice(){
@@ -61,8 +63,28 @@ class Player{
         // Currently basic rent only
         let rent = 0;
         var count = 0;
+        var totalColorCount = {
+            brown: 2,
+            blue: 3,
+            orange: 3,
+            yellow: 3,
+            redCount: 3,
+            greenCount: 3,
+            greyCount: 2,
+        };
         if (property.type === 'street') {
-            rent = property.rentCosts[0];
+            var propertyColor = property.color;
+            for(var index = 0; index < this.properties.length; index++){
+                if(this.properties[index].type === 'street' && propertyColor === this.properties[index].color){
+                    count++;
+                }
+            }
+            if(count === totalColorCount[propertyColor]){
+                rent = parseInt(property.rentCosts[0]) * 2;
+            } else {
+                rent = parseInt(property.rentCosts[0]);
+            }
+
         } else if (property.type === 'railroad') {
             for(var index = 0; index < this.properties.length; index++){
                 if(this.properties[index].type === 'railroad'){
@@ -78,7 +100,6 @@ class Player{
             // TODO: Store current die rolls for players
             // TODO: Calculte this rent based on renter's dice roll & 
             //       number of utilities in this player's properties
-            var count = 0;
             for(var index=0; index<this.properties.length; index++){
                 if(this.properties[index].type === 'utility'){
                     count++;
@@ -91,7 +112,7 @@ class Player{
             }
         }
 
-        console.log('rent', rent);
+
         return rent;
     }
 
@@ -109,10 +130,6 @@ class Player{
         }
         this.money -= amountToPay;
         square.owner.money += amountToPay;
-        console.log('renter dice', this.diceTotal);
-        console.log('owner dice', this.square.owner.diceTotal);
-        console.log('renter', this.money);
-        console.log('owner', this.square.owner.money);
         for(var i = 0; i < this.square.owner.properties.length; i++){
             console.log(this.square.owner.properties[i].type);
         }
