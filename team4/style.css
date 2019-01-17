@@ -424,11 +424,14 @@ h1 {
     z-index: 400;
 }
 
-/* Modal Dialog - No Close Button */
+/* Modal Dialog - No Close Button*/
 .no-close .ui-dialog-titlebar-close {
     display: none;
 }
+<<<<<<< HEAD
+=======
 
+>>>>>>> bc4e76875c2faf3d17f76769b2eb3aa8fc2fd852
 .player {
     background-image: url('images/sailor moon.png');
     position: relative;

@@ -18,7 +18,10 @@ class Game{
 
         // TODO: attach players created in this section. 
         this.players = [player1, player2];
+
+        
         this.players[0].rolldice();
+
     }
 
     handlePlayerTurnEnd() {
