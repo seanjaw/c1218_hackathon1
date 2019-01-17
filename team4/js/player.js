@@ -47,18 +47,19 @@ class Player{
             'z-index': 9999
         });
     }
-
+    //Creating new player with accordion settings
     createNewPlayer(){ 
         if ($("h1").length > 3){
-            console.error("Can only have 4 players!")
-        } else { //Creating new player with accordion settings
+
+            console.error("Can only have 4 players!");
+            
+        } else { 
+
         let numOfPlayers = $("h1").length + 1;
         
         this.createPlayer = $("<h1>")
             .css("background-color", this.playerColor[$("h1").length])
-            .text("Player" + numOfPlayers);
-        // this.createNewPlayer.append(spanElem);
-        
+            .text("Player" + numOfPlayers);        
         $("#accordion").append(this.createPlayer);
         }
     }
