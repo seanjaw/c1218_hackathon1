@@ -15,6 +15,9 @@ class Player{
 
         this.buyProperty = this.buyProperty.bind(this);
         this.rolldice = this.rolldice.bind(this);
+
+        this.diceArray = null;
+        this.diceTotal = null;
     }
 
     rolldice(){
@@ -26,6 +29,8 @@ class Player{
 
         let total = rollArray[0] + rollArray[1];
         this.move( total );
+        this.diceArray = rollArray;
+        this.diceTotal = total;
     }
 
     move( amount ){
@@ -52,19 +57,41 @@ class Player{
         console.log('Buy property: ', this.square.title, ' for $', this.square.price);
     }
 
-    calculateRent( property, renter ) {
+    calculateRent( property, renter) {
         // Currently basic rent only
         let rent = 0;
+        var count = 0;
         if (property.type === 'street') {
             rent = property.rentCosts[0];
         } else if (property.type === 'railroad') {
-            rent = property.rentCosts[0];
+            for(var index = 0; index < this.properties.length; index++){
+                if(this.properties[index].type === 'railroad'){
+                    count++;
+                }
+                if(count >= 2){
+                    rent =  property.rentCosts[0] * 2;
+                } else {
+                    rent = property.rentCosts[0];
+                }
+            }
         } else if (property.type === 'utility') {
             // TODO: Store current die rolls for players
             // TODO: Calculte this rent based on renter's dice roll & 
             //       number of utilities in this player's properties
-
+            var count = 0;
+            for(var index=0; index<this.properties.length; index++){
+                if(this.properties[index].type === 'utility'){
+                    count++;
+                }
+            }
+            if(count >= 2){
+                rent = 10 * renter.diceTotal;
+            } else {
+                rent = 4 * renter.diceTotal;
+            }
         }
+
+        console.log('rent', rent);
         return rent;
     }
 
@@ -82,8 +109,16 @@ class Player{
         }
         this.money -= amountToPay;
         square.owner.money += amountToPay;
-
+        console.log('renter dice', this.diceTotal);
+        console.log('owner dice', this.square.owner.diceTotal);
+        console.log('renter', this.money);
+        console.log('owner', this.square.owner.money);
+        for(var i = 0; i < this.square.owner.properties.length; i++){
+            console.log(this.square.owner.properties[i].type);
+        }
         this.turnEndCallback();
+
+
     }
 
     /*

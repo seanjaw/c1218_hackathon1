@@ -18,7 +18,7 @@ class Game{
 
         this.players = [player1, player2];
         
-        this.players[0].rolldice();
+       // this.players[0].rolldice();
     }
 
     handlePlayerTurnEnd() {
@@ -26,7 +26,7 @@ class Game{
         if (this.currentPlayerIndex >= this.players.length) {
             this.currentPlayerIndex = 0;
         }
-        this.players[this.currentPlayerIndex].rolldice();
+        //this.players[this.currentPlayerIndex].rolldice();
     }
 }
 

@@ -416,10 +416,10 @@ body {
     z-index: 400;
 }
 
-/* Modal Dialog - No Close Button */
+/* Modal Dialog - No Close Button*/
 .no-close .ui-dialog-titlebar-close {
     display: none;
-
+}
 .player {
     background-image: url('images/sailor moon.png');
     position: relative;
