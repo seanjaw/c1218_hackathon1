@@ -1,9 +1,10 @@
 class Player{
-    constructor( square, avatar, name, turnEndCallback ){
+    constructor( square, avatar, name, turnEndCallback, domElmPlayerInfo){
         this.square = square;
         this.avatar = avatar;
         this.name = name;
         this.turnEndCallback = turnEndCallback;
+        this.domElmPlayerInfo = domElmPlayerInfo;
 
         this.createPlayer = null;
         this.playerColor = ["red", "blue", "green", "yellow"];
@@ -221,6 +222,7 @@ class Player{
 
         this.createPlayer = $("<h1>")
             .css("background-color", this.playerColor[$("h1").length])
+            .addClass("player" + numOfPlayers)
             .text("Player" + numOfPlayers);        
         $("#accordion").append(this.createPlayer);
         $(this.createPlayer).after(divToAppend);

@@ -1,13 +1,15 @@
 $(document).ready(initApp);
 let game = null;
+let model = null;
 
 function initApp(){
    
-   let model = new Modal($("#modalShadow"), $("#modalBody"), $("#submitPlayers"));
+   model = new Modal($("#modalShadow"), $("#modalBody"), $("#submitPlayers"));
    model.init();
-
    game = new Game();
-   game.play();
+   
+   let playerArrayToPass = model.createPlayersArray();
+   game.play(playerArrayToPass);
 }
 
 
