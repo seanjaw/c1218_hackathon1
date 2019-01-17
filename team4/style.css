@@ -171,3 +171,26 @@ body {
 .arrowImage {
     display: inline-block;
 }
+
+#modalShadow{
+	position: fixed;
+	left: 0;
+	top: 0;
+	height: 100vh;
+	width: 100vw;
+	background-color: black;
+	opacity: .4;
+}
+#modalBody{
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	min-height: 30vmin;
+	min-width: 30vmin;
+	transform: translate(-50%, -50%);
+	background-color: white;
+	display: flex;
+}
+#modalMessage{
+	margin: auto auto;
+}
