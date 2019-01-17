@@ -110,6 +110,7 @@ class Player{
             'background-size': 'contain',
             'background-repeat': 'no-repeat'
         });
+
         $('body').append(dom);
         return dom;
     }

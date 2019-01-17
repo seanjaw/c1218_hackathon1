@@ -1,4 +1,4 @@
-$(document).ready(initApp);
+// $(document).ready(initApp);
 let game = null;
 
 function initApp(){
