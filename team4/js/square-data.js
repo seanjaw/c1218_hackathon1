@@ -42,7 +42,7 @@ chance	FRIENDSHIP
 street	Mercury and Mars	350	35;70;175;500;1100;1300;1500	grey	sailor%20moon%20pic10.png
 luxury-tax	Attack				
 street	Princess	400	50;100;200;600;1400;1700;2000	grey	sailor%20moon%20kid.png`;
-=======
+
 // type	title	price	rentCosts
 /*
 const SQUARE_DATA = `go	Go			585e4695cb11b227491c3373.png
