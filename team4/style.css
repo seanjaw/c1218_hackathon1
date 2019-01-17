@@ -87,6 +87,7 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     box-sizing: border-box;
+    position: relative;
 }
 
 .freeParking,
@@ -359,6 +360,7 @@ body {
 .topPropInfo {
     display: flex;
     flex-direction: column-reverse;
+    position: relative;
 }
 
 .topText > p,
@@ -378,3 +380,361 @@ body {
     position: relative;
     left: 30%;
 }
+
+.player {
+    background-image: url(images/icon1.png);
+    position: relative;
+    background-position: contain;
+    border: 5px solid red;
+    top: 5%;
+    left: 5%;
+    height: 10px;
+    width: 10px;
+    z-index: 9999;
+}
+
+.venusJupiterText {
+    position: absolute;
+    bottom: -17%;
+}
+
+.sadJupiterText {
+    position: absolute;
+    bottom: -6%;
+}
+
+.artemisText {
+    position: absolute;
+    bottom: 15%;
+    left: 15%;
+}
+
+.rightText,
+.rightMoney,
+.rightImg {
+    transform: rotate(-90deg);
+}
+
+.rightImg {
+    width: 130%;
+    position: relative;
+    left: 18%;
+    bottom: 10%;
+}
+
+.rightPropContainer .propInfo {
+    display: flex;
+    flex-direction: row;
+}
+
+.rightText > p,
+.rightMoney > p {
+    margin: 0;
+    font-family: arial, helvetica, sans-serif;
+    font-size: 55%;
+    font-weight: bold;
+    text-align: center;
+}
+
+.rightText {
+    position: relative;
+    left: 30%;
+}
+
+.rightMoney {
+    position: relative;
+    left: 0;
+    top: 35%;
+    background-color: white;
+    height: 23%;
+}
+
+.kamen .rightImg{
+    width: 107%;
+    left: 25%;
+}
+
+.queen .rightImg {
+    width: 90%;
+    left: 25%;
+}
+
+.mercuryMars .rightImg {
+    width: 100%;
+}
+
+.mercuryMarsText {
+    left: 20%;
+}
+
+.princess .rightImg{
+    width: 95%;
+    bottom: 18%;
+}
+
+
+.loveText {
+    color: #d9534f;
+    text-align: center;
+    font-family: 'Coiny', cursive;
+
+}
+
+.loveTextContainer {
+    position: relative;
+    top: 20%;
+}
+
+.loveText > p {
+    margin-bottom: 0;
+}
+
+.attackText {
+    position: absolute;
+    color: white;
+
+}
+
+.attackText > p {
+    text-align: center;
+}
+
+.attackContainer,
+.attackContainer .image{
+    height: 100%;
+}
+
+.attack {
+    width: 100%;
+    height: 100%;
+}
+
+.taxText {
+    font-size: 72%;
+    font-family: 'Coiny', cursive;
+}
+
+.taxTextContainer {
+    position: relative;
+    top: 30%;
+}
+
+.friendshipText {
+    color: #d9534f;
+    text-align: center;
+    font-family: 'Coiny', cursive;
+    font-size: 50%;
+}
+
+.friendshipTextContainer {
+    position: relative;
+    top: 30%;
+}
+
+.jailBar {
+    height: 100%;
+    width: 100%;
+}
+
+.jailBarContainer {
+    width: 70%;
+    height: 70%;
+}
+
+.justLeft > p,
+.vistingBottom > p {
+    font-family: 'Coiny', cursive;
+}
+
+.justLeft {
+    position: relative;
+    bottom: 15%;
+    left: 10%;
+}
+
+.vistingBottom {
+    position: relative;
+    transform: rotate(-90deg);
+    bottom: 100%;
+    left: 35%;
+}
+
+.sideTaxContainer {
+    font-size: 72%;
+    font-family: 'Coiny', cursive;
+    transform: rotate(90deg);
+    position: relative;
+    bottom: 30%;
+    top: 2%;
+}
+
+.sideLoveContainer {
+    color: #d9534f;
+    text-align: center;
+    font-family: 'Coiny', cursive;
+    transform: rotate(90deg);
+    position: relative;
+    left: 30%;
+}
+.freeParking {
+    position: relative;
+}
+
+.car {
+    width: 50%;
+    transform: rotate(140deg);
+    position: absolute;
+    left: 24%;
+    top: 38%;
+}
+
+.parking > p {
+    transform: rotate(140deg);
+    font-family: 'Coiny', cursive;
+    position: absolute;
+    left: 44%;
+    top: 55%;
+}
+
+.free > p {
+    transform: rotate(140deg);
+    font-family: 'Coiny', cursive;
+    position: absolute;
+    left: 14%;
+    top: 2%;
+}
+
+.topTaxContainer {
+    font-size: 72%;
+    font-family: 'Coiny', cursive;
+    transform: rotate(180deg);
+    position: relative;
+    right: 5%;
+}
+
+.topFriendshipContainer {
+    color: #d9534f;
+    text-align: center;
+    font-family: 'Coiny', cursive;
+    font-size: 50%;
+    position: relative;
+    right: 5%;
+    top: 50%;
+    transform: rotate(180deg);
+}
+
+.goToJail {
+    position: relative;
+}
+.jailImg {
+    width: 40%;
+    transform: rotate(-140deg);
+    position: absolute;
+    bottom: 20%;
+    right: 50%;
+}
+
+.jailTop,
+.goTo {
+    transform: rotate(-140deg);
+    font-family: 'Coiny', cursive;
+    position: relative;
+    right: 15%;
+    bottom: 10%;
+}
+
+.rightLoveContainer {
+    color: #d9534f;
+    text-align: center;
+    font-family: 'Coiny', cursive;
+    transform: rotate(-90deg);
+    position: relative;
+   left: 30%;
+}
+
+.rightTaxContainer {
+    font-size: 72%;
+    font-family: 'Coiny', cursive;
+    transform: rotate(-90deg);
+    position: relative;
+    left: 40%;
+}
+
+.rightFriendshipContainer {
+    color: #d9534f;
+    text-align: center;
+    font-family: 'Coiny', cursive;
+    font-size: 50%;
+    position: relative;
+    left: 40%;
+    transform: rotate(-90deg);
+}
+
+.rightAttackText {
+    color: white;
+    position: absolute;
+    transform: rotate(-90deg);
+}
+
+
+
+.rightAttackContainer{
+    width: 100%;
+    height: 100%;
+    background-image: url("images/Wicked_Lady_Manga.jpg");
+
+}
+
+.topHeader img {
+    width: 30%;
+    transform: rotate(-45deg);
+    position: absolute;
+    top: 9%;
+    left: -1%;
+}
+
+.middleHeader img {
+    width: 40%;
+    transform: rotate(-45deg);
+    position: absolute;
+    top: 15%;
+}
+
+.loveDeck {
+    width: 40%;
+    height: 30%;
+    background-color: white;
+    opacity: 0.75;
+    transform: rotate(45deg);
+    position: absolute;
+    top: 55%;
+    left: 13%;
+}
+
+.friendDeck {
+    transform: rotate(-135deg);
+    position: absolute;
+    top: 15%;
+    right: 10%;
+    width: 40%;
+    height: 30%;
+    background-color: white;
+    opacity: 0.75;
+}
+
+.loveCard {
+    position: relative;
+    top: 30%;
+}
+
+.loveCard > p,
+.friendCard > p {
+    font-family: 'Coiny', cursive;
+    text-align: center;
+}
+
+.friendCard {
+    position: relative;
+    top: 30%;
+}
+

@@ -26,24 +26,12 @@ class Player{
     createDOM() {
         let dom = $('<div>');
         dom.addClass('player');
-        dom.css({
-            'background-image': 'url(images/icon1.png)'
-        });
         $('body').append(dom);
         return dom;
     }
     updateDisplay() {
         this.square.squareDom.append(this.playerDom);
-        this.playerDom.css({
-            position: 'relative',
-            'background-position': 'contain',
-            'border': '5px solid red',
-            top: 5,
-            left: 5,
-            height: '10px',
-            width: '10px',
-            'z-index': 9999
-        });
+
     }
 
     createNewPlayer(){ 
