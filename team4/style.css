@@ -48,6 +48,7 @@ body {
 .rightPropContainer {
     flex-direction: column;
     background-image: url("images/sailor-moon-back.jpg");
+    background-repeat: no-repeat;
 }
 
 .sidePropContainer {
@@ -79,6 +80,8 @@ body {
     width: 70%;
     height: 100%;
     display: flex;
+    flex-direction: row-reverse;
+
 }
 
 .bottomProp {
@@ -91,6 +94,7 @@ body {
     height: 11.11%;
     border-bottom: 2px solid black;
     box-sizing: border-box;
+    position: relative;
 }
 
 .topProp .prop1,
@@ -99,6 +103,7 @@ body {
     height: 100%;
     border-right: 2px solid black;
     box-sizing: border-box;
+    position: relative;
 }
 
 .freeParking {
@@ -121,7 +126,7 @@ body {
 }
 
 .startCollect {
-    font-size: 1.5vh;
+    font-size: 1.4vh;
     margin: 0;
     font-family: arial, helvetica, sans-serif;
     font-weight: bold;
@@ -130,7 +135,7 @@ body {
 }
 
 .startGo {
-    font-size: 4vh;
+    font-size: 3.5vh;
     margin: 0;
     font-family: 'Anton', sans-serif;
     font-weight: bold;
@@ -139,13 +144,152 @@ body {
 }
 
 .arrowImage img {
-    width: 40%;
+    width: 55%;
 }
 
 .startArea {
     display: inline-block;
+    text-align: center;
+    transform: rotate(-30deg);
+    position: absolute;
+    top: 14%;
+    left: 3%;
 }
 
 .arrowImage {
     display: inline-block;
+    position: absolute;
+    top: 70%;
+    left: 40%;
+}
+
+.goStart {
+    position: relative;
+}
+
+.brown {
+    height: 15%;
+    background-color: saddlebrown;
+}
+
+.blue {
+    height: 15%;
+    background-color: #31b0d5;
+}
+
+.pink,
+.orange {
+    width: 15%;
+    height: 100%;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+}
+
+.pink {
+    background-color: #df5277;
+}
+
+.orange {
+    background-color: darkorange;
+}
+
+.red,
+.yellow {
+    height: 15%;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+}
+
+.red {
+    background-color: #cd0a0a;
+}
+
+.yellow {
+    background-color: gold;
+}
+
+.green,
+.grey {
+    width: 15%;
+    height: 100%;
+    display: inline-block;
+    position: absolute;
+    left: 0;
+}
+
+.green {
+    background-color: #449d44;
+}
+
+.grey {
+    background-color: #5e5e5e;
+}
+
+.bottomImg {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.bottomText {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+
+}
+
+.bottomMoney {
+    position: absolute;
+    bottom: 3%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+}
+
+.bottomText > p,
+.bottomMoney > p {
+    margin: 0;
+    font-family: arial, helvetica, sans-serif;
+    font-size: 60%;
+    font-weight: bold;
+}
+
+.neptune .bottomImg {
+    width: 85%;
+}
+
+.leftImg {
+    width: 50%;
+    transform: rotate(90deg);
+}
+
+.leftText {
+    transform: rotate(90deg);
+    width: 50%;
+    text-align: center;
+}
+
+.leftMoney {
+    background-color: white;
+    transform: rotate(90deg);
+    display: inline-block;
+}
+
+.leftText > p,
+.leftMoney > p {
+    margin: 0;
+    font-family: arial, helvetica, sans-serif;
+    font-size: 60%;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.sidePropContainer .propInfo {
+    display: flex;
+    flex-direction: row-reverse;
 }
