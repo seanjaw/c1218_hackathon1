@@ -16,9 +16,12 @@ class Game{
         let player1 = new Player(go, 'icon1', 'Player1', this.handlePlayerTurnEnd);
         let player2 = new Player(go, 'icon2', 'Player2', this.handlePlayerTurnEnd);
 
+        // TODO: attach players created in this section. 
         this.players = [player1, player2];
+
         
-       // this.players[0].rolldice();
+        this.players[0].rolldice();
+
     }
 
     handlePlayerTurnEnd() {
@@ -26,11 +29,10 @@ class Game{
         if (this.currentPlayerIndex >= this.players.length) {
             this.currentPlayerIndex = 0;
         }
-        //this.players[this.currentPlayerIndex].rolldice();
+        this.players[this.currentPlayerIndex].rolldice();
     }
 }
-
-class Modal{
+class Modal {
 
 	constructor(modalShadow, modalBody, submitPlayers){
 
@@ -39,43 +41,49 @@ class Modal{
         this.playerNumber = 0;
         this.submitPlayers = submitPlayers;
         this.submitPlayers = this.submitPlayers.bind(this);
+        this.clickHandle = this.clickHandle.bind(this);
     }
   
 	show(){
 
 		$(this.modalShadow).show();
         $(this.modalBody).show();
+        // $(this.submitPlayers).show();
     }
     
-	hide(){
+	hideModal(){
 
-        console.log("Clicked hide");
 		$(this.modalShadow).hide();
         $(this.modalBody).hide();
+        // $(this.submitPlayers).hide();
 	}
 	
 	init(){
 
         console.log("Made it Init");
         this.submitPlayers.click(this.clickHandle);
+        $("input").val(2);
         this.show();
     }
-    
-    clickHandle(event){ // Fix clickhandle
 
+    clickHandle() { // Fix clickhandle
 
-        this.playerNumber = $(".numberOfPeopleInput").text();
+        this.playerNumber = $("input").val();
 
-        this.hide();
-		$(this.modalMessage).off("click");
-        $(this.modalMessage).click(this.hide);
-        return event;
+        console.log("TEST INPUT ", this.playerNumber);
+
+        this.hideModal();
+        $(this.submitPlayers).off("click");
+        this.displayPlayers();
     }
 
     displayPlayers(){ 
-        console.log("Can dipslay players");
-        // while (this.playerNumber > 0){
-
-        // }
+        let temp = null;
+        while (this.playerNumber > 0){
+            temp = new Player;
+            temp.createNewPlayerList();
+            this.playerNumber--;
+        }
+        temp.setPlayerList();
     }
 }

@@ -6,7 +6,7 @@ body {
 .frame {
     width: 100vw;
     height: 100vh;
-    background-color: red;
+    background-color: black;
     display: inline-flex;
 }
 
@@ -208,9 +208,15 @@ body {
 }
 #modalMessage{
 	margin: auto auto;
-  position: absolute;
-  top: 70%;
-  left: 40%;
+    position: absolute;
+    top: 70%;
+    left: 40%;
+}
+#submitPlayers {
+    background-color: green;
+}
+h1 {
+    color: white;
 }
 
 .goStart {
@@ -355,6 +361,7 @@ body {
 .sidePropContainer .propInfo {
     display: flex;
     flex-direction: row-reverse;
+
 }
 
 .chibiusa .leftImg {
@@ -408,6 +415,7 @@ body {
 }
 
 
+
 /* Modal Dialog - Transparent Overlay */
 .ui-widget-overlay {
     background: transparent;
@@ -420,6 +428,10 @@ body {
 .no-close .ui-dialog-titlebar-close {
     display: none;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> bc4e76875c2faf3d17f76769b2eb3aa8fc2fd852
 .player {
     background-image: url('images/sailor moon.png');
     position: relative;
