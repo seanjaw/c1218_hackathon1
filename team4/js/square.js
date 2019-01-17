@@ -48,6 +48,7 @@ class Square {
 
     
     createGoDOM(){
+    
         let html =`<div class="goStart square">
             <div class="startArea">
                 <p class="startCollect">COLLECT $200 SALARY AS YOU PASS</p>
@@ -58,6 +59,15 @@ class Square {
             </div>
         </div>`;
         return $(html);
+        // let arrowImageDiv = $('<div>', {'class':'arrowImage'});
+        // let startCollectP = $('<p>', {'class':'startCollect'});
+        // let startGoP = $('<p>', {'class':'startGo'});
+        // let startAreaDiv = $('<div>', {'class':'startArea'})
+        //     .append([startCollectP,startGoP]);
+        // let goStartSquareDiv = $('<div>', {'class': "goStart square"})
+        //     .append([startAreaDiv,arrowImageDiv]);
+        // return goStartSquareDiv;
+
 
     }
 
@@ -70,24 +80,46 @@ class Square {
             <div class="vistingBottom"></div>
         </div>`;
         return $(html);
+
+        // let jailSquareDiv = $('<div>', {'class':'jail square'}).text(this.title);
+        // let justLeftDiv = $('<div>', {'class':'justLeft'});
+        // let visitingBottomDiv = $('<div>', {'class':'visitingBottom'});
+        // let jailImageContainerDiv = $('<div>', {'class': "jailImageContainer"})
+        //     .append([jailSquareDiv, justLeftDiv, visitingBottomDiv]);
+        // let jailDiv = $('<div>', {'class': "jail"})
+        //     .append([jailImageContainerDiv]);
+        // return jailDiv;
     }
 
     createParkingDOM(){
-        let html = ` <div class="freeParking">
-            <div class="parking"></div>
-            <div class="image square"></div>
-            <div class="free"></div>
-        </div>`;
-        return $(html);
+        // let html = ` <div class="freeParking">
+        //     <div class="parking"></div>
+        //     <div class="image square"></div>
+        //     <div class="free"></div>
+        // </div>`;
+        // return $(html);
+        let parkingDiv = $('<div>', {'class':'parking'}).text(this.title);
+        let imageSquareDiv = $('<div>', {'class':'image square'});
+        let freeDiv = $('<div>', {'class':'free'});
+        let freeParkingDiv = $('<div>', {'class': "freeParking"})
+            .append([parkingDiv, imageSquareDiv, freeDiv]);
+        return freeParkingDiv;
     }
 
     createGoToJailDOM(){
-        let html = ` <div class="goToJail square">
-            <div class="jail"></div>
-            <div class="image square"></div>
-            <div class="goTo"></div>
-        </div>`;
-        return $(html);
+        // let html = ` <div class="goToJail square">
+        //     <div class="jail"></div>
+        //     <div class="image square"></div>
+        //     <div class="goTo"></div>
+        // // </div>`;
+        // return $(html);
+        let goToDiv = $('<div>', {'class':'goTo'});
+        let imageDiv = $('<div>', {'class':'image square'});
+        let goTo2Div = $('<div>', {'class':'goTo'});
+        let goToJailDiv = $('<div>', {'class': "goToJail square"})
+            .append([goToDiv, imageDiv , goTo2Div]);
+        return goToJailDiv;
+
     }
     createSquareDOM(){
         if (this.type === 'go') return this.createGoDOM();
