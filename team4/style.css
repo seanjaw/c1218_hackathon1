@@ -36,7 +36,7 @@ body {
 }
 
 .playerContainer {
-    display: flex;
+    display: block;
     position: relative;
     align-content: center;
     margin: auto;
