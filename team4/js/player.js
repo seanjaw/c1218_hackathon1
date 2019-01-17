@@ -1,7 +1,8 @@
 class Player{
-    constructor( square, avatar, turnEndCallback ){
+    constructor( square, avatar, name, turnEndCallback ){
         this.square = square;
         this.avatar = avatar;
+        this.name = name;
         this.turnEndCallback = turnEndCallback;
 
         this.createPlayer = null;
@@ -35,6 +36,8 @@ class Player{
 
         if (PROPERTY_TYPES.indexOf(this.square.type) !== -1 && this.square.owner === null && this.money >= this.square.price) {
             this.showBuyModal();
+        } else if (PROPERTY_TYPES.indexOf(this.square.type) !== -1 && this.square.owner !== null) {
+            this.showRentModal();
         } else {
             this.showLocationModal();
         }       
@@ -47,6 +50,40 @@ class Player{
         this.money -= this.square.price;
         this.addProperty(this.square);
         console.log('Buy property: ', this.square.title, ' for $', this.square.price);
+    }
+
+    calculateRent( property, renter ) {
+        // Currently basic rent only
+        let rent = 0;
+        if (property.type === 'street') {
+            rent = property.rentCosts[0];
+        } else if (property.type === 'railroad') {
+            rent = property.rentCosts[0];
+        } else if (property.type === 'utility') {
+            // TODO: Store current die rolls for players
+            // TODO: Calculte this rent based on renter's dice roll & 
+            //       number of utilities in this player's properties
+
+        }
+        return rent;
+    }
+
+    /*
+     * Pay rent to owner of current square
+     */
+    payRent() {
+        let square = this.square;
+        let rent = square.owner.calculateRent(square, this);
+
+        // TODO: Mortgage property or lose if not enough money to pay rent
+        let amountToPay = rent;
+        if (this.money < amountToPay) {
+            amountToPay = this.money;
+        }
+        this.money -= amountToPay;
+        square.owner.money += amountToPay;
+
+        this.turnEndCallback();
     }
 
     /*
@@ -103,6 +140,26 @@ class Player{
             dialogClass: "no-close", 
             height: 300,
             buttons: [{text: "Roll Dice", click: rollDiceCallback}]
+        });
+    }
+
+    showRentModal() {
+        let square = this.square;
+        let rent = square.owner.calculateRent(square, this);
+
+        let message =  `${this.name} pay ${square.owner.name} rent of \$${rent} for ${square.title}`;
+        let dialog = $('<div>').text(message);
+
+        let okCallback = () => {
+            dialog.dialog('close');
+            this.payRent();
+        };
+
+        dialog.dialog({
+            modal: true, 
+            dialogClass: "no-close", 
+            height: 300,
+            buttons: [{text: "OK", click: okCallback}]
         });
     }
 

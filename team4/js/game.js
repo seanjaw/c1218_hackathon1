@@ -13,8 +13,8 @@ class Game{
      //    model.show(); 
 
         let go = this.squares[0];
-        let player1 = new Player(go, 'icon1', this.handlePlayerTurnEnd);
-        let player2 = new Player(go, 'icon2', this.handlePlayerTurnEnd);
+        let player1 = new Player(go, 'icon1', 'Player1', this.handlePlayerTurnEnd);
+        let player2 = new Player(go, 'icon2', 'Player2', this.handlePlayerTurnEnd);
 
         this.players = [player1, player2];
         

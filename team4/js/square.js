@@ -1,10 +1,11 @@
 const PROPERTY_TYPES = ['street','railroad','utility'];
 
 class Square {
-    constructor( type, title, price ) {
+    constructor( type, title, price, rentCosts ) {
         this.type = type;
         this.title = title;
         this.price = price;
+        this.rentCosts = rentCosts;
 
         this.owner = null;
         this.next = null;
@@ -19,8 +20,12 @@ class Square {
         for ( let lineIndex= lines.length - 1; lineIndex >= 0; lineIndex--){
             let line = lines[lineIndex];
             let props = line.split('\t');
+            // Split rents apart
+            props[3] = props[3].split(';');
+
             let square = new Square(...props);
             square.next = neighbor;
+            
             squares.unshift(square);
             neighbor= square; 
         }
