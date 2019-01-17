@@ -22,6 +22,19 @@ class Player{
             this.square = this.square.next;
         }
         console.log('After move: ', this.square.title); 
+
+        if (this.square.type === 'property') {
+            let prompt = `Buy property ${this.square.title} for ${this.square.price}?`;
+
+            if (confirm(prompt)) {
+                console.log('Chose to buy property');
+            } else {
+                console.log('Chose not to buy property');
+            }
+        } else {
+            console.log('This is not a property');
+        }
+
         this.updateDisplay();      
     }
     
@@ -34,6 +47,7 @@ class Player{
         $('body').append(dom);
         return dom;
     }
+
     updateDisplay() {
         this.square.squareDom.append(this.playerDom);
         this.playerDom.css({

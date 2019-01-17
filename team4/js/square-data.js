@@ -1,40 +1,40 @@
-const SQUARE_DATA = `go	Go
-property	Mediterranean
-community-chest	Community Chest 1
-property	Baltic
-income-tax	Income Tax
-railroad	Reading Railroad
-property	Oriental
-chance	Chance 1
-property	Vermont
-property	Connecticut
-jail	Jail
-property	St Charles
-utility	Electric Company
-property	States
-property	Virginia
-railroad	Pennsylvania Railroad
-property	St James
-community-chest	Community Chest 2
-property	Tennessee
-property	New York
-parking	Parking
-property	Kentucky
-chance	Chance 2
-property	Indiana
-property	Illinois
-property	B&O Railroad
-property	Atlantic
-property	Ventnor
-utility	Water Works
-property	Marvin Gardens
-go-to-jail	Go To Jail
-property	Pacific
-property	North Carolina
-community-chest	Community Chest 3
-property	Pennsylvania
-railroad	Short Line Railroad
-chance	Chance 3
-property	Park Place
-luxury-tax	Luxury Tax
-property	Boardwalk`;
+const SQUARE_DATA = `go	Go	
+property	Mediterranean	60
+community-chest	Community Chest 1	
+property	Baltic	60
+income-tax	Income Tax	
+railroad	Reading Railroad	200
+property	Oriental	100
+chance	Chance 1	
+property	Vermont	100
+property	Connecticut	120
+jail	Jail	
+property	St Charles	140
+utility	Electric Company	150
+property	States	140
+property	Virginia	160
+railroad	Pennsylvania Railroad	200
+property	St James	180
+community-chest	Community Chest 2	
+property	Tennessee	180
+property	New York	200
+parking	Parking	
+property	Kentucky	220
+chance	Chance 2	
+property	Indiana	220
+property	Illinois	240
+property	B&O Railroad	200
+property	Atlantic	260
+property	Ventnor	260
+utility	Water Works	150
+property	Marvin Gardens	280
+go-to-jail	Go To Jail	
+property	Pacific	300
+property	North Carolina	300
+community-chest	Community Chest 3	
+property	Pennsylvania	320
+railroad	Short Line Railroad	200
+chance	Chance 3	
+property	Park Place	350
+luxury-tax	Luxury Tax	
+property	Boardwalk	400`;
