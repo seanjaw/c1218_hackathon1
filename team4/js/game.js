@@ -13,11 +13,11 @@ class Game{
      //    model.show(); 
 
         let go = this.squares[0];
-        let player1 = new Player(go, 'icon1', 'Player1', this.handlePlayerTurnEnd);
-        let player2 = new Player(go, 'icon2', 'Player2', this.handlePlayerTurnEnd);
+        // let player1 = new Player(go, 'icon1', 'Player1', this.handlePlayerTurnEnd);
+        // let player2 = new Player(go, 'icon2', 'Player2', this.handlePlayerTurnEnd);
 
+        // TODO: attach players created in this section. 
         this.players = [player1, player2];
-        
         this.players[0].rolldice();
     }
 
@@ -29,7 +29,7 @@ class Game{
         this.players[this.currentPlayerIndex].rolldice();
     }
 }
-class Modal{
+class Modal {
 
 	constructor(modalShadow, modalBody, submitPlayers){
 
@@ -75,8 +75,9 @@ class Modal{
     }
 
     displayPlayers(){ 
-        let temp = new Player;
+        let temp = null;
         while (this.playerNumber > 0){
+            temp = new Player;
             temp.createNewPlayerList();
             this.playerNumber--;
         }
