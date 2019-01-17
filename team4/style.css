@@ -6,7 +6,7 @@ body {
 .frame {
     width: 100vw;
     height: 100vh;
-    background-color: red;
+    background-color: black;
     display: inline-flex;
 }
 
@@ -427,6 +427,7 @@ h1 {
 /* Modal Dialog - No Close Button */
 .no-close .ui-dialog-titlebar-close {
     display: none;
+}
 
 .player {
     background-image: url('images/sailor moon.png');

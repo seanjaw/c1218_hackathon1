@@ -16,8 +16,8 @@ class Game{
         let player1 = new Player(go, 'icon1', 'Player1', this.handlePlayerTurnEnd);
         let player2 = new Player(go, 'icon2', 'Player2', this.handlePlayerTurnEnd);
 
+        // TODO: attach players created in this section. 
         this.players = [player1, player2];
-        
         this.players[0].rolldice();
     }
 
@@ -29,8 +29,7 @@ class Game{
         this.players[this.currentPlayerIndex].rolldice();
     }
 }
-
-class Modal{
+class Modal {
 
 	constructor(modalShadow, modalBody, submitPlayers){
 
@@ -60,27 +59,26 @@ class Modal{
 
         console.log("Made it Init");
         this.submitPlayers.click(this.clickHandle);
+        $("input").val(2);
         this.show();
     }
-    
-    // class SomeClass extends React.Component {
-    //     handleInputChange = (val) => {
-    //       console.log('selectionMade: ', val);
-    //     }
-    //   }
 
     clickHandle() { // Fix clickhandle
 
         this.playerNumber = $("input").val();
+
+        console.log("TEST INPUT ", this.playerNumber);
+
         this.hideModal();
         $(this.submitPlayers).off("click");
         this.displayPlayers();
     }
 
     displayPlayers(){ 
-        let temp = new Player;
+        let temp = null;
         while (this.playerNumber > 0){
-            temp.createNewPlayer();
+            temp = new Player;
+            temp.createNewPlayerList();
             this.playerNumber--;
         }
         temp.setPlayerList();
