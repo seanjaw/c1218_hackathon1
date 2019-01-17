@@ -5,24 +5,36 @@ class Game{
         this.chanceCards = Card.initCards(CHANCE_DATA);
         this.currentPlayerIndex = 0;
         this.squares = Square.initSquareData();
-
         this.handlePlayerTurnEnd = this.handlePlayerTurnEnd.bind(this);
+        this.domElmPlayersList = [];
+        this.iconArray = ["player-icons/1.png",
+        "player-icons/2.png",
+        "player-icons/3.png",
+        "player-icons/4.png",
+        "player-icons/5.png",
+        "player-icons/6.png",
+        "player-icons/7.gif",
+        "player-icons/7.png",
+        "player-icons/8.png",
+        "player-icons/9.png",
+        "player-icons/10.png",
+        "player-icons/11.png",
+        "player-icons/12.png"];
     }
 
-    play() {
-        // let model = new Modal($("#modalShadow"), $(".modalBody"), $(".submitPlayers"));
-        // model.init();
-     //    model.show(); 
-
-        let go = this.squares[0];
-        let player1 = new Player(go, 'icon1', 'Player1', this.handlePlayerTurnEnd);
-        let player2 = new Player(go, 'icon2', 'Player2', this.handlePlayerTurnEnd);
-
-        // TODO: attach players created in this section. 
-        this.players = [player1, player2];
-
+    play(addPlayers) {
         
-        // this.players[0].rolldice();
+        this.domElmPlayersList = addPlayers;
+        let go = this.squares[0];
+
+        for (var playerIndex = 0; playerIndex < this.domElmPlayersList.length; playerIndex++){
+            let tempName = "player"+(playerIndex + 1);
+            let iconName = this.iconArray[playerIndex];
+            let newPlayer =  new Player(go, iconName, tempName, this.handlePlayerTurnEnd, this.domElmPlayersList[playerIndex]);
+            this.players.push(newPlayer);
+            newPlayer.updateDisplay();
+        }
+        this.players[0].rolldice();
     }
 
     handlePlayerTurnEnd() {
@@ -36,7 +48,6 @@ class Game{
 class Modal {
 
 	constructor(modalShadow, modalBody, submitPlayers){
-
 		this.modalShadow = modalShadow;
 		this.modalBody = modalBody;
         this.playerNumber = 0;
@@ -61,30 +72,39 @@ class Modal {
 	
 	init(){
 
-        console.log("Made it Init");
         this.submitPlayers.click(this.clickHandle);
         $("input").val(2);
         this.show();
     }
 
-    clickHandle() { // Fix clickhandle
+    clickHandle() { 
 
         this.playerNumber = $("input").val();
-
-        console.log("TEST INPUT ", this.playerNumber);
-
         this.hideModal();
         $(this.submitPlayers).off("click");
         this.displayPlayers();
+        this.createPlayersArray();
     }
 
     displayPlayers(){ 
         let temp = null;
+
         while (this.playerNumber > 0){
             temp = new Player;
             temp.createNewPlayerList();
             this.playerNumber--;
         }
         temp.setPlayerList();
+        
+    }
+    createPlayersArray(){
+        let tempArray = [];
+        for (var playerIndex = 0; playerIndex < $("h1").length; playerIndex++){
+
+            let findPlayer = playerIndex + 1;
+            let tempPlayer = $(".player" + findPlayer);
+            tempArray.push(tempPlayer); 
+            }
+        game.play(tempArray);
     }
 }
