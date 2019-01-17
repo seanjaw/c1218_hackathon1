@@ -7,9 +7,6 @@ function initApp(){
    model = new Modal($("#modalShadow"), $("#modalBody"), $("#submitPlayers"));
    model.init();
    game = new Game();
-   
-   let playerArrayToPass = model.createPlayersArray();
-   game.play(playerArrayToPass);
 }
 
 

@@ -12,12 +12,9 @@ class Game{
         let go = this.squares[0];
         for (var playerIndex = 0; playerIndex < this.domElmPlayersList.length; playerIndex++){
             let tempName = "player"+(playerIndex + 1);
-            console.log("tempName ", tempName);
             let iconName = "icon"+(playerIndex + 1);
-
-            tempName =  new Player(go, iconName, tempName, this.handlePlayerTurnEnd, this.domElmPlayersList[playerIndex]);
-            this.players.push(tempName);
-            console.log("Pushed name", tempName)
+            let newPlayer =  new Player(go, iconName, tempName, this.handlePlayerTurnEnd, this.domElmPlayersList[playerIndex]);
+            this.players.push(newPlayer);
         }
         // this.players[0].rolldice(); 
     }
