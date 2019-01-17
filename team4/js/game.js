@@ -47,11 +47,11 @@ class Modal{
     clickHandle(event){ // Fix clickhandle
 
 
-        this.playerNumber = $(".numberOfPeopleInput").text();
+        this.playerNumber = $("input").text();
 
         this.hide();
-		$(this.modalMessage).off("click");
-        $(this.modalMessage).click(this.hide);
+		$(this.submitPlayers).off("click");
+        $(this.submitPlayers).click(this.hide);
         return event;
     }
 
