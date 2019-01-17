@@ -1,15 +1,32 @@
 class Game{
     constructor(){
         this.players = [];
-        let squares = Square.initSquareData();
-        let go = squares[0];
-        let player1 = new Player(go);
-        this.players.push(player1);
-        for (let i = 0; i < 1; i++) {
-            let rolls = player1.rolldice();
-            let total = rolls[0] + rolls[1];
-            player1.move(total);
+        this.currentPlayerIndex = 0;
+        this.squares = Square.initSquareData();
+
+        this.handlePlayerTurnEnd = this.handlePlayerTurnEnd.bind(this);
+    }
+
+    play() {
+        // let model = new Modal($("#modalShadow"), $(".modalBody"), $(".submitPlayers"));
+        // model.init();
+     //    model.show(); 
+
+        let go = this.squares[0];
+        let player1 = new Player(go, 'icon1', this.handlePlayerTurnEnd);
+        let player2 = new Player(go, 'icon2', this.handlePlayerTurnEnd);
+
+        this.players = [player1, player2];
+        
+        this.players[0].rolldice();
+    }
+
+    handlePlayerTurnEnd() {
+        this.currentPlayerIndex++;
+        if (this.currentPlayerIndex >= this.players.length) {
+            this.currentPlayerIndex = 0;
         }
+        this.players[this.currentPlayerIndex].rolldice();
     }
 }
 
