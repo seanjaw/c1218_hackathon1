@@ -4,6 +4,7 @@ class Player{
         this.createPlayer = null;
         this.playerColor = ["red", "blue", "green", "yellow"];
         this.playerDom = this.createDOM();
+        this.money = 1500;
     }
 
     rolldice(){
@@ -23,6 +24,7 @@ class Player{
         console.log('After move: ', this.square.title); 
         this.updateDisplay();      
     }
+    
     createDOM() {
         let dom = $('<div>');
         dom.addClass('player');
