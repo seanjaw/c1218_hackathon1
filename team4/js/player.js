@@ -17,6 +17,11 @@ class Player{
         this.rolldice = this.rolldice.bind(this);
         this.addMoney = this.addMoney.bind(this);
         this.removeMoney = this.removeMoney.bind(this);
+
+        this.diceArray = null;
+        this.diceTotal = null;
+
+
     }
 
     rolldice(){
@@ -28,6 +33,8 @@ class Player{
 
         let total = rollArray[0] + rollArray[1];
         this.move( total );
+        this.diceArray = rollArray;
+        this.diceTotal = total;
     }
 
     move( amount ){
@@ -60,19 +67,60 @@ class Player{
         console.log('Buy property: ', this.square.title, ' for $', this.square.price);
     }
 
-    calculateRent( property, renter ) {
+    calculateRent( property, renter) {
         // Currently basic rent only
         let rent = 0;
+        var count = 0;
+        var totalColorCount = {
+            brown: 2,
+            blue: 3,
+            orange: 3,
+            yellow: 3,
+            redCount: 3,
+            greenCount: 3,
+            greyCount: 2,
+        };
         if (property.type === 'street') {
-            rent = property.rentCosts[0];
+            var propertyColor = property.color;
+            for(var index = 0; index < this.properties.length; index++){
+                if(this.properties[index].type === 'street' && propertyColor === this.properties[index].color){
+                    count++;
+                }
+            }
+            if(count === totalColorCount[propertyColor]){
+                rent = parseInt(property.rentCosts[0]) * 2;
+            } else {
+                rent = parseInt(property.rentCosts[0]);
+            }
+
         } else if (property.type === 'railroad') {
-            rent = property.rentCosts[0];
+            for(var index = 0; index < this.properties.length; index++){
+                if(this.properties[index].type === 'railroad'){
+                    count++;
+                }
+                if(count >= 2){
+                    rent =  property.rentCosts[0] * 2;
+                } else {
+                    rent = property.rentCosts[0];
+                }
+            }
         } else if (property.type === 'utility') {
             // TODO: Store current die rolls for players
             // TODO: Calculte this rent based on renter's dice roll & 
             //       number of utilities in this player's properties
-
+            for(var index=0; index<this.properties.length; index++){
+                if(this.properties[index].type === 'utility'){
+                    count++;
+                }
+            }
+            if(count >= 2){
+                rent = 10 * renter.diceTotal;
+            } else {
+                rent = 4 * renter.diceTotal;
+            }
         }
+
+
         return rent;
     }
 
@@ -90,8 +138,12 @@ class Player{
         }
         this.money -= amountToPay;
         square.owner.money += amountToPay;
-
+        for(var i = 0; i < this.square.owner.properties.length; i++){
+            console.log(this.square.owner.properties[i].type);
+        }
         this.turnEndCallback();
+
+
     }
 
     /**
@@ -230,7 +282,10 @@ class Player{
     showBuyModal() {
         let message =  `Buy '${this.square.title}' for \$${this.square.price}?`;
         let dialog = $('<div>').text(message);
-
+        if(this.square.type === 'street'){
+            let deed = Square.createDeed(this.square);
+            dialog.append(deed);
+        }
         let buyCallback = () => {
             dialog.dialog('close');
             this.buyProperty();
@@ -245,7 +300,7 @@ class Player{
         dialog.dialog({
             modal: true, 
             dialogClass: "no-close", 
-            height: 300,
+            height: 520,
             buttons: [
                 {text: "Buy", click: buyCallback},
                 {text: "Auction", click: auctionCallback}
@@ -271,7 +326,8 @@ class Player{
     }
 
     //Creating new player with accordion settings
-    createNewPlayer(){ 
+    createNewPlayerList(){ 
+
         if ($("h1").length > 3){
 
             console.error("Can only have 4 players!");
@@ -279,16 +335,20 @@ class Player{
         } else { 
 
         let numOfPlayers = $("h1").length + 1;
-        
+        let divToAppend = $("<div>").text("Player Information");
+
         this.createPlayer = $("<h1>")
             .css("background-color", this.playerColor[$("h1").length])
             .text("Player" + numOfPlayers);        
         $("#accordion").append(this.createPlayer);
+        $(this.createPlayer).after(divToAppend);
         }
     }
 
     setPlayerList(){
-        $("#accordion").accordion();
+        $("#accordion").accordion({
+            collapsible: "true"
+          });
     }
 }
 
