@@ -24,7 +24,10 @@ class Square {
             let props = line.split('\t');
             // Split rents apart
             props[3] = props[3].split(';');
-
+            for(var rentIndex = 0; rentIndex < props[3].length; rentIndex++){
+                props[3][rentIndex] = parseInt(props[3][rentIndex]);
+            }
+            props[2] = parseInt(props[2]);
             let square = new Square(...props);
             square.next = neighbor;
             
