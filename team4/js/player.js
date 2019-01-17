@@ -48,7 +48,8 @@ class Player{
         });
     }
     //Creating new player with accordion settings
-    createNewPlayer(){ 
+    createNewPlayerList(){ 
+
         if ($("h1").length > 3){
 
             console.error("Can only have 4 players!");
@@ -56,16 +57,20 @@ class Player{
         } else { 
 
         let numOfPlayers = $("h1").length + 1;
-        
+        let divToAppend = $("<div>").text("Player Information");
+
         this.createPlayer = $("<h1>")
             .css("background-color", this.playerColor[$("h1").length])
             .text("Player" + numOfPlayers);        
         $("#accordion").append(this.createPlayer);
+        $(this.createPlayer).after(divToAppend);
         }
     }
 
     setPlayerList(){
-        $("#accordion").accordion();
+        $("#accordion").accordion({
+            collapsible: "true"
+          });
     }
 }
 

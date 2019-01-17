@@ -12,7 +12,6 @@ class Game{
         }
     }
 }
-
 class Modal{
 
 	constructor(modalShadow, modalBody, submitPlayers){
@@ -43,18 +42,16 @@ class Modal{
 
         console.log("Made it Init");
         this.submitPlayers.click(this.clickHandle);
+        $("input").val(2);
         this.show();
     }
-    
-    // class SomeClass extends React.Component {
-    //     handleInputChange = (val) => {
-    //       console.log('selectionMade: ', val);
-    //     }
-    //   }
 
     clickHandle() { // Fix clickhandle
 
         this.playerNumber = $("input").val();
+
+        console.log("TEST INPUT ", this.playerNumber);
+
         this.hideModal();
         $(this.submitPlayers).off("click");
         this.displayPlayers();
@@ -63,7 +60,7 @@ class Modal{
     displayPlayers(){ 
         let temp = new Player;
         while (this.playerNumber > 0){
-            temp.createNewPlayer();
+            temp.createNewPlayerList();
             this.playerNumber--;
         }
         temp.setPlayerList();
