@@ -1,30 +1,37 @@
+const PROPERTY_TYPES = ['street','railroad','utility'];
+
 class Square {
-    constructor(type,title) {
+    constructor( type, title, price, rentCosts ) {
         this.type = type;
         this.title = title;
+        this.price = price;
+        this.rentCosts = rentCosts;
+
+        this.owner = null;
         this.next = null;
         this.squareDom= this.createSquareDOM();
-
     }
 
     static initSquareData (){
-        //set up link list
+        //set up linked list
         let squares = [];
         let neighbor = null;
         let lines = SQUARE_DATA.split('\n');
         for ( let lineIndex= lines.length - 1; lineIndex >= 0; lineIndex--){
             let line = lines[lineIndex];
             let props = line.split('\t');
-            let square = new Square(props[0],props[1]);
+            // Split rents apart
+            props[3] = props[3].split(';');
+
+            let square = new Square(...props);
             square.next = neighbor;
+            
             squares.unshift(square);
             neighbor= square; 
         }
         squares[squares.length-1].next = squares[0];
         
         //add to DOM
-
-        console.log ("got in here");
         let sides = ['.bottomPropContainer', '.sidePropContainer', '.propContainer', '.rightPropContainer'];
 
         let squareIndex = 1;
@@ -37,6 +44,7 @@ class Square {
             }
             squareIndex++;
         }
+
         //add corners
         $('.goStart').replaceWith(squares[0].squareDom);
         $('.jail.square').parent().parent().replaceWith(squares[10].squareDom);
