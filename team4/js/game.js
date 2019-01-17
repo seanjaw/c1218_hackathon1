@@ -5,6 +5,19 @@ class Game{
         this.squares = Square.initSquareData();
         this.handlePlayerTurnEnd = this.handlePlayerTurnEnd.bind(this);
         this.domElmPlayersList = [];
+        this.iconArray = ["player-icons/1.png",
+        "player-icons/2.png",
+        "player-icons/3.png",
+        "player-icons/4.png",
+        "player-icons/5.png",
+        "player-icons/6.png",
+        "player-icons/7.gif",
+        "player-icons/7.png",
+        "player-icons/8.png",
+        "player-icons/9.png",
+        "player-icons/10.png",
+        "player-icons/11.png",
+        "player-icons/12.png"];
     }
 
     play(addPlayers) {
@@ -12,9 +25,10 @@ class Game{
         let go = this.squares[0];
         for (var playerIndex = 0; playerIndex < this.domElmPlayersList.length; playerIndex++){
             let tempName = "player"+(playerIndex + 1);
-            let iconName = "icon"+(playerIndex + 1);
+            let iconName = this.iconArray[playerIndex];
             let newPlayer =  new Player(go, iconName, tempName, this.handlePlayerTurnEnd, this.domElmPlayersList[playerIndex]);
             this.players.push(newPlayer);
+            newPlayer.updateDisplay();
         }
         // this.players[0].rolldice(); 
     }
@@ -30,7 +44,6 @@ class Game{
 class Modal {
 
 	constructor(modalShadow, modalBody, submitPlayers){
-
 		this.modalShadow = modalShadow;
 		this.modalBody = modalBody;
         this.playerNumber = 0;
