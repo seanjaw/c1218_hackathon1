@@ -202,7 +202,10 @@ class Player{
     showBuyModal() {
         let message =  `Buy '${this.square.title}' for \$${this.square.price}?`;
         let dialog = $('<div>').text(message);
-
+        if(this.square.type === 'street'){
+            let deed = Square.createDeed(this.square);
+            dialog.append(deed);
+        }
         let buyCallback = () => {
             dialog.dialog('close');
             this.buyProperty();
@@ -217,7 +220,7 @@ class Player{
         dialog.dialog({
             modal: true, 
             dialogClass: "no-close", 
-            height: 300,
+            height: 520,
             buttons: [
                 {text: "Buy", click: buyCallback},
                 {text: "Auction", click: auctionCallback}
