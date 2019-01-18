@@ -20,11 +20,10 @@ class Player{
         this.addMoney = this.addMoney.bind(this);
         this.removeMoney = this.removeMoney.bind(this);
 
-        this.diceArray = null;
+        this.diceArray = [5,2];
         this.diceTotal = null;
         this.divToAppend = null;
-
-
+        this.jailCount = 0;
     }
 
     rolldice(){
@@ -40,10 +39,69 @@ class Player{
         this.diceTotal = total;
     }
 
+    go() {
+        this.money += 200;
+    }
+    tax() {
+        this.money -= 200;
+    }
+
+    freeParking() {
+        return;
+    }
+    goToJail() {
+        this.square = game.squares[10];
+    }
+
     move( amount ){
+        var goTrigger = false;
+        if(this.square.type === 'jail' && this.jailCount === 3){
+            this.jailCount = 0;
+        } else if (this.square.type === 'jail' && this.diceArray[0] === this.diceArray[1]) {
+            amount = this.diceArray[0] * 2;
+            this.jailCount = 0;
+        } else if (this.square.type === 'jail' && this.diceArray[0] !== this.diceArray[1]){
+            this.updateDisplay();
+            this.jailCount++;
+
+            if (PROPERTY_TYPES.indexOf(this.square.type) !== -1 && this.square.owner === null && this.money >= this.square.price) {
+                this.showBuyModal();
+            } else if (PROPERTY_TYPES.indexOf(this.square.type) !== -1 && this.square.owner !== null) {
+                this.showRentModal();
+            } else if (this.square.type === 'community-chest') {
+                let card = game.communityChestCards.pop();
+                this.showCardModal( 'Community Chest', card);
+            } else if (this.square.type === 'chance') {
+                let card = game.chanceCards.pop();
+                this.showCardModal( 'Chance', card);
+            } else {
+                this.showLocationModal();
+            }
+            return;
+        }
+
         for (let i = 0; i < amount; i++) {
             this.square = this.square.next;
+            if(this.square.type === 'go'){
+                goTrigger = true;
+            }
         }
+        if(goTrigger === true){
+            this.go();
+        } else if (this.square.type === 'income-tax'|| this.square.type === 'luxury-tax') {
+            this.tax();
+        } else if (this.square.type === 'parking'){
+            this.freeParking();
+        } else if (this.square.type === 'go-to-jail'){
+            this.updateDisplay();
+            this.showLocationModal();
+            this.goToJail();
+        } else if (this.square.type === 'jail') {
+            this.jailCount++;
+        }
+
+
+
         this.updateDisplay();
 
         if (PROPERTY_TYPES.indexOf(this.square.type) !== -1 && this.square.owner === null && this.money >= this.square.price) {
@@ -149,6 +207,22 @@ class Player{
 
     }
 
+    /*
+     * Receive money from all other players based on a Community Chest or Chance card
+     */
+    receiveMoneyFromPlayers( amount ) {
+        let actualAmount = 0;
+        for (let playerIndex = 0; playerIndex < game.players.length; playerIndex++) {
+            let player = game.players[playerIndex];
+            if (player !== this) {
+                actualAmount += player.removeMoney( amount );
+            }
+        }
+        this.addMoney(actualAmount);
+
+        this.turnEndCallback();
+    }
+
     /**
      * Add money to this user
      * TODO: Potentially trigger animation here
@@ -156,6 +230,7 @@ class Player{
      */
     addMoney( amount ) {
         this.money += amount;
+        console.log('In addMoney');
     }
 
     /**
@@ -171,6 +246,7 @@ class Player{
         }
         this.money -= amountToRemove;
 
+        console.log('In removeMoney');
         return amountToRemove;
     }
 
@@ -236,22 +312,26 @@ class Player{
     showCardModal(deckName, card) {
         let message =  `${deckName}: ${card.text}`;
         let dialog = $('<div>').text(message);
-
+        let cardDisplay = Card.createCardDOM(deckName, card);
+        dialog.append(cardDisplay);
         let okCallback;
         if (card.type === 'pay-bank') {
             okCallback = () => {
                 dialog.dialog('close');
                 this.removeMoney(card.amount);
+                this.turnEndCallback();
             };
         } else if (card.type === 'receive-bank') {
             okCallback = () => {
                 dialog.dialog('close');
                 this.addMoney(card.amount);
+                this.turnEndCallback();
             };            
-        } else if (card.type === 'pay-players') {
+        } else if (card.type === 'receive-players') {
             okCallback = () => {
                 dialog.dialog('close');
-                console.log('Need to pay players');
+                this.receiveMoneyFromPlayers(card.amount);
+                this.turnEndCallback();
             }; 
         }
 
