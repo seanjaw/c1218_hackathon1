@@ -155,10 +155,17 @@ class Player{
     }
 
     /*
-     * Pay all other players an amount based on a Community Chest or Chance card
+     * Receive money from all other players based on a Community Chest or Chance card
      */
-    payOtherPlayers( amount ) {
-        console.log("TODO: Implement Player.payOtherPlayers");
+    receiveMoneyFromPlayers( amount ) {
+        let actualAmount = 0;
+        for (let playerIndex = 0; playerIndex < game.players.length; playerIndex++) {
+            let player = game.players[playerIndex];
+            if (player !== this) {
+                actualAmount += player.removeMoney( amount );
+            }
+        }
+        this.addMoney(actualAmount);
 
         this.turnEndCallback();
     }
@@ -266,10 +273,10 @@ class Player{
                 this.addMoney(card.amount);
                 this.turnEndCallback();
             };            
-        } else if (card.type === 'pay-players') {
+        } else if (card.type === 'receive-players') {
             okCallback = () => {
                 dialog.dialog('close');
-                this.payOtherPlayers(card.amount);
+                this.receiveMoneyFromPlayers(card.amount);
                 this.turnEndCallback();
             }; 
         }
