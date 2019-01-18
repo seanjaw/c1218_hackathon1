@@ -1,10 +1,539 @@
-
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Monopoly Sailor Moon</title>
-    </head>
-    <body>
-        
-    </body>
+<head>
+    <title>Sailor Moon Monopoly</title>
+    <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Coiny" rel="stylesheet">
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/card-data.js"></script>
+    <script src="js/card.js"></script>
+    <script src="js/square.js"></script>
+    <script src="js/square-data.js"></script>
+    <script src="js/player.js" type="text/javascript" ></script>
+    <script src="js/game.js" type="text/javascript" ></script>
+    <script src="js/main.js" type="text/javascript" ></script>
+</head>
+<body>
+    <div class="frame">
+        <div class="boardFrame">    
+            <div class="topProp">
+                <div class="freeParking square-20">
+                    <div class="parking">
+                        <p>Parking</p>
+                    </div>
+                    <div class="image square">
+                        <img src="images/ab37dd7a85c3dd06347ef3d3ca1fc7aa_car-clip-art-car-images_500-453.png" class="car">
+                    </div>
+                    <div class="free">
+                        <p>Free</p>
+                    </div>
+                </div>
+                <div class="propContainer">
+                    <div class="prop1 square-21">
+                        <div class="propInfo square topPropInfo">
+                            <div class="text topText">
+                                <p>Tuxedo</p>
+                            </div>
+                            <div class="image">
+                                <img src="images/sailor%20moon%20pic25.png" alt="tuxedo" class="topImg">
+                            </div>
+                            <div class="text topMoney">
+                                <p>$220</p>
+                            </div>
+                        </div>
+                        <div class="propcolor yellow"></div>
+                    </div>
+                    <div class="prop1 square-22">
+                        <div class="propInfo square utility">
+                            <div class="text topTaxContainer">
+                                <p>Utility</p>
+                            </div>
+                            <div class="image"></div>
+                        </div>
+                    </div>
+                    <div class="prop1 square-23">
+                        <div class="propInfo square topPropInfo">
+                            <div class="text topText">
+                                <p>Usagi</p>
+                            </div>
+                            <div class="image">
+                                <img src="images/sailor%20moon%20pic4.png" alt="usagi" class="topImg">
+                            </div>
+                            <div class="text topMoney">
+                                <p>$220</p>
+                            </div>
+                        </div>
+                        <div class="propcolor yellow"></div>
+                    </div>
+                    <div class="prop1 square-24">
+                        <div class="propInfo square topPropInfo">
+                            <div class="text topText venusJupiterText">
+                                <p>Jupiter and Venus</p>
+                            </div>
+                            <div class="image">
+                                <img src="images/sailor%20moon%20pic20.png" alt="jupiter and venus" class="topImg">
+                            </div>
+                            <div class="text topMoney">
+                                <p>$240</p>
+                            </div>
+                        </div>
+                        <div class="propcolor yellow"></div>
+                    </div>
+                    <div class="prop1 square-25">
+                        <div class="propInfo square railroad">
+                            <div class="text topTaxContainer">
+                                <p>Railroad</p>
+                            </div>
+                            <div class="image"></div>
+                        </div>
+                    </div>
+                    <div class="prop1 square-26">
+                        <div class="propInfo square topPropInfo">
+                            <div class="text topText sadJupiterText">
+                                <p>Sad Jupiter</p>
+                            </div>
+                            <div class="image">
+                                <img src="images/sailor%20moon%20pic21.png" alt="sad jupiter" class="topImg">
+                            </div>
+                            <div class="text topMoney">
+                                <p>$260</p>
+                            </div>
+                        </div>
+                        <div class="propcolor red"></div>
+                    </div>
+                    <div class="prop1 square-27">
+                        <div class="propInfo square topPropInfo">
+                            <div class="text topText">
+                                <p>Sad Jupiter</p>
+                            </div>
+                            <div class="image">
+                                <img src="images/sailor%20moon%20pic19.png" alt="happy venus" class="topImg">
+                            </div>
+                            <div class="text topMoney">
+                                <p>$260</p>
+                            </div>
+                        </div>
+                        <div class="propcolor red"></div>
+                    </div>
+                    <div class="prop1 square-28">
+                        <div class="propInfo square">
+                            <div class="text topFriendshipContainer">
+                                <p>FRIENDSHIP</p>
+                            </div>
+                            <div class="image"></div>
+                        </div>
+                    </div>
+                    <div class="prop1 square-29">
+                        <div class="propInfo square topPropInfo">
+                            <div class="text topText artemisText">
+                                <p>Artemis</p>
+                            </div>
+                            <div class="image">
+                                <img src="images/sailor%20moon%20pic22.gif" alt="artemis" class="topImg">
+                            </div>
+                            <div class="text topMoney">
+                                <p>$280</p>
+                            </div>
+                        </div>
+                        <div class="propcolor red"></div>
+                    </div>
+                </div>
+                <div class="goToJail square square-30">
+                    <div class="jailTop">
+                        <p>Jail</p>
+                    </div>
+                    <div class="image square">
+                        <img src="images/park-ranger-clipart.gif" class="jailImg">
+                    </div>
+                    <div class="goTo">
+                        <p>Go To</p>
+                    </div>
+                </div>
+            </div>
+            <div class="middleContainer">
+                <div class="sidePropContainer">
+                    <div class="prop1 square-11">
+                        <div class="propInfo square">
+                            <div class="text leftText">
+                                <p>Sailor Mercury</p>
+                            </div>
+                            <div class="image">
+                                <img src="images/bbacf47ead84bd053b6ae3908ea2ba3c.png" alt="sailor mercury" class="leftImg">
+                            </div>
+                            <div class="text leftMoney">
+                                <p>$140</p>
+                            </div>
+                        </div>
+                        <div class="propcolor pink"></div>
+                    </div>
+                    <div class="prop1 square-12">
+                        <div class="propInfo square utility">
+                            <div class="text sideTaxContainer">
+                                <p>Waterworks</p>
+                            </div>
+                            <div class="image"></div>
+                        </div>
+                    </div>
+                    <div class="prop1 square-13">
+                        <div class="propInfo square">
+                            <div class="text leftText">
+                                <p>Chibiusa</p>
+                            </div>
+                            <div class="image chibiusa">
+                                <img src="images/Little-Princess-Serenity-sailor-mini-moon-rini-9658735-200-239.gif" alt="chibiusa" class="leftImg">
+                            </div>
+                            <div class="text leftMoney">
+                                <p>$140</p>
+                            </div>
+                        </div>
+                        <div class="propcolor pink"></div>
+                    </div>
+                    <div class="prop1 square-14">
+                        <div class="propInfo square">
+                            <div class="text leftText">
+                                <p>Sailor Venus</p>
+                            </div>
+                            <div class="image venus">
+                                <img src="images/sailor%20moon%20pic18.png" alt="sailor venus" class="leftImg">
+                            </div>
+                            <div class="text leftMoney">
+                                <p>$160</p>
+                            </div>
+                        </div>
+                        <div class="propcolor pink"></div>
+                    </div>
+                    <div class="prop1 square-15">
+                        <div class="propInfo square utility">
+                            <div class="text sideTaxContainer">
+                                <p>Waterworks</p>
+                            </div>
+                            <div class="image"></div>
+                        </div>
+                    </div>
+                    <div class="prop1 square-16">
+                        <div class="propInfo square">
+                            <div class="text leftText">
+                                <p>Sailor Mars</p>
+                            </div>
+                            <div class="image mars">
+                                <img src="images/tumblr_mkph7z6fmA1r49apoo1_500.png" alt="sailor mars" class="leftImg">
+                            </div>
+                            <div class="text leftMoney">
+                                <p>$180</p>
+                            </div>
+                        </div>
+                        <div class="propcolor orange"></div>
+                    </div>
+                    <div class="prop1 square-17">
+                        <div class="propInfo square">
+                            <div class="text sideLoveContainer">
+                                <p>LOVE</p>
+                            </div>
+                            <div class="image"></div>
+                        </div>
+                    </div>
+                    <div class="prop1 square-18">
+                        <div class="propInfo square">
+                            <div class="text leftText">
+                                <p>Sailor Jupiter</p>
+                            </div>
+                            <div class="image jupiter">
+                                <img src="images/sailor%20moon%20pic15.png" alt="sailor jupiter" class="leftImg">
+                            </div>
+                            <div class="text leftMoney">
+                                <p>$180</p>
+                            </div>
+                        </div>
+                        <div class="propcolor orange"></div>
+                    </div>
+                    <div class="prop1 square-19">
+                        <div class="propInfo square">
+                            <div class="text leftText">
+                                <p>Sailor Moon</p>
+                            </div>
+                            <div class="image moon">
+                                <img src="images/sailor%20moon%20pic6.png" alt="sailor moon" class="leftImg">
+                            </div>
+                            <div class="text leftMoney">
+                                <p>$200</p>
+                            </div>
+                        </div>
+                        <div class="propcolor orange"></div>
+                    </div>  
+                </div>
+                <div class="middleFrame">
+                    <div class="topHeader">
+                        <img src="images/Sailor_Moon_Updated_Logo.svg.png">
+                    </div>
+                    <div class="middleHeader">
+                        <img src="images/593007ad3919fe0ee3614da7.png">
+                    </div>
+                    <div class="loveDeck">
+                        <div class="loveCard">
+                            <p>LOVE</p>
+                        </div>
+                    </div>
+                    <div class="friendDeck">
+                        <div class="friendCard">
+                            <P>FRIENDSHIP</P>
+                        </div>
+                    </div>
+                </div>
+                <div class="rightPropContainer">
+                    <div class="prop1  square-31">
+                        <div class="propcolor green"></div>
+                        <div class="propInfo square">
+
+                            <div class="text rightText">
+                                <p>Eating Usagi</p>
+                            </div>
+                            <div class="image">
+                                <img src="images/sailor%20moon%20pic.png" alt="sailor moon" class="rightImg">
+                            </div>
+                            <div class="text rightMoney">
+                                <p>$300</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="prop1 square-32">
+                        <div class="propcolor green"></div>
+                        <div class="propInfo square">
+                            <div class="text rightText">
+                                <p>Kamen</p>
+                            </div>
+                            <div class="image kamen">
+                                <img src="images/sailor%20moon%20pic24.png" alt="Kamen" class="rightImg">
+                            </div>
+                            <div class="text rightMoney">
+                                <p>$300</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="prop1 square-33">
+                        <div class="propInfo square">
+                            <div class="text rightLoveContainer">
+                                <p>LOVE</p>
+                            </div>
+                            <div class="image"></div>
+                        </div>
+                    </div>
+                    <div class="prop1 square-34">
+                        <div class="propcolor green"></div>
+                        <div class="propInfo  square">
+                            <div class="text rightText">
+                                <p>Queen Serenity</p>
+                            </div>
+                            <div class="image queen">
+                                <img src="images/Neo_Queen_Serenity.png" alt="queen serenity" class="rightImg">
+                            </div>
+                            <div class="text rightMoney">
+                                <p>$320</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="prop1 square-35">
+                        <div class="propInfo square utility">
+                            <div class="text rightTaxContainer">
+                                <p>Utility</p>
+                            </div>
+                            <div class="image"></div>
+                        </div>
+                    </div>
+                    <div class="prop1 square-36">
+                        <div class="propInfo square">
+                            <div class="text rightFriendshipContainer">
+                                <p>FRIENDSHIP</p>
+                            </div>
+                            <div class="image"></div>
+                        </div>
+                    </div>
+                    <div class="prop1 square-37">
+                        <div class="propcolor grey"></div>
+                        <div class="propInfo square">
+                            <div class="text rightText mercuryMarsText">
+                                <p>Mercury and Mars</p>
+                            </div>
+                            <div class="image mercuryMars">
+                                <img src="images/sailor%20moon%20pic10.png" alt="mercury and mars" class="rightImg">
+                            </div>
+                            <div class="text rightMoney">
+                                <p>$350</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="prop1 square-38">
+                        <div class="propInfo square rightAttackContainer">
+                            <div class="text rightAttackText">
+                                <p>Attack</p>
+                                <p>-$200</p>
+                            </div>
+                            <div class="image">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="prop1 square-39">
+                        <div class="propcolor grey"></div>
+                        <div class="propInfo square">
+                            <div class="text rightText">
+                                <p>Princess</p>
+                            </div>
+                            <div class="image princess">
+                                <img src="images/sailor%20moon%20kid.png" alt="princess" class="rightImg">
+                            </div>
+                            <div class="text rightMoney">
+                                <p>$400</p>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+            </div>
+            <div class="bottomProp">
+                <div class="goStart square square-0">
+                    <div class="startArea">
+                        <p class="startCollect">COLLECT $200 SALARY AS YOU PASS</p>
+                        <P class="startGo">GO</P>
+                    </div>
+                    <div class="arrowImage">
+                        <img src="images/585e4695cb11b227491c3373.png">
+                    </div>
+                </div>
+                <div class="bottomPropContainer">
+                    <div class="prop1 square-1">
+                        <div class="propcolor brown"></div>
+                        <div class="propInfo square">
+                            <div class="text bottomText">
+                                <p>Luna</p>
+                            </div>
+                            <div class="image">
+                                <img src="images/sailor-moon-luna-png-2.png" alt="luna" class="bottomImg">
+                            </div>
+                            <div class="text bottomMoney">
+                                <p>$60</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="prop1 square-2">
+                        <div class="propInfo square loveTextContainer">
+                            <div class="text loveText">
+                                <p>LOVE</p>
+                            </div>
+                            <div class="image"></div>
+                        </div>
+                    </div>
+                    <div class="prop1 square-3">
+                            <div class="propcolor brown"></div>
+                            <div class="propInfo square">
+                                <div class="text bottomText">
+                                    <p>Sailor Pluto</p>
+                                </div>
+                                <div class="image">
+                                    <img src="images/Sailor_Pluto_(Sailor_Moon).png" alt="sailor pluto" class="bottomImg">
+                                </div>
+                                <div class="text bottomMoney">
+                                    <p>$60</p>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="prop1 square-4">
+                        <div class="propInfo square attackContainer">
+                            <div class="text attackText">
+                                <p>Attack</p>
+                                <p>-$200</p>
+                            </div>
+                            <div class="image">
+                                <img src="images/Wicked_Lady_Manga.jpg" class="attack">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="prop1 square-5">
+                        <div class="propInfo square taxTextContainer railroad">
+                            <div class="text taxText">
+                                <p>Railroad</p>
+                            </div>
+                            <div class="image"></div>
+                        </div>
+                    </div>
+                    <div class="prop1 square-6">
+                        <div class="propcolor blue"></div>
+                        <div class="propInfo square">
+                            <div class="text bottomText">
+                                <p>Sailor Neptune</p>
+                            </div>
+                            <div class="image neptune">
+                                <img src="images/ce574b7f31fed0731382533d2df40aed.png" alt="sailor neptune" class="bottomImg">
+                            </div>
+                            <div class="text bottomMoney">
+                                <p>$100</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="prop1 square-7">
+                        <div class="propInfo square friendshipTextContainer">
+                            <div class="text friendshipText">
+                                <p>FRIENDSHIP</p>
+                            </div>
+                            <div class="image"></div>
+                        </div>
+                    </div>
+                    <div class="prop1 square-8">
+                        <div class="propcolor blue"></div>
+                        <div class="propInfo square">
+                            <div class="text bottomText">
+                                <p>Sailor Uranus</p>
+                            </div>
+                            <div class="image">
+                                <img src="images/dea4208dd0bf75304ccfcd5cfeda4784.png" alt="sailor uranus" class="bottomImg">
+                            </div>
+                            <div class="text bottomMoney">
+                                <p>$100</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="prop1 square-9">
+                        <div class="propcolor blue"></div>
+                        <div class="propInfo square">
+                            <div class="text bottomText">
+                                <p>Sailor Saturn</p>
+                            </div>
+                            <div class="image">
+                                <img src="images/Sailor.Saturn..png" alt="sailor saturn" class="bottomImg">
+                            </div>
+                            <div class="text bottomMoney">
+                                <p>$120</p>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+                <div class="jail square-10">
+                    <div class="jailImageContainer">
+                        <div class="jail square jailBarContainer">
+                            <img src="images/hands-holding-prison-bars-vector-1840918.jpg" class="jailBar">
+                        </div>
+                    </div>
+                    <div class="justLeft">
+                        <p>Just</p>
+                    </div>
+                    <div class="vistingBottom">
+                        <p>Visiting</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="players">      
+            <div class="playerInformation">
+                <div id="accordion" class="playerContainer"></div>
+            </div>
+        </div>
+        <div id="modalShadow"></div>
+        <div id="modalBody">
+            <div id="modalMessage">Choose The Number of Players</div>
+            <button id="submitPlayers">Start</button>
+            <input type="number" min="2" max="4">
+        </div>  
+    </div>
+</body>
 </html>
