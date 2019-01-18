@@ -100,6 +100,8 @@ class Player{
             this.jailCount++;
         }
 
+
+
         this.updateDisplay();
 
         if (PROPERTY_TYPES.indexOf(this.square.type) !== -1 && this.square.owner === null && this.money >= this.square.price) {
@@ -208,6 +210,15 @@ class Player{
 
     }
 
+    /*
+     * Pay all other players an amount based on a Community Chest or Chance card
+     */
+    payOtherPlayers( amount ) {
+        console.log("TODO: Implement Player.payOtherPlayers");
+
+        this.turnEndCallback();
+    }
+
     /**
      * Add money to this user
      * TODO: Potentially trigger animation here
@@ -215,6 +226,7 @@ class Player{
      */
     addMoney( amount ) {
         this.money += amount;
+        console.log('In addMoney');
     }
 
     /**
@@ -230,6 +242,7 @@ class Player{
         }
         this.money -= amountToRemove;
 
+        console.log('In removeMoney');
         return amountToRemove;
     }
 
@@ -301,16 +314,19 @@ class Player{
             okCallback = () => {
                 dialog.dialog('close');
                 this.removeMoney(card.amount);
+                this.turnEndCallback();
             };
         } else if (card.type === 'receive-bank') {
             okCallback = () => {
                 dialog.dialog('close');
                 this.addMoney(card.amount);
+                this.turnEndCallback();
             };            
         } else if (card.type === 'pay-players') {
             okCallback = () => {
                 dialog.dialog('close');
-                console.log('Need to pay players');
+                this.payOtherPlayers(card.amount);
+                this.turnEndCallback();
             }; 
         }
 
