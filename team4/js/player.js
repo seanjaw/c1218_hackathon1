@@ -20,9 +20,9 @@ class Player{
         this.addMoney = this.addMoney.bind(this);
         this.removeMoney = this.removeMoney.bind(this);
 
-        this.diceArray = null;
+        this.diceArray = [5,2];
         this.diceTotal = null;
-
+        this.jailCount = 0;
 
     }
 
@@ -39,12 +39,68 @@ class Player{
         this.diceTotal = total;
     }
 
+    go() {
+        this.money += 200;
+    }
+    tax() {
+        this.money -= 200;
+    }
+
+    freeParking() {
+        return;
+    }
+    goToJail() {
+        this.square = game.squares[10];
+    }
+
     move( amount ){
-        for (let i = 0; i < amount; i++) {
-            this.square = this.square.next;
+        var goTrigger = false;
+        if(this.square.type === 'jail' && this.jailCount === 3){
+            this.jailCount = 0;
+        } else if (this.square.type === 'jail' && this.diceArray[0] === this.diceArray[1]) {
+            amount = this.diceArray[0] * 2;
+            this.jailCount = 0;
+        } else if (this.square.type === 'jail' && this.diceArray[0] !== this.diceArray[1]){
+            this.updateDisplay();
+            this.jailCount++;
+
+            if (PROPERTY_TYPES.indexOf(this.square.type) !== -1 && this.square.owner === null && this.money >= this.square.price) {
+                this.showBuyModal();
+            } else if (PROPERTY_TYPES.indexOf(this.square.type) !== -1 && this.square.owner !== null) {
+                this.showRentModal();
+            } else if (this.square.type === 'community-chest') {
+                let card = game.communityChestCards.pop();
+                this.showCardModal( 'Community Chest', card);
+            } else if (this.square.type === 'chance') {
+                let card = game.chanceCards.pop();
+                this.showCardModal( 'Chance', card);
+            } else {
+                this.showLocationModal();
+            }
+            return;
         }
 
-        console.log('Player ', this.name, ' is at ', this.square.title);
+        for (let i = 0; i < amount; i++) {
+            this.square = this.square.next;
+            if(this.square.type === 'go'){
+                goTrigger = true;
+            }
+        }
+        if(goTrigger === true){
+            this.go();
+        } else if (this.square.type === 'income-tax'|| this.square.type === 'luxury-tax') {
+            this.tax();
+        } else if (this.square.type === 'parking'){
+            this.freeParking();
+        } else if (this.square.type === 'go-to-jail'){
+            this.updateDisplay();
+            this.showLocationModal();
+            this.goToJail();
+        } else if (this.square.type === 'jail') {
+            this.jailCount++;
+        }
+
+
 
         this.updateDisplay();
 
