@@ -32,4 +32,28 @@ class Card{
 
         return cards;
     }
+    static createCardDOM(deckName, card){
+        let html=`<div class="chest">
+        <div class="chestBorder">
+            <div class="topContainer textAlign">
+                    <h2>Community Chest</h2>
+            </div>
+
+            <div class="bottomContainer">
+                <div class="left">
+                        <p>Hospital Fees. Pay 100.</p>
+                </div>
+                
+                <div class="right">
+                        <p>image</p>
+                </div>
+                
+            </div>
+          
+
+        </div>
+    </div>`;
+    
+    return $(html);
+    }
 }

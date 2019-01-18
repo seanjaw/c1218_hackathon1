@@ -315,7 +315,8 @@ class Player{
     showCardModal(deckName, card) {
         let message =  `${deckName}: ${card.text}`;
         let dialog = $('<div>').text(message);
-
+        let cardDisplay = Card.createCardDOM(deckName, card);
+        dialog.append(cardDisplay);
         let okCallback;
         if (card.type === 'pay-bank') {
             okCallback = () => {
