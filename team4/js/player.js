@@ -22,6 +22,7 @@ class Player{
 
         this.diceArray = null;
         this.diceTotal = null;
+        this.divToAppend = null;
 
 
     }
@@ -60,9 +61,6 @@ class Player{
         }       
     }
 
-    getCurrentMoney() {
-        return this.money;
-    }
     /*
      * Buy property for current square
      */
@@ -341,14 +339,15 @@ class Player{
         } else { 
 
         let numOfPlayers = $("h1").length + 1;
-        let divToAppend = $("<div>").text("Player Information");
-
+        this.divToAppend = $("<div>")
+            .addClass("player" + numOfPlayers)
+            .text("Input Information");
+            
         this.createPlayer = $("<h1>")
             .css("background-color", this.playerColor[$("h1").length])
-            .addClass("player" + numOfPlayers)
             .text("Player" + numOfPlayers);        
         $("#accordion").append(this.createPlayer);
-        $(this.createPlayer).after(divToAppend);
+        $(this.createPlayer).after(this.divToAppend);
         }
     }
 
