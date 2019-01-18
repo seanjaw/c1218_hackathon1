@@ -12,7 +12,7 @@ class Square {
         this.color = color || null;
         this.owner = null;
         this.next = null;
-        this.squareDom= this.createSquareDOM();
+        this.squareDom = null;
     }
 
 
@@ -31,6 +31,8 @@ class Square {
             }
             props[2] = parseInt(props[2]);
             let square = new Square(...props);
+            square.squareDom = $('.square-' + lineIndex);
+            
             square.next = neighbor;
             
             squares.unshift(square);
