@@ -840,4 +840,31 @@ h1 {
     justify-content: flex-start;
     width:75%;
 }
+/* css for chance and chest card */
+.chest{
+    height:220px;
+    width:250px;
+    padding: 15px;
+    border: 1px solid black;
 
+}
+
+.chest .chestBorder{
+    width: 100%;
+    height: 100%;
+    border: 5px solid black;
+}
+.chest .textAlign{
+    text-align: center; 
+}
+.chest .topContainer{
+    height: 20%;
+}
+
+.chest .bottomContainer{
+    height: 80%;
+}
+
+.chest .left, .chest .right{
+    display: inline-block;
+}

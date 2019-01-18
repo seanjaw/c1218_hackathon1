@@ -9,7 +9,7 @@ class Square {
         this.rentCosts = rentCosts;
         this.image = image || null;  
 
-        this.color = color;
+        this.color = color || null;
         this.owner = null;
         this.next = null;
         this.squareDom= this.createSquareDOM();
@@ -60,39 +60,58 @@ class Square {
 
         return squares;
     }
-
+   
     static createDeed(square){
-        let html=` <div class="deed">
-        <div class="title">
-            <h4>Title Deed</h4>
-            <h2>Tennessee Avenue</h2>
-        </div>
-        <div class="content">
-            <div class="left">
-                <p>Rent</p>
-                <p>Rent with set</p>
-                <p>Rent with 1</p>
-                <p>Rent with 2</p>
-                <p>Rent with 3</p>
-                <p>Rent with 4</p>
-                <p>Rent with H</p>
+    //     let html=` <div class="deed">
+    //     <div class="title">
+    //         <h4>Title Deed</h4>
+    //         <h2>Tennessee Avenue</h2>
+    //     </div>
+    //     <div class="content">
+    //         <div class="left">
+    //             <p>Rent</p>
+    //             <p>Rent with set</p>
+    //             <p>Rent with 1</p>
+    //             <p>Rent with 2</p>
+    //             <p>Rent with 3</p>
+    //             <p>Rent with 4</p>
+    //             <p>Rent with H</p>
 
-            </div>
-            <div class="right">
-                <p>$14</p>
-                <p>$28</p>
-                <p>$70</p>
-                <p>$14</p>
-                <p>$28</p>
-                <p>$70</p>
-                <p>$70</p>
+    //         </div>
+    //         <div class="right">
+    //             <p>$14</p>
+    //             <p>$28</p>
+    //             <p>$70</p>
+    //             <p>$14</p>
+    //             <p>$28</p>
+    //             <p>$70</p>
+    //             <p>$70</p>
 
-            </div>
-        </div>
-    </div>`;
-    let deed
-    return $(html);
-    }
+    //         </div>
+    //     </div>
+    // </div>`;
+    // return $(html);
+  
+    let rentInfoP = $('<p>').text('Rent');
+    let leftDiv = $('<div>', {'class':'left'})
+    .append(rentInfoP);
+    let priceInfoP = $('<p>').text('$14');
+    let rightDiv = $('<div>', {'class':'right'})
+    .append(priceInfoP);
+    let contentDiv = $('<div>', {'class':'content'})
+        .append([leftDiv, rightDiv]);
+    let titleDeedH4 = $('<h4>').text('Title Deed');
+    let streetH2 = $('<h2>').text('Tennesee Avenue');
+    let titleDiv = $('<div>', {'class':'title'})
+        .append([titleDeedH4,streetH2]);
+    let deedDiv = $('<div>', {'class':'deed'})
+    .append([titleDiv, contentDiv]);
+    return deedDiv;
+
+
+
+}
+
     createGoDOM(){
     
         let html =`<div class="goStart square">
@@ -199,14 +218,19 @@ class Square {
         else{
             imageDiv =$('<img>' ,  {src: 'images/' + this.image, 'class': 'topImg'});
         }
-        // let imageDiv =$('<img>' ,  {src: 'images/' + this.image, 'class': 'topImg'});
         let imageContainerDiv = $('<div>', {'class':'image'}).append(imageDiv);
         let priceDiv = $('<p>').text(this.price);
         let priceContainerDiv = $('<div>', {'class':'text'}).append(priceDiv);
         let squareDiv = $('<div>', {'class': "propInfo square"})
             .append([titleContainerDiv, imageContainerDiv, priceContainerDiv]);
-    
-        let colorDiv = $('<div>' , {'class' : "propcolor"});
+        
+        let colorDiv = null;
+        if (this.color === null){
+            colorDiv = $('<div>' , {'class' : "propcolor"});
+        }
+        else{
+            colorDiv = $('<div>' , {'class' : "propcolor color"});
+        }
         let prop1Div = $('<div>' , {'class' : "prop1"})
             .append(squareDiv, colorDiv);   
         return prop1Div;
