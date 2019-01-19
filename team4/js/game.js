@@ -25,14 +25,11 @@ class Game{
     play(addPlayers) {
         
         this.domElmPlayersList = addPlayers;
-        console.log("Dome Elm ", this.domElmPlayersList)
         let go = this.squares[0];
-console.log("Passing Array ", addPlayers);
         for (var playerIndex = 0; playerIndex < this.domElmPlayersList.length; playerIndex++){
             let tempName = "player"+(playerIndex + 1);
             let iconName = this.iconArray[playerIndex];
             let newPlayer =  new Player(go, iconName, tempName, this.handlePlayerTurnEnd, this.domElmPlayersList[playerIndex]);
-            console.log("added ", this.domElmPlayersList[playerIndex])
             this.players.push(newPlayer);
             newPlayer.updateDisplay();
         }
@@ -52,11 +49,8 @@ console.log("Passing Array ", addPlayers);
     displayCurrentMoney(){
 
         let currentPlayer = this.players[this.currentPlayerIndex];
-            console.log("Current Player ",currentPlayer);
         let currentMoney = (currentPlayer.money).toString();
-            console.log("Curent Money ", "Money " + currentMoney);
         let currentDomElmPlayer = currentPlayer.domElmPlayerInfo[game.currentPlayerIndex];
-            console.log(currentDomElmPlayer);
         $(currentDomElmPlayer).text("Money $" + currentMoney); 
     }
 }
@@ -88,7 +82,7 @@ class Modal {
 	init(){
 
         this.submitPlayers.click(this.clickHandle);
-        $("input").val(2);
+        // $("input").val(2);
         this.show();
     }
 
