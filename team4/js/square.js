@@ -12,6 +12,9 @@ class Square {
         this.color = color || null;
         this.owner = null;
         this.next = null;
+
+
+        this.house = 0;
         this.squareDom = null;
     }
 
