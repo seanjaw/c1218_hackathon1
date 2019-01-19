@@ -151,9 +151,9 @@ class Player{
         if (PROPERTY_TYPES.indexOf(this.square.type) !== -1 && this.square.owner === null && this.money >= this.square.price) {
             this.showBuyModal();
         } else if (PROPERTY_TYPES.indexOf(this.square.type) !== -1 && this.square.owner !== null) {
-            if(this.square.owner === this && this.square.type === 'utility'){
+            if(this.square.owner === this && this.square.type !== 'street'){
                 return;
-            }else if(this.square.owner === this && this.square.type !== 'utility'){
+            }else if(this.square.owner === this && this.square.type === 'street'){
                 this.showBuyModal();
             } else {
                 this.showRentModal();
@@ -178,7 +178,7 @@ class Player{
 
     buyProperty() {
         var colorInMyColorCount = this.myColorCount[this.square.color];
-        if(this.totalColorCount[this.square.color] === colorInMyColorCount.colorCount){
+        if(this.square.type === 'street' && this.totalColorCount[this.square.color] === colorInMyColorCount.colorCount){
             // buy house
             // house price
             var houseCost = this.houseCost();
@@ -187,15 +187,28 @@ class Player{
             var minimum = Math.min.apply(Math, colorInMyColorCount.arrayOfHouseCount);
             var indexOfHouseToAdd = colorInMyColorCount.arrayOfHouseCount.indexOf(minimum);
             colorInMyColorCount.arrayOfHouseCount[indexOfHouseToAdd]++;
-            var newHouse = new House(this.color, this.square);
-            newHouse.createHouseImage();
+
+            var imageToAppend = $('<div>').css({
+                'background-image': 'url(../houseIcon/greenHouse.png)',
+                'background-size': 'contain',
+                'background-repeat': 'no-repeat',
+                'width': '20px',
+                'height': '20px',
+                'z-index': 3,
+            });
+
+            this.square.squareDom.append(imageToAppend);
+
             this.square.totalHouseCount++;
             console.log('Buy property: a house on', this.square.title, ' for $', this.square.price/2);
         } else {
             // buy street
             this.money -= this.square.price;
             this.addProperty(this.square);
-            colorInMyColorCount.colorCount++;
+            if(this.square.type === 'street'){
+                colorInMyColorCount.colorCount++;
+            }
+
             console.log('Buy property: ', this.square.title, ' for $', this.square.price);
         }
     }
@@ -489,7 +502,7 @@ class Player{
             .text("Player" + numOfPlayers);        
         $("#accordion").append(this.createPlayer);
 
-        this.color = this.createPlayer[0].style.backgroundColor;
+        this.color = this.playerColor[currentPlayerIndex];
 
         $(this.createPlayer).after(this.playerDisplayDom);
 

@@ -33,7 +33,7 @@ class Game{
             this.players.push(newPlayer);
             newPlayer.updateDisplay();
         }
-        this.players[0].rolldice();
+        //this.players[0].rolldice();
     }
 
     handlePlayerTurnEnd() {
@@ -50,7 +50,6 @@ class Game{
         let currentMoney = (currentPlayer.money).toString();
         let currentDomElmPlayer = currentPlayer.domElmPlayerInfo[game.currentPlayerIndex];
         $(currentDomElmPlayer).text("Money $" + currentMoney);
-        this.players[this.currentPlayerIndex].rolldice();
     }
 }
 
