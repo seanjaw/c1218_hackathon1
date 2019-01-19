@@ -364,10 +364,12 @@ class Player{
     }
 
     showBuyModal() {
-        let message =  `Buy '${this.square.title}' for \$${this.square.price}?`;
+        const {square} = this;
+
+        let message =  `Buy '${square.title}' for \$${square.price}?`;
         let dialog = $('<div>').text(message);
-        if(this.square.type === 'street'){
-            let deed = Square.createDeed(this.square);
+        if(square.type === 'street'){
+            let deed = square.deedDOM;
             dialog.append(deed);
         }
         let buyCallback = () => {
