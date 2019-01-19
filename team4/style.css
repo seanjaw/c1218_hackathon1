@@ -28,7 +28,7 @@ body {
 
 .playerInformation {
     width: 90%;
-    height: 75%;
+    height: 50%;
     display: flex;
     align-items: center;
     margin: auto;
@@ -40,6 +40,15 @@ body {
     position: relative;
     align-content: center;
     margin: auto;
+    background-color: red; /* TODO: Remove when finishing setup! */
+}
+
+.displayPlayerActions {
+    display: block;
+    position: relative;
+    align-content: center;
+    margin: auto;
+    background-color: blue; /* TODO: Remove when finishing setup! */
 }
 
 .topProp {
