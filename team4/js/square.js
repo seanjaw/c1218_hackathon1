@@ -16,6 +16,7 @@ class Square {
 
         this.house = 0;
         this.squareDom = null;
+        this.deedDOM = null;
     }
 
 
@@ -27,6 +28,7 @@ class Square {
         for ( let lineIndex= lines.length - 1; lineIndex >= 0; lineIndex--){
             let line = lines[lineIndex];
             let props = line.split('\t');
+
             // Split rents apart
             props[3] = props[3].split(';');
             for(var rentIndex = 0; rentIndex < props[3].length; rentIndex++){
@@ -34,8 +36,12 @@ class Square {
             }
             props[2] = parseInt(props[2]);
             let square = new Square(...props);
+
+            // Attach DOM objects
             square.squareDom = $('.square-' + lineIndex);
+            square.deedDOM = square.createDeedDOM();
             
+            // Set next neighboring square
             square.next = neighbor;
             
             squares.unshift(square);
@@ -44,78 +50,81 @@ class Square {
         squares[squares.length-1].next = squares[0];
         
         //add to DOM
-        let sides = ['.bottomPropContainer', '.sidePropContainer', '.propContainer', '.rightPropContainer'];
+        // let sides = ['.bottomPropContainer', '.sidePropContainer', '.propContainer', '.rightPropContainer'];
 
-        let squareIndex = 1;
-        for (let sideIndex =0 ; sideIndex< sides.length ; sideIndex++ ){
-            let side = sides[sideIndex];
-            $(side).empty();
-            for (let i = 0; i < 9; i++, squareIndex++) {
-                let square = squares[squareIndex];
-                $(side).append(square.squareDom);
-            }
-            squareIndex++;
-        }
+        // let squareIndex = 1;
+        // for (let sideIndex =0 ; sideIndex< sides.length ; sideIndex++ ){
+        //     let side = sides[sideIndex];
+        //     $(side).empty();
+        //     for (let i = 0; i < 9; i++, squareIndex++) {
+        //         let square = squares[squareIndex];
+        //         $(side).append(square.squareDom);
+        //     }
+        //     squareIndex++;
+        // }
 
-        //add corners
-        $('.goStart').replaceWith(squares[0].squareDom);
-        $('.jail.square').parent().parent().replaceWith(squares[10].squareDom);
-        $('.freeParking').replaceWith(squares[20].squareDom);
-        $('.goToJail').replaceWith(squares[30].squareDom);
+        // //add corners
+        // $('.goStart').replaceWith(squares[0].squareDom);
+        // $('.jail.square').parent().parent().replaceWith(squares[10].squareDom);
+        // $('.freeParking').replaceWith(squares[20].squareDom);
+        // $('.goToJail').replaceWith(squares[30].squareDom);
 
         return squares;
     }
    
-    static createDeed(square){
-    //     let html=` <div class="deed">
-    //     <div class="title">
-    //         <h4>Title Deed</h4>
-    //         <h2>Tennessee Avenue</h2>
-    //     </div>
-    //     <div class="content">
-    //         <div class="left">
-    //             <p>Rent</p>
-    //             <p>Rent with set</p>
-    //             <p>Rent with 1</p>
-    //             <p>Rent with 2</p>
-    //             <p>Rent with 3</p>
-    //             <p>Rent with 4</p>
-    //             <p>Rent with H</p>
-
-    //         </div>
-    //         <div class="right">
-    //             <p>$14</p>
-    //             <p>$28</p>
-    //             <p>$70</p>
-    //             <p>$14</p>
-    //             <p>$28</p>
-    //             <p>$70</p>
-    //             <p>$70</p>
-
-    //         </div>
-    //     </div>
-    // </div>`;
-    // return $(html);
+    /*
+     * Create a Deed for this square
+     */
+    createDeedDOM(){
   
-    let rentInfoP = $('<p>').text('Rent');
-    let leftDiv = $('<div>', {'class':'left'})
-    .append(rentInfoP);
-    let priceInfoP = $('<p>').text('$14');
-    let rightDiv = $('<div>', {'class':'right'})
-    .append(priceInfoP);
-    let contentDiv = $('<div>', {'class':'content'})
-        .append([leftDiv, rightDiv]);
-    let titleDeedH4 = $('<h4>').text('Title Deed');
-    let streetH2 = $('<h2>').text('Tennesee Avenue');
-    let titleDiv = $('<div>', {'class':'title'})
-        .append([titleDeedH4,streetH2]);
-    let deedDiv = $('<div>', {'class':'deed'})
-    .append([titleDiv, contentDiv]);
-    return deedDiv;
+        // TODO: Should use color class instead, but currently CSS color classes also style layout...
+        //       Also there is a dependency to the current square.color in Player code to organize properties into color sets
+        const COLORS = {
+            'brown': 'saddlebrown',
+            'blue': '#31b0d5',
+            'pink': '#df5277',
+            'orange': 'darkorange',
+            'red': '#cd0a0a',
+            'yellow': 'gold',
+            'green': '#449d44',
+            'grey': '#5e5e5e'
+        };
 
+        const RENT_LABELS = [
+            'Rent',
+            'Rent with set',
+            'Rent with 1',
+            'Rent with 2',
+            'Rent with 3',
+            'Rent with 4',
+            'Rent with hotel'
+        ];
 
+        // Rent Section
+        let leftDiv = $('<div>', {'class':'left'});
+        let rightDiv = $('<div>', {'class':'right'});
 
-}
+        for (let i = 0; i < RENT_LABELS.length; i++) {
+            let rentLabelP = $('<p>').text(RENT_LABELS[i]);
+            let rentCostP = $('<p>').text('$' + this.rentCosts[i]);
+            leftDiv.append(rentLabelP);
+            rightDiv.append(rentCostP);
+        }
+
+        let contentDiv = $('<div>', {'class':'content'})
+            .append([leftDiv, rightDiv]);
+
+        // Header Section
+        let titleDeedH4 = $('<h4>').text('Title Deed');
+        let streetH2 = $('<h2>').text(this.title);
+        let titleDiv = $('<div>', {'class':'title'})
+            .css({'background-color': COLORS[this.color]})
+            .append([titleDeedH4,streetH2]);
+        let deedDiv = $('<div>', {'class':'deed'})
+            .append([titleDiv, contentDiv]);
+        
+        return deedDiv;
+    }
 
     createGoDOM(){
     
