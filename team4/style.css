@@ -206,21 +206,62 @@ body {
 	position: fixed;
 	left: 50%;
 	top: 50%;
-	min-height: 30vmin;
-	min-width: 30vmin;
+	min-height: 10vmin;
+	min-width: 70vmin;
 	transform: translate(-50%, -50%);
 	background-color: white;
-	display: flex;
+    display: flex;
+    border: 1px solid black;
+    background-color: gray
 }
 #modalMessage{
-	margin: auto auto;
-    position: absolute;
-    top: 70%;
-    left: 40%;
+    font-size: 2rem;
+    margin: auto;
 }
 #submitPlayers {
     background-color: green;
+    font-size: 2rem;
+    width: 25%;
+    border: 1px solid black;
 }
+#submitPlayers:hover {
+    background-color: rgb(0, 180, 0);
+    cursor: pointer;
+    font-size: 2rem;
+    width: 25%;
+    border: 1px solid black;
+}
+
+#submitPlayers:active {
+    background-color: rgb(0, 80, 0);
+    cursor: pointer;
+    font-size: 2rem;
+    width: 25%;
+    border: 1px solid black;
+}
+
+.num-of-players{
+    cursor: pointer;
+    width: 10%;
+    font-size: 2rem;
+    border: 1px solid black;
+    background-color: gray
+}
+.num-of-players:hover {
+    cursor: pointer;
+    width: 10%;
+    font-size: 2rem;
+    border: 1px solid black;
+    background-color: darkslategrey
+}
+.num-of-players:active {
+    cursor: pointer;
+    width: 10%;
+    font-size: 2rem;
+    border: 1px solid black;
+    background-color: rgb(65, 112, 112)
+}
+
 h1 {
     color: white;
 }
@@ -840,4 +881,31 @@ h1 {
     justify-content: flex-start;
     width:75%;
 }
+/* css for chance and chest card */
+.chest{
+    height:220px;
+    width:250px;
+    padding: 15px;
+    border: 1px solid black;
 
+}
+
+.chest .chestBorder{
+    width: 100%;
+    height: 100%;
+    border: 5px solid black;
+}
+.chest .textAlign{
+    text-align: center; 
+}
+.chest .topContainer{
+    height: 20%;
+}
+
+.chest .bottomContainer{
+    height: 80%;
+}
+
+.chest .left, .chest .right{
+    display: inline-block;
+}

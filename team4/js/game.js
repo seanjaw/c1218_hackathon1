@@ -26,7 +26,6 @@ class Game{
         
         this.domElmPlayersList = addPlayers;
         let go = this.squares[0];
-
         for (var playerIndex = 0; playerIndex < this.domElmPlayersList.length; playerIndex++){
             let tempName = "player"+(playerIndex + 1);
             let iconName = this.iconArray[playerIndex];
@@ -34,7 +33,9 @@ class Game{
             this.players.push(newPlayer);
             newPlayer.updateDisplay();
         }
-        //this.players[0].rolldice();
+
+        this.players[0].rolldice();
+        this.displayCurrentMoney();
     }
 
     handlePlayerTurnEnd() {
@@ -42,9 +43,18 @@ class Game{
         if (this.currentPlayerIndex >= this.players.length) {
             this.currentPlayerIndex = 0;
         }
-       // this.players[this.currentPlayerIndex].rolldice();
+        this.players[this.currentPlayerIndex].rolldice();
+        this.displayCurrentMoney();
+    }
+    displayCurrentMoney(){
+
+        let currentPlayer = this.players[this.currentPlayerIndex];
+        let currentMoney = (currentPlayer.money).toString();
+        let currentDomElmPlayer = currentPlayer.domElmPlayerInfo[game.currentPlayerIndex];
+        $(currentDomElmPlayer).text("Money $" + currentMoney);
     }
 }
+
 class Modal {
 
 	constructor(modalShadow, modalBody, submitPlayers){
@@ -73,7 +83,7 @@ class Modal {
 	init(){
 
         this.submitPlayers.click(this.clickHandle);
-        $("input").val(2);
+        // $("input").val(2);
         this.show();
     }
 
