@@ -20,10 +20,30 @@ class Player{
         this.addMoney = this.addMoney.bind(this);
         this.removeMoney = this.removeMoney.bind(this);
 
-        this.diceArray = [5,2];
+        this.diceArray = null;
         this.diceTotal = null;
         this.divToAppend = null;
         this.jailCount = 0;
+
+        this.totalColorCount = {
+            brown: 2,
+            blue: 3,
+            orange: 3,
+            yellow: 3,
+            red: 3,
+            green: 3,
+            grey: 2,
+        };
+
+        this.myColorCount = {
+            brown: 0,
+            blue: 0,
+            orange: 0,
+            yellow: 0,
+            red: 0,
+            green: 0,
+            grey: 0,
+        }
     }
 
     rolldice(){
@@ -39,10 +59,10 @@ class Player{
         this.diceTotal = total;
     }
 
-    go() {
+    rewardFromPassingGo() {
         this.money += 200;
     }
-    tax() {
+    payTax() {
         this.money -= 200;
     }
 
@@ -52,31 +72,23 @@ class Player{
     goToJail() {
         this.square = game.squares[10];
     }
+    inJail (amount){
+
+        if( this.jailCount === 4 || this.diceArray[0] === this.diceArray[1]){
+            this.jailCount = 0;
+            this.move(amount);
+
+        } else if ( this.diceArray[0] !== this.diceArray[1]){
+            this.jailCount++;
+            this.updateDisplay();
+        }
+
+    }
 
     move( amount ){
         var goTrigger = false;
-        if(this.square.type === 'jail' && this.jailCount === 3){
-            this.jailCount = 0;
-        } else if (this.square.type === 'jail' && this.diceArray[0] === this.diceArray[1]) {
-            amount = this.diceArray[0] * 2;
-            this.jailCount = 0;
-        } else if (this.square.type === 'jail' && this.diceArray[0] !== this.diceArray[1]){
-            this.updateDisplay();
-            this.jailCount++;
-
-            if (PROPERTY_TYPES.indexOf(this.square.type) !== -1 && this.square.owner === null && this.money >= this.square.price) {
-                this.showBuyModal();
-            } else if (PROPERTY_TYPES.indexOf(this.square.type) !== -1 && this.square.owner !== null) {
-                this.showRentModal();
-            } else if (this.square.type === 'community-chest') {
-                let card = game.communityChestCards.pop();
-                this.showCardModal( 'Community Chest', card);
-            } else if (this.square.type === 'chance') {
-                let card = game.chanceCards.pop();
-                this.showCardModal( 'Chance', card);
-            } else {
-                this.showLocationModal();
-            }
+        if(this.jailCount > 0){
+            this.inJail(amount);
             return;
         }
 
@@ -87,27 +99,30 @@ class Player{
             }
         }
         if(goTrigger === true){
-            this.go();
+            this.rewardFromPassingGo();
         } else if (this.square.type === 'income-tax'|| this.square.type === 'luxury-tax') {
-            this.tax();
+            this.payTax();
         } else if (this.square.type === 'parking'){
             this.freeParking();
         } else if (this.square.type === 'go-to-jail'){
             this.updateDisplay();
             this.showLocationModal();
             this.goToJail();
-        } else if (this.square.type === 'jail') {
             this.jailCount++;
         }
-
-
 
         this.updateDisplay();
 
         if (PROPERTY_TYPES.indexOf(this.square.type) !== -1 && this.square.owner === null && this.money >= this.square.price) {
             this.showBuyModal();
         } else if (PROPERTY_TYPES.indexOf(this.square.type) !== -1 && this.square.owner !== null) {
-            this.showRentModal();
+            if(this.square.owner === this && this.square.type === 'utility'){
+                return;
+            }else if(this.square.owner === this && this.suqare.type !== 'utility'){
+                this.showBuyModal();
+            } else {
+                this.showRentModal();
+            }
         } else if (this.square.type === 'community-chest') {
             let card = game.communityChestCards.pop();
             this.showCardModal( 'Community Chest', card);
@@ -116,51 +131,58 @@ class Player{
             this.showCardModal( 'Chance', card);
         } else {
             this.showLocationModal();
-        }       
+        }
     }
 
     /*
      * Buy property for current square
      */
     buyProperty() {
-        this.money -= this.square.price;
-        this.addProperty(this.square);
-        console.log('Buy property: ', this.square.title, ' for $', this.square.price);
+        if(this.totalColorCount[this.square.color] === this.myColorCount[this.square.color]){
+            // buy house
+            // house price
+            this.money -= this.square.price / 2;
+            this.square.house++;
+            console.log('Buy property: a house on', this.square.title, ' for $', this.square.price/2);
+        } else {
+            // buy street
+            this.money -= this.square.price;
+            this.addProperty(this.square);
+            this.myColorCount[this.square.color]++;
+            console.log('Buy property: ', this.square.title, ' for $', this.square.price);
+        }
     }
+
 
     calculateRent( property, renter) {
         // Currently basic rent only
         let rent = 0;
         var count = 0;
-        var totalColorCount = {
-            brown: 2,
-            blue: 3,
-            orange: 3,
-            yellow: 3,
-            redCount: 3,
-            greenCount: 3,
-            greyCount: 2,
-        };
+        var houseCount = 0;
+
         if (property.type === 'street') {
+
             var propertyColor = property.color;
             for(var index = 0; index < this.properties.length; index++){
                 if(this.properties[index].type === 'street' && propertyColor === this.properties[index].color){
                     count++;
+                    houseCount += this.properties[index].house;
                 }
             }
-            if(count === totalColorCount[propertyColor]){
+            if(houseCount>0){
+                rent = property.rentCosts[houseCount + 1];
+            } else if(count === this.totalColorCount[propertyColor]){
                 rent = parseInt(property.rentCosts[0]) * 2;
             } else {
                 rent = parseInt(property.rentCosts[0]);
             }
-
         } else if (property.type === 'railroad') {
             for(var index = 0; index < this.properties.length; index++){
                 if(this.properties[index].type === 'railroad'){
                     count++;
                 }
                 if(count >= 2){
-                    rent =  property.rentCosts[0] * 2;
+                    rent =  property.rentCosts[1];
                 } else {
                     rent = property.rentCosts[0];
                 }
