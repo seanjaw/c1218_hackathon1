@@ -105,6 +105,7 @@ class Modal {
             this.playerNumber--;
         }
         temp.setPlayerList();
+        this.playerNumber = $("input").val();
         
     }
     createPlayersArray(){
