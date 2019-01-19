@@ -33,27 +33,35 @@ class Card{
         return cards;
     }
     static createCardDOM(deckName, card){
-        let html=`<div class="chest">
-        <div class="chestBorder">
-            <div class="topContainer textAlign">
-                    <h2>Community Chest</h2>
-            </div>
+    //     let html=`<div class="chest">
+    //     <div class="chestBorder">
+    //         <div class="topContainer textAlign">
+    //                 <h2>Community Chest</h2>
+    //         </div>
 
-            <div class="bottomContainer">
-                <div class="left">
-                        <p>Hospital Fees. Pay 100.</p>
-                </div>
+    //         <div class="bottomContainer">
+    //             <div class="left">
+    //                     <p>Hospital Fees. Pay 100.</p>
+    //             </div>
                 
-                <div class="right">
-                        <p>image</p>
-                </div>
+    //             <div class="right">
+    //                     <p>image</p>
+    //             </div>
                 
-            </div>
-          
-
-        </div>
-    </div>`;
+    //         </div>
+    //     </div>
+    // </div>`;
     
-    return $(html);
+    // return $(html);
+    let informationP = $('<p>').text('Hopstial Fees. Pay 100');
+    let leftDiv = $('<div>', {'class':'left'}).append(informationP);
+    let imageP  = $('<p>').text('image');
+    let rightDiv  = $('<div>',{'class':'right'}).append(imageP);
+    let bottomContainerDiv = $('<div>')
+        .append([leftDiv, rightDiv]);
+    let titleH2 = $('<h2>').text('Community Chest');
+    let topContainerDiv  = $('<div>').append(titleH2);
+
+
     }
 }
