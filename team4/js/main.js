@@ -1,10 +1,10 @@
 $(document).ready(initApp);
 let game = null;
-let model = null;
+let modal = null;
 
 function initApp(){
-   model = new Modal($("#modalShadow"), $("#modalBody"), $("#submitPlayers"));
-   model.init();
+   modal = new Modal($("#modalShadow"), $("#modalBody"), $("#submitPlayers"));
+   modal.init();
    game = new Game();
 }
 
