@@ -5,7 +5,7 @@ class Player{
         this.avatar = avatar;
         this.name = name;
         this.turnEndCallback = turnEndCallback;
-        this.domElmPlayerInfo = domElmPlayerInfo;  //
+        this.domElmPlayerInfo = domElmPlayerInfo;  
 
         this.createPlayer = null; //Used in createNewPlayerList()
         this.playerColor = ["red", "blue", "green", "yellow"];
