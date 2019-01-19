@@ -34,7 +34,7 @@ class Game{
             newPlayer.updateDisplay();
         }
 
-        this.players[0].rolldice();
+        //this.players[0].rolldice();
         this.displayCurrentMoney();
     }
 
@@ -43,7 +43,7 @@ class Game{
         if (this.currentPlayerIndex >= this.players.length) {
             this.currentPlayerIndex = 0;
         }
-        this.players[this.currentPlayerIndex].rolldice();
+       // this.players[this.currentPlayerIndex].rolldice();
         this.displayCurrentMoney();
     }
     displayCurrentMoney(){
