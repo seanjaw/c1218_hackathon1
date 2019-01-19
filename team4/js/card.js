@@ -53,14 +53,27 @@ class Card{
     // </div>`;
     
     // return $(html);
+
+    // if (deckname === ){
+
+    // }
     let informationP = $('<p>').text('Hopstial Fees. Pay 100');
     let leftDiv = $('<div>', {'class':'left'}).append(informationP);
     let imageP  = $('<p>').text('image');
     let rightDiv  = $('<div>',{'class':'right'}).append(imageP);
-    let bottomContainerDiv = $('<div>')
+    let bottomContainerDiv = $('<div>' , {'class':'bottomContainer'})
         .append([leftDiv, rightDiv]);
     let titleH2 = $('<h2>').text('Community Chest');
-    let topContainerDiv  = $('<div>').append(titleH2);
+    let topContainerDiv  = $('<div>', {'class':'topContainer textAlign'})
+        .append(titleH2);
+    let chestBorderDiv = $('<div>', {'class':'chestBorder'})
+        .append([topContainerDiv,bottomContainerDiv]);
+    let chestDiv =     $('<div>', {'class':'chest'})
+    .append(chestBorderDiv);
+
+    return chestDiv;
+
+
 
 
     }
