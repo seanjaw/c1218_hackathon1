@@ -101,15 +101,16 @@ class Modal {
 
         while (this.playerNumber > 0){
             temp = new Player;
-            temp.createNewPlayerList();
+            temp.createNewPlayerList(this.playerNumber);
             this.playerNumber--;
         }
         temp.setPlayerList();
+        this.playerNumber = $("input").val();
         
     }
     createPlayersArray(){
         let tempArray = [];
-        for (var playerIndex = 0; playerIndex < $("h1").length; playerIndex++){
+        for (var playerIndex = 0; playerIndex < this.playerNumber; playerIndex++){
 
             let findPlayer = playerIndex + 1;
             let tempPlayer = $(".player" + findPlayer);
