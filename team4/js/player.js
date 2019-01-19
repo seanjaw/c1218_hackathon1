@@ -7,7 +7,7 @@ class Player{
         this.turnEndCallback = turnEndCallback;
         this.domElmPlayerInfo = domElmPlayerInfo;
 
-        this.createPlayer = null;
+        this.createPlayer = null; //Used in create player list
         this.playerColor = ["red", "blue", "green", "yellow"];
         this.money = 1500;
         this.properties = [];
@@ -409,29 +409,25 @@ class Player{
         });
     }
 
-    //Creating new player with accordion settings
-    createNewPlayerList(){ 
+    //Creating new player list with accordion settings
+    createNewPlayerList(numberOfPlayers){ 
+        
+        let numOfPlayers = parseInt(numberOfPlayers);
 
-        if ($("h1").length > 3){
-
-            console.error("Can only have 4 players!");
-            
-        } else { 
-
-        let numOfPlayers = $("h1").length + 1;
         this.divToAppend = $("<div>")
             .addClass("player" + numOfPlayers)
+            .addClass("trackPlayerIndex")
             .text("Input Information");
-            
+        
+        let currentPlayerIndex = $(".trackPlayerIndex").length;
         this.createPlayer = $("<h1>")
-            .css("background-color", this.playerColor[$("h1").length])
+            .css("background-color", this.playerColor[currentPlayerIndex])
             .text("Player" + numOfPlayers);        
         $("#accordion").append(this.createPlayer);
         $(this.createPlayer).after(this.divToAppend);
-        }
     }
 
-    setPlayerList(){
+    setPlayerList(){ //Set jQuery UI after players loaded
         $("#accordion").accordion({
             collapsible: "true"
           });
