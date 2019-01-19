@@ -124,10 +124,10 @@ class Player{
             }
         } else if (this.square.type === 'community-chest') {
             let card = game.communityChestCards.pop();
-            this.showCardModal( 'Community Chest', card);
+            this.showCardModal(card);
         } else if (this.square.type === 'chance') {
             let card = game.chanceCards.pop();
-            this.showCardModal( 'Chance', card);
+            this.showCardModal(card);
         } else {
             this.showLocationModal();
         }
@@ -330,10 +330,10 @@ class Player{
         });
     }
 
-    showCardModal(deckName, card) {
-        let message =  `${deckName}: ${card.text}`;
-        let dialog = $('<div>').text(message);
-        let cardDisplay = Card.createCardDOM(deckName, card);
+    showCardModal(card) {
+        // let message =  `${deckName}: ${card.text}`;
+        let dialog = $('<div>');
+        let cardDisplay = card.createCardDOM();
         dialog.append(cardDisplay);
         let okCallback;
         if (card.type === 'pay-bank') {
