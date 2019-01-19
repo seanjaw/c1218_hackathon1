@@ -11,6 +11,7 @@ class Player{
         this.money = 1500;
         this.properties = [];
         this.active = true;
+        this.color = null;
 
         this.playerDom = this.createDOM();
 
@@ -185,6 +186,8 @@ class Player{
             var minimum = Math.min.apply(Math, colorInMyColorCount.arrayOfHouseCount);
             var indexOfHouseToAdd = colorInMyColorCount.arrayOfHouseCount.indexOf(minimum);
             colorInMyColorCount.arrayOfHouseCount[indexOfHouseToAdd]++;
+            var newHouse = new House(this.color, this.square);
+            newHouse.createHouseImage();
             this.square.totalHouseCount++;
             console.log('Buy property: a house on', this.square.title, ' for $', this.square.price/2);
         } else {
@@ -341,11 +344,11 @@ class Player{
         this.square.squareDom.append(this.playerDom);
         this.playerDom.css({
             position: 'relative',
-            top: 5,
+            bottom: 0,
             left: 5,
             height: '60px',
             width: '60px',
-            'z-index': 2
+            'z-index': 4
         });
     } 
 
@@ -484,6 +487,7 @@ class Player{
             .text("Player" + numOfPlayers);        
         $("#accordion").append(this.createPlayer);
         $(this.createPlayer).after(this.divToAppend);
+        this.color = this.createPlayer[0].style.backgroundColor;
     }
 
     setPlayerList(){ //Set jQuery UI after players loaded
