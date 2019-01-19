@@ -13,6 +13,7 @@ class Square {
         this.owner = null;
         this.next = null;
         this.squareDom= this.createSquareDOM();
+        this.house = 0;
     }
 
 
