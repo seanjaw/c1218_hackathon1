@@ -33,7 +33,7 @@ class Game{
             this.players.push(newPlayer);
             newPlayer.updateDisplay();
         }
-        
+
         this.players[0].rolldice();
         this.displayCurrentMoney();
     }
@@ -51,9 +51,10 @@ class Game{
         let currentPlayer = this.players[this.currentPlayerIndex];
         let currentMoney = (currentPlayer.money).toString();
         let currentDomElmPlayer = currentPlayer.domElmPlayerInfo[game.currentPlayerIndex];
-        $(currentDomElmPlayer).text("Money $" + currentMoney); 
+        $(currentDomElmPlayer).text("Money $" + currentMoney);
     }
 }
+
 class Modal {
 
 	constructor(modalShadow, modalBody, submitPlayers){
@@ -100,15 +101,16 @@ class Modal {
 
         while (this.playerNumber > 0){
             temp = new Player;
-            temp.createNewPlayerList();
+            temp.createNewPlayerList(this.playerNumber);
             this.playerNumber--;
         }
         temp.setPlayerList();
+        this.playerNumber = $("input").val();
         
     }
     createPlayersArray(){
         let tempArray = [];
-        for (var playerIndex = 0; playerIndex < $("h1").length; playerIndex++){
+        for (var playerIndex = 0; playerIndex < this.playerNumber; playerIndex++){
 
             let findPlayer = playerIndex + 1;
             let tempPlayer = $(".player" + findPlayer);
