@@ -14,6 +14,7 @@ class Player{
         this.active = true;
 
         this.playerDom = this.createDOM();
+        this.playerDisplayDom = null;
 
         this.buyProperty = this.buyProperty.bind(this);
         this.rolldice = this.rolldice.bind(this);
@@ -22,7 +23,6 @@ class Player{
 
         this.diceArray = null;
         this.diceTotal = null;
-        this.divToAppend = null;
         this.jailCount = 0;
 
         this.totalColorCount = {
@@ -312,6 +312,7 @@ class Player{
             width: '60px',
             'z-index': 2
         });
+        $(this.domElmPlayerInfo).text("Money $" + this.money);
     } 
 
     showDiceModal() {
@@ -438,7 +439,7 @@ class Player{
         
         let numOfPlayers = parseInt(numberOfPlayers);
 
-        this.divToAppend = $("<div>")
+        this.playerDisplayDom = $("<div>")
             .addClass("player" + numOfPlayers)
             .addClass("trackPlayerIndex")
             .text("Input Information");
@@ -448,7 +449,7 @@ class Player{
             .css("background-color", this.playerColor[currentPlayerIndex])
             .text("Player" + numOfPlayers);        
         $("#accordion").append(this.createPlayer);
-        $(this.createPlayer).after(this.divToAppend);
+        $(this.createPlayer).after(this.playerDisplayDom);
     }
 
     setPlayerList(){ //Set jQuery UI after players loaded
