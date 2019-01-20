@@ -8,7 +8,7 @@ class Player{
         this.domElmPlayerInfo = domElmPlayerInfo;
 
         this.createPlayer = null; //Used in createNewPlayerList()
-        this.playerColor = ["red", "blue", "green", "yellow"];//Colors used to store in individual players in createPlayer()
+        this.playerColor = ["red", "blue", "green", "yellow"];//TODO: setup with player object array Colors used to store in individual players in createPlayer()
         this.money = 1500;
         this.properties = [];
         this.active = true;
@@ -313,7 +313,26 @@ class Player{
             'z-index': 2
         });
         $(this.domElmPlayerInfo).text("Money $" + this.money);
+        this.highlightPropertiesOwned();
     } 
+
+    highlightPropertiesOwned(){
+        // game.player[index].
+        
+        let currentPlayerColor = $(game.players[0].domElmPlayerInfo[0].previousElementSibling).css("background-color");
+        // let playerProperties = game.players[0].properties[0].squareDom;
+
+        // let currentPlayerColor = game.players[0].domElmPlayerInfo.css("background-color");
+        // let playerProperties =  game.players[game.currentPlayerIndex-1].properties;
+    //    $(temp[1].squareDom[0]).css("box-shadow", "inset 0 0 1em 0.25em rgb(255, 0, 0)")
+
+    
+        // let currentPlayerColor = this.domElmPlayerInfocss("background-color");
+
+        // for (propIndex = 0; propIndex < this.properties.length; propIndex++){
+        //     $(this.properties[propIndex].squareDom[0]).css("box-shadow", "inset 0 0 1em 0.25em "+"rgb(255, 0, 0)");
+        // }
+    }
 
     showDiceModal() {
         let message =  `Roll Dice`;
