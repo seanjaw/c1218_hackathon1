@@ -57,26 +57,31 @@ class Player{
             orange: {
                 colorCount: 0,
                 totalHouseCount: 0,
+                totalHotelCount: 0,
                 arrayOfHouseCount: [0, 0, 0]
             },
             yellow: {
                 colorCount: 0,
                 totalHouseCount: 0,
+                totalHotelCount: 0,
                 arrayOfHouseCount: [0, 0, 0]
             },
             red: {
                 colorCount: 0,
                 totalHouseCount: 0,
+                totalHotelCount: 0,
                 arrayOfHouseCount: [0, 0, 0]
             },
             green: {
                 colorCount: 0,
                 totalHouseCount: 0,
+                totalHotelCount: 0,
                 arrayOfHouseCount: [0, 0, 0]
             },
             grey: {
                 colorCount: 0,
                 totalHouseCount: 0,
+                totalHotelCount: 0,
                 arrayOfHouseCount: [0, 0]
             },
         }
@@ -180,22 +185,43 @@ class Player{
         return this.square.price / 2;
     }
 
+    buyHouse(){
+        // buy house
+        // house price
+        var colorInMyColorCount = this.myColorCount[this.square.color];
+        var houseCost = this.houseCost();
+        this.money -= houseCost;
+        colorInMyColorCount.totalHouseCount++;
+        // TODO: ADD FUNCTIONALITY FOR DISTRIBUTING HOUSE EVENLY
+        var minimum = Math.min.apply(Math, colorInMyColorCount.arrayOfHouseCount);
+        var indexOfHouseToAdd = colorInMyColorCount.arrayOfHouseCount.indexOf(minimum);
+        colorInMyColorCount.arrayOfHouseCount[indexOfHouseToAdd]++;
+        this.square.houseCount++;
+    }
+
+    buyHotel(){
+        var colorInMyColorCount = this.myColorCount[this.square.color];
+        var hotelPrice = this.houseCost();
+        this.money -= hotelPrice;
+        colorInMyColorCount.totalHotelCount++;
+        this.square.hotelCount++;
+        this.square.houseCount -= 4;
+        colorInMyColorCount.totalHouseCount -= 4;
+        /*
+        for(var i = 0; i < 4; i++){
+            if(i >= colorInMyColorCount.arrayOfHouseCount.length){
+                i = i - colorInMyColorCount.arrayOfHouseCount.length;
+            }
+            colorInMyColorCount.arrayOfHouseCount[i] -= 1;
+        }
+        */
+
+
+    }
+
     buyProperty() {
         var colorInMyColorCount = this.myColorCount[this.square.color];
         if(this.square.type === 'street' && this.totalColorCount[this.square.color] === colorInMyColorCount.colorCount){
-            // buy house
-            // house price
-            var houseCost = this.houseCost();
-            this.money -= houseCost;
-            colorInMyColorCount.totalHouseCount++;
-            // TODO: ADD FUNCTIONALITY FOR DISTRIBUTING HOUSE EVENLY
-            var minimum = Math.min.apply(Math, colorInMyColorCount.arrayOfHouseCount);
-            var indexOfHouseToAdd = colorInMyColorCount.arrayOfHouseCount.indexOf(minimum);
-            colorInMyColorCount.arrayOfHouseCount[indexOfHouseToAdd]++;
-            this.square.houseCount++;
-
-
-
 /*
             var imageToAppend = $('<div>').css({
                 'background-image': 'url(../houseIcon/greenHouse.png)',
@@ -208,7 +234,11 @@ class Player{
 
             this.square.squareDom.find('.propcolor').append(imageToAppend);
 */
-
+            if(colorInMyColorCount.totalHouseCount === 4){
+                this.buyHotel()
+            }else {
+                this.buyHouse();
+            }
             console.log('Buy property: a house on', this.square.title, ' for $', this.square.price/2);
         } else {
             // buy street
@@ -227,11 +257,13 @@ class Player{
         // Currently basic rent only
         let rent = 0;
         var count = 0;
-
+        debugger;
         if (property.type === 'street') {
             var propertyColor = this.myColorCount[property.color];
-            if(propertyColor.totalHouseCount > 0) {
-                rent = property.rentCosts[propertyColor.totalHouseCount + 1];
+            if(property.hotelCount > 0){
+                rent = property.rentCosts[property.rentCosts.length - 1];
+            }else if(property.houseCount > 0) {
+                rent = property.rentCosts[property.houseCount + 1];
             } else if(this.totalColorCount[property.color] === propertyColor.colorCount) {
                 rent = property.rentCosts[1];
             } else {
