@@ -239,6 +239,11 @@ body {
     border: 1px solid black;
 }
 
+#playerName {
+    font-size: 2rem;
+    width: 100%;
+}
+
 .num-of-players{
     cursor: pointer;
     width: 10%;

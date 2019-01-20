@@ -456,7 +456,7 @@ class Player{
     }
 
     //Creating new player list with accordion settings
-    createNewPlayerList(numberOfPlayers){ 
+    createNewPlayerList(numberOfPlayers, playerName){ 
         
         let numOfPlayers = parseInt(numberOfPlayers);
 
@@ -468,7 +468,7 @@ class Player{
         let currentPlayerIndex = $(".trackPlayerIndex").length;
         this.createPlayer = $("<h1>")
             .css("background-color", this.playerColorArray[currentPlayerIndex])
-            .text("Player" + numOfPlayers);        
+            .text(playerName);        
         $("#accordion").append(this.createPlayer);
 
         this.playerColor = this.playerColorArray[currentPlayerIndex];
