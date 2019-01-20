@@ -1011,6 +1011,13 @@ h1 {
     color: white;
 }
 
+.right {
+    width: 30%;
+}
+
+.propInfo > .image {
+    opacity: 0.4;
+}
 /*
  * Roll Dice Dialog
  */
