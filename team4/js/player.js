@@ -173,7 +173,7 @@ class Player{
             }else if(this.square.owner === this && this.suqare.type !== 'utility'){
                 game.showBuyFrame();
             } else {
-                this.showRentModal();
+                game.showRentFrame();
             }
         } else if (this.square.type === 'community-chest') {
             let card = game.communityChestCards.pop();
@@ -433,26 +433,6 @@ class Player{
             let domToChangeColor = this.properties[propertyIndex].squareDom;
             $(domToChangeColor).css("box-shadow", "inset 0 0 1em 0.25em " + color);
         }
-    }
-
-    showRentModal() {
-        let square = this.square;
-        let rent = square.owner.calculateRent(square, this);
-
-        let message =  `${this.name} pay ${square.owner.name} rent of \$${rent} for ${square.title}`;
-        let dialog = $('<div>').text(message);
-
-        let okCallback = () => {
-            dialog.dialog('close');
-            this.payRent();
-        };
-
-        dialog.dialog({
-            modal: true, 
-            dialogClass: "no-close", 
-            height: 300,
-            buttons: [{text: "OK", click: okCallback}]
-        });
     }
 
     //Creating new player list with accordion settings
