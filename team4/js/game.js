@@ -10,7 +10,6 @@ class Game{
         this.chanceCards = Card.initCards(CHANCE_NAME, CHANCE_DATA);
         this.currentPlayerIndex = 0;
         this.squares = Square.initSquareData();
-        this.handlePlayerTurnEnd = this.handlePlayerTurnEnd.bind(this);
         this.domElmPlayersList = [];
         this.iconArray = ["player-icons/1.png",
         "player-icons/2.png",
@@ -25,6 +24,12 @@ class Game{
         "player-icons/10.png",
         "player-icons/11.png",
         "player-icons/12.png"];
+
+        // Bindings
+        this.handlePlayerTurnEnd = this.handlePlayerTurnEnd.bind(this);
+        this.showBuyModal = this.showBuyModal.bind(this);
+        this.showDiceModal = this.showDiceModal.bind(this);
+        this.showInteractiveModal = this.showInteractiveModal.bind(this);
     }
 
     play(addPlayers) {
@@ -89,9 +94,13 @@ class Game{
         let title = 'Please select an action';
         let content = $('<div>');
         let buttons = {'End Turn': game.handlePlayerTurnEnd};
+        this.currentPlayer.updateDisplay();
         this.showModal(title, content, buttons);
     }
 
+    /**
+     * Show modal that allows current player to roll dice
+     */
     showDiceModal() {
         let title = '';
         let content = $('<div>').addClass('dice');
@@ -99,6 +108,9 @@ class Game{
         this.showModal(title, content, buttons);
     }
 
+    /**
+     * Show modal that allows current player to buy or pass on current property
+     */
     showBuyModal() {
         let player = this.currentPlayer;
         let square = player.square;
@@ -116,7 +128,7 @@ class Game{
                 player.buyProperty();
                 game.showInteractiveModal();
             },
-            'Pass': this.turnEndCallback
+            'Pass': game.showInteractiveModal
         }
 
         this.showModal(title, content, buttons);
