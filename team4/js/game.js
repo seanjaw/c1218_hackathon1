@@ -246,19 +246,30 @@ class Modal {
         } else {
 
             let singlePlayerName = $("#playerName").val();
-            this.collectPlayerNames(singlePlayerName);
-            console.log("Player Name is ", singlePlayerName);
-            this.playerNumberIndex--;
-            $("#playerName").val("");
-            $("#playerName").attr({"placeholder": "Enter The Next Player Name!"});
+            
+            if (singlePlayerName === ""){
 
-            if (this.playerNumberIndex === 0){
+                $("#playerName")
+                    .attr({"placeholder": "Please Enter A Name!"})
+                    .css("background-color", "red");
 
-                console.log("Ended Name Requests");
-                this.hideModal();
-                this.displayPlayers();
-                this.createPlayersArray();
+            } else {
 
+                this.collectPlayerNames(singlePlayerName);
+                console.log("Player Name is ", singlePlayerName);
+                this.playerNumberIndex--;
+                $("#playerName").val("");
+                $("#playerName")
+                    .attr({"placeholder": "Enter The Next Player Name!"})
+                    .css("background-color", "white");
+
+                if (this.playerNumberIndex === 0){
+
+                    console.log("Ended Name Requests");
+                    this.hideModal();
+                    this.displayPlayers();
+                    this.createPlayersArray();
+                }
             }
         }
     }
