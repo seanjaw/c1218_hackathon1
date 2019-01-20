@@ -11,6 +11,7 @@ class Card{
         this.amount = amount;
         this.text = text;
         this.deckName= deckName;
+        this.cardDOM = this.createCardDOM();
     }
 
     /**
@@ -33,25 +34,21 @@ class Card{
 
         return cards;
     }
+
     createCardDOM(){
-
-    let informationP = $('<p>').text(this.text);
-    let leftDiv = $('<div>', {'class':'left'}).append(informationP);
-    let imageP  = $('<p>').text('image');
-    let rightDiv  = $('<div>',{'class':'right'}).append(imageP);
-    let bottomContainerDiv = $('<div>' , {'class':'bottomContainer'})
-        .append([leftDiv, rightDiv]);
-    let titleH2 = $('<h2>').text(this.deckName);
-    let topContainerDiv  = $('<div>', {'class':'topContainer textAlign'})
-        .append(titleH2);
-    let chestBorderDiv = $('<div>', {'class':'chestBorder'})
-        .append([topContainerDiv,bottomContainerDiv]);
-    let chestDiv =     $('<div>', {'class':'chest'})
-        .append(chestBorderDiv);
-    return chestDiv;
-
-
-
-
+        let informationP = $('<p>').text(this.text);
+        let leftDiv = $('<div>', {'class':'left'}).append(informationP);
+        let imageP  = $('<p>').text('image');
+        let rightDiv  = $('<div>',{'class':'right'}).append(imageP);
+        let bottomContainerDiv = $('<div>' , {'class':'bottomContainer'})
+            .append([leftDiv, rightDiv]);
+        let titleH2 = $('<h2>').text(this.deckName);
+        let topContainerDiv  = $('<div>', {'class':'topContainer textAlign'})
+            .append(titleH2);
+        let chestBorderDiv = $('<div>', {'class':'chestBorder'})
+            .append([topContainerDiv,bottomContainerDiv]);
+        let chestDiv =     $('<div>', {'class':'chest'})
+            .append(chestBorderDiv);
+        return chestDiv;
     }
 }

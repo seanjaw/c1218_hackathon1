@@ -1,33 +1,41 @@
 class Player{
-    constructor( square, avatar, name, turnEndCallback){
+    constructor( square, avatar, name, turnEndCallback, domElmPlayerInfo, playerColor){
+        // Private Properties
+        this._avatar = null;
+        this.avatarSmall = null;
 
+        // Passed In Properties
         this.square = square;
         this.avatar = avatar;
         this.name = name;
         this.turnEndCallback = turnEndCallback;
+        this.domElmPlayerInfo = domElmPlayerInfo;
 
+        // Derived Properties
         this.createPlayer = null; //Used in createNewPlayerList()
-        this.playerColor = ["red", "blue", "green", "yellow"];//Colors used to store in individual players in createPlayer()
+        this.playerColorArray = ["red", "blue", "green", "yellow"];//TODO: setup with player object array Colors used to store in individual players in createPlayer()
         this.money = 1500;
         this.properties = [];
-        this.active = true;
+        this.playerColor = playerColor;
 
+        // DOM Properties
         this.playerDom = this.createDOM();
+        this.playerDisplayDom = null;
 
+        // Bindings
         this.buyProperty = this.buyProperty.bind(this);
         this.rolldice = this.rolldice.bind(this);
         this.addMoney = this.addMoney.bind(this);
         this.removeMoney = this.removeMoney.bind(this);
-
     
         this.diceArray = null;
         this.diceTotal = null;
-        this.divToAppend = null;
         this.jailCount = 0;
 
         this.totalColorCount = {
             brown: 2,
             blue: 3,
+            pink: 3,
             orange: 3,
             yellow: 3,
             red: 3,
@@ -36,13 +44,54 @@ class Player{
         };
 
         this.myColorCount = {
-            brown: 0,
-            blue: 0,
-            orange: 0,
-            yellow: 0,
-            red: 0,
-            green: 0,
-            grey: 0,
+            brown: {
+                colorCount: 0,
+                totalHouseCount: 0,
+                totalHotelCount: 0,
+                arrayOfHouseCount: [0, 0]
+            },
+            blue: {
+                colorCount: 0,
+                totalHouseCount: 0,
+                totalHotelCount: 0,
+                arrayOfHouseCount: [0, 0, 0]
+            },
+            pink: {
+                colorCount: 0,
+                totalHouseCount: 0,
+                totalHotelCount: 0,
+                arrayOfHouseCount: [0, 0, 0]
+            },
+            orange: {
+                colorCount: 0,
+                totalHouseCount: 0,
+                totalHotelCount: 0,
+                arrayOfHouseCount: [0, 0, 0]
+            },
+            yellow: {
+                colorCount: 0,
+                totalHouseCount: 0,
+                totalHotelCount: 0,
+                arrayOfHouseCount: [0, 0, 0]
+            },
+            red: {
+                colorCount: 0,
+                totalHouseCount: 0,
+                totalHotelCount: 0,
+                arrayOfHouseCount: [0, 0, 0]
+            },
+            green: {
+                colorCount: 0,
+                totalHouseCount: 0,
+                totalHotelCount: 0,
+                arrayOfHouseCount: [0, 0, 0]
+            },
+            grey: {
+                colorCount: 0,
+                totalHouseCount: 0,
+                totalHotelCount: 0,
+                arrayOfHouseCount: [0, 0]
+            },
         }
     }
 
@@ -109,7 +158,7 @@ class Player{
             this.freeParking();
         } else if (this.square.type === 'go-to-jail'){
             this.updateDisplay();
-            this.showLocationModal();
+            game.showLocationFrame();
             this.goToJail();
             this.jailCount++;
         }
@@ -117,78 +166,138 @@ class Player{
         this.updateDisplay();
 
         if (PROPERTY_TYPES.indexOf(this.square.type) !== -1 && this.square.owner === null && this.money >= this.square.price) {
-            this.showBuyModal();
+            game.showBuyFrame();
         } else if (PROPERTY_TYPES.indexOf(this.square.type) !== -1 && this.square.owner !== null) {
-            if(this.square.owner === this && this.square.type === 'utility'){
+            if(this.square.owner === this && this.square.type !== 'street'){
                 return;
             }else if(this.square.owner === this && this.suqare.type !== 'utility'){
-                this.showBuyModal();
+                game.showBuyFrame();
             } else {
                 this.showRentModal();
             }
         } else if (this.square.type === 'community-chest') {
             let card = game.communityChestCards.pop();
-            this.showCardModal(card);
+            game.showCardFrame(card);
         } else if (this.square.type === 'chance') {
             let card = game.chanceCards.pop();
-            this.showCardModal(card);
+            game.showCardFrame(card);
         } else {
-            this.showLocationModal();
+            game.showLocationFrame();
         }
     }
 
     /*
      * Buy property for current square
      */
+    houseCost() {
+        return this.square.price / 2;
+    }
+
+    buyHouse(){
+        // buy house
+        // house price
+        var colorInMyColorCount = this.myColorCount[this.square.color];
+        var houseCost = this.houseCost();
+        this.money -= houseCost;
+        colorInMyColorCount.totalHouseCount++;
+        // TODO: ADD FUNCTIONALITY FOR DISTRIBUTING HOUSE EVENLY
+        var minimum = Math.min.apply(Math, colorInMyColorCount.arrayOfHouseCount);
+        var indexOfHouseToAdd = colorInMyColorCount.arrayOfHouseCount.indexOf(minimum);
+        colorInMyColorCount.arrayOfHouseCount[indexOfHouseToAdd]++;
+        this.square.houseCount++;
+    }
+
+    buyHotel(){
+        if(this.square.hotelCount === 4){
+            return;
+        }
+        var colorInMyColorCount = this.myColorCount[this.square.color];
+        var hotelPrice = this.houseCost();
+        this.money -= hotelPrice;
+        colorInMyColorCount.totalHotelCount++;
+        this.square.hotelCount++;
+        this.square.houseCount -= 4;
+        colorInMyColorCount.totalHouseCount -= 4;
+        /*
+        for(var i = 0; i < 4; i++){
+            if(i >= colorInMyColorCount.arrayOfHouseCount.length){
+                i = i - colorInMyColorCount.arrayOfHouseCount.length;
+            }
+            colorInMyColorCount.arrayOfHouseCount[i] -= 1;
+        }
+        */
+    }
+
     buyProperty() {
-        if(this.totalColorCount[this.square.color] === this.myColorCount[this.square.color]){
-            // buy house
-            // house price
-            this.money -= this.square.price / 2;
-            this.square.house++;
+        var colorInMyColorCount = this.myColorCount[this.square.color];
+        if(this.square.type === 'street' && this.totalColorCount[this.square.color] === colorInMyColorCount.colorCount){
+/*
+            var imageToAppend = $('<div>').css({
+                'background-image': 'url(../houseIcon/greenHouse.png)',
+                'background-size': 'contain',
+                'background-repeat': 'no-repeat',
+                'width': '50px',
+                'height': '50px',
+                'z-index': 10,
+            });
+
+            this.square.squareDom.find('.propcolor').append(imageToAppend);
+*/
+            if(colorInMyColorCount.totalHouseCount === 4){
+                this.buyHotel()
+            }else {
+                this.buyHouse();
+            }
             console.log('Buy property: a house on', this.square.title, ' for $', this.square.price/2);
         } else {
             // buy street
             this.money -= this.square.price;
             this.addProperty(this.square);
-            this.myColorCount[this.square.color]++;
+            if(this.square.type === 'street'){
+                colorInMyColorCount.colorCount++;
+            }
+
             console.log('Buy property: ', this.square.title, ' for $', this.square.price);
         }
     }
 
+    sellHouse(property) {
+        this.money += property.price / 4;
+        property.houseCount--;
+        this.myColorCount[property.color].totalHouseCount--;
+    }
+
+    sellHotel(property){
+        this.money += (property.price) * 5 / 4;
+        property.hotelCount--;
+        this.myColorCount[property.color].totalHotelCount--;
+    }
 
     calculateRent( property, renter) {
         // Currently basic rent only
         let rent = 0;
         var count = 0;
-        var houseCount = 0;
-
         if (property.type === 'street') {
-
-            var propertyColor = property.color;
-            for(var index = 0; index < this.properties.length; index++){
-                if(this.properties[index].type === 'street' && propertyColor === this.properties[index].color){
-                    count++;
-                    houseCount += this.properties[index].house;
-                }
-            }
-            if(houseCount>0){
-                rent = property.rentCosts[houseCount + 1];
-            } else if(count === this.totalColorCount[propertyColor]){
-                rent = parseInt(property.rentCosts[0]) * 2;
+            var propertyColor = this.myColorCount[property.color];
+            if(property.hotelCount > 0){
+                rent = property.rentCosts[property.rentCosts.length - 1];
+            }else if(property.houseCount > 0) {
+                rent = property.rentCosts[property.houseCount + 1];
+            } else if(this.totalColorCount[property.color] === propertyColor.colorCount) {
+                rent = property.rentCosts[1];
             } else {
-                rent = parseInt(property.rentCosts[0]);
+                rent = property.rentCosts[0];
             }
         } else if (property.type === 'railroad') {
             for(var index = 0; index < this.properties.length; index++){
                 if(this.properties[index].type === 'railroad'){
                     count++;
                 }
-                if(count >= 2){
-                    rent =  property.rentCosts[1];
-                } else {
-                    rent = property.rentCosts[0];
-                }
+            }
+            if(count >= 2){
+                rent =  property.rentCosts[1];
+            } else {
+                rent = property.rentCosts[0];
             }
         } else if (property.type === 'utility') {
             // TODO: Store current die rolls for players
@@ -205,7 +314,6 @@ class Player{
                 rent = 4 * renter.diceTotal;
             }
         }
-
 
         return rent;
     }
@@ -308,64 +416,23 @@ class Player{
     updateDisplay() {
         this.square.squareDom.append(this.playerDom);
         this.playerDom.css({
-            position: 'relative',
-            top: 5,
+            position: 'absolute',
+            bottom: 0,
             left: 5,
             height: '60px',
             width: '60px',
-            'z-index': 2
+            'z-index': 4
         });
+        $(this.domElmPlayerInfo).text("Money $" + this.money);
+        this.highlightPropertiesOwned();
     } 
 
-    showDiceModal() {
-        let message =  `Roll Dice`;
-        let dialog = $('<div>').text(message);
-
-        let rollDiceCallback = () => {
-            dialog.dialog('close');
-            this.rolldice();
-        };
-
-        dialog.dialog({
-            modal: true, 
-            dialogClass: "no-close", 
-            height: 300,
-            buttons: [{text: "Roll Dice", click: rollDiceCallback}]
-        });
-    }
-
-    showCardModal(card) {
-        // let message =  `${deckName}: ${card.text}`;
-        let dialog = $('<div>');
-        let cardDisplay = card.createCardDOM();
-        dialog.append(cardDisplay);
-        let okCallback;
-        if (card.type === 'pay-bank') {
-            okCallback = () => {
-                dialog.dialog('close');
-                this.removeMoney(card.amount);
-                this.turnEndCallback();
-            };
-        } else if (card.type === 'receive-bank') {
-            okCallback = () => {
-                dialog.dialog('close');
-                this.addMoney(card.amount);
-                this.turnEndCallback();
-            };            
-        } else if (card.type === 'receive-players') {
-            okCallback = () => {
-                dialog.dialog('close');
-                this.receiveMoneyFromPlayers(card.amount);
-                this.turnEndCallback();
-            }; 
+    highlightPropertiesOwned(){
+        let color = this.playerColor;
+        for (var propertyIndex = 0; propertyIndex < this.properties.length; propertyIndex++){
+            let domToChangeColor = this.properties[propertyIndex].squareDom;
+            $(domToChangeColor).css("box-shadow", "inset 0 0 1em 0.25em " + color);
         }
-
-        dialog.dialog({
-            modal: true, 
-            dialogClass: "no-close", 
-            height: 300,
-            buttons: [{text: "OK", click: okCallback}]
-        });
     }
 
     showRentModal() {
@@ -388,76 +455,46 @@ class Player{
         });
     }
 
-    showBuyModal() {
-        const {square} = this;
-
-        let message =  `Buy '${square.title}' for \$${square.price}?`;
-        let dialog = $('<div>').text(message);
-        if(square.type === 'street'){
-            let deed = square.deedDOM;
-            dialog.append(deed);
-        }
-        let buyCallback = () => {
-            dialog.dialog('close');
-            this.buyProperty();
-            this.turnEndCallback();
-        };
-
-        let auctionCallback = () => {
-            dialog.dialog('close');
-            this.turnEndCallback();
-        };
-
-        dialog.dialog({
-            modal: true, 
-            dialogClass: "no-close", 
-            height: 520,
-            buttons: [
-                {text: "Buy", click: buyCallback},
-                {text: "Auction", click: auctionCallback}
-            ]
-        });
-    }
-
-    showLocationModal() {
-        let message =  `Landed on '${this.square.title}'`;
-        let dialog = $('<div>').text(message);
-
-        let okCallback = () => {
-            dialog.dialog('close');
-            this.turnEndCallback();
-        };
-
-        dialog.dialog({
-            modal: true, 
-            dialogClass: "no-close", 
-            height: 300,
-            buttons: [{text: "OK", click: okCallback}]
-        });
-    }
-
     //Creating new player list with accordion settings
     createNewPlayerList(numberOfPlayers){ 
         
         let numOfPlayers = parseInt(numberOfPlayers);
 
-        this.divToAppend = $("<div>")
+        this.playerDisplayDom = $("<div>")
             .addClass("player" + numOfPlayers)
             .addClass("trackPlayerIndex")
             .text("Input Information");
         
         let currentPlayerIndex = $(".trackPlayerIndex").length;
         this.createPlayer = $("<h1>")
-            .css("background-color", this.playerColor[currentPlayerIndex])
+            .css("background-color", this.playerColorArray[currentPlayerIndex])
             .text("Player" + numOfPlayers);        
         $("#accordion").append(this.createPlayer);
-        $(this.createPlayer).after(this.divToAppend);
+
+        this.playerColor = this.playerColorArray[currentPlayerIndex];
+
+        $(this.createPlayer).after(this.playerDisplayDom);
+        
     }
 
     setPlayerList(){ //Set jQuery UI after players loaded
         $("#accordion").accordion({
             collapsible: "true"
           });
+    }
+
+    /**
+     * Always set avatar and avatarSmall at same time
+     */
+    set avatar(newAvatar) {
+        this._avatar = newAvatar;
+        if (newAvatar) {
+            this.avatarSmall = this._avatar.replace('.png', '-face.png');
+        }
+    }
+
+    get avatar() {
+        return this._avatar;
     }
 }
 
