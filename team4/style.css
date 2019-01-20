@@ -926,8 +926,9 @@ h1 {
     width: 60%;
 }
 
-.right{
+.right {
     width: 30%;
+}
 .propInfo > .image {
     opacity: 0.4;
 }
