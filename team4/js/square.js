@@ -16,7 +16,7 @@ class Square {
 
         this.house = 0;
         this.squareDom = null;
-        this.deedDOM = null;
+        this.deedDOM = this.createDeedDOM();
     }
 
 
@@ -39,7 +39,6 @@ class Square {
 
             // Attach DOM objects
             square.squareDom = $('.square-' + lineIndex);
-            square.deedDOM = square.createDeedDOM();
             
             // Set next neighboring square
             square.next = neighbor;

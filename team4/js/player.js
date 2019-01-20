@@ -1,21 +1,26 @@
 class Player{
     constructor( square, avatar, name, turnEndCallback, domElmPlayerInfo){
+        // Private Properties
+        this._avatar = null;
 
+        // Passed In Properties
         this.square = square;
         this.avatar = avatar;
         this.name = name;
         this.turnEndCallback = turnEndCallback;
         this.domElmPlayerInfo = domElmPlayerInfo;
 
+        // Derived Properties
+        this.avatarSmall = null;
         this.createPlayer = null; //Used in createNewPlayerList()
         this.playerColor = ["red", "blue", "green", "yellow"];//Colors used to store in individual players in createPlayer()
         this.money = 1500;
         this.properties = [];
-        this.active = true;
 
         this.playerDom = this.createDOM();
         this.playerDisplayDom = null;
 
+        // Bindings
         this.buyProperty = this.buyProperty.bind(this);
         this.rolldice = this.rolldice.bind(this);
         this.addMoney = this.addMoney.bind(this);
@@ -114,12 +119,12 @@ class Player{
         this.updateDisplay();
 
         if (PROPERTY_TYPES.indexOf(this.square.type) !== -1 && this.square.owner === null && this.money >= this.square.price) {
-            this.showBuyModal();
+            game.showBuyModal();
         } else if (PROPERTY_TYPES.indexOf(this.square.type) !== -1 && this.square.owner !== null) {
             if(this.square.owner === this && this.square.type === 'utility'){
                 return;
             }else if(this.square.owner === this && this.suqare.type !== 'utility'){
-                this.showBuyModal();
+                game.showBuyModal();
             } else {
                 this.showRentModal();
             }
@@ -313,23 +318,6 @@ class Player{
             'z-index': 2
         });
         $(this.domElmPlayerInfo).text("Money $" + this.money);
-    } 
-
-    showDiceModal() {
-        let message =  `Roll Dice`;
-        let dialog = $('<div>').text(message);
-
-        let rollDiceCallback = () => {
-            dialog.dialog('close');
-            this.rolldice();
-        };
-
-        dialog.dialog({
-            modal: true, 
-            dialogClass: "no-close", 
-            height: 300,
-            buttons: [{text: "Roll Dice", click: rollDiceCallback}]
-        });
     }
 
     showCardModal(deckName, card) {
@@ -386,37 +374,6 @@ class Player{
         });
     }
 
-    showBuyModal() {
-        const {square} = this;
-
-        let message =  `Buy '${square.title}' for \$${square.price}?`;
-        let dialog = $('<div>').text(message);
-        if(square.type === 'street'){
-            let deed = square.deedDOM;
-            dialog.append(deed);
-        }
-        let buyCallback = () => {
-            dialog.dialog('close');
-            this.buyProperty();
-            this.turnEndCallback();
-        };
-
-        let auctionCallback = () => {
-            dialog.dialog('close');
-            this.turnEndCallback();
-        };
-
-        dialog.dialog({
-            modal: true, 
-            dialogClass: "no-close", 
-            height: 520,
-            buttons: [
-                {text: "Buy", click: buyCallback},
-                {text: "Auction", click: auctionCallback}
-            ]
-        });
-    }
-
     showLocationModal() {
         let message =  `Landed on '${this.square.title}'`;
         let dialog = $('<div>').text(message);
@@ -456,6 +413,20 @@ class Player{
         $("#accordion").accordion({
             collapsible: "true"
           });
+    }
+
+    /**
+     * Always set avatar and avatarSmall at same time
+     */
+    set avatar(newAvatar) {
+        this._avatar = newAvatar;
+        if (newAvatar) {
+            this.avatarSmall = this._avatar.replace('.png', '-face.png');
+        }
+    }
+
+    get avatar() {
+        return this._avatar;
     }
 }
 

@@ -34,7 +34,7 @@ class Game{
             newPlayer.updateDisplay();
         }
 
-        this.players[0].rolldice();
+        this.showDiceModal(this.currentPlayer);
     }
 
     handlePlayerTurnEnd() {
@@ -42,7 +42,63 @@ class Game{
         if (this.currentPlayerIndex >= this.players.length) {
             this.currentPlayerIndex = 0;
         }
-        this.players[this.currentPlayerIndex].rolldice();
+        this.showDiceModal(this.currentPlayer);
+    }
+
+    showModal( title, content, buttons ) {
+        let dialog = $('.action-dialog-container');
+        dialog.find('.avatar .image').css({
+            'background-image': this.currentPlayer.avatarSmall
+        });
+        dialog.find('.avatar .name').text(this.currentPlayer.name);
+
+        let buttonsSection = dialog.find('.buttons');
+        buttonsSection.empty();
+        for (let buttonName in buttons) {
+            let callback = buttons[buttonName];
+            let button = $('<button>')
+                .text(buttonName)
+                .click(callback);
+            buttonsSection.append(button);
+        }
+
+        dialog.find('.action > .content').empty().append(content);
+        dialog.find('.action > .title').text(title);
+        dialog.css({display: 'block'});
+    }
+
+    showDiceModal(player) {
+        let title = '';
+        let content = $('<div>').addClass('dice');
+        let buttons = {'Roll Dice': player.rolldice};
+        this.showModal(title, content, buttons);
+    }
+
+    showBuyModal() {
+        let player = this.currentPlayer;
+        let square = player.square;
+
+        let title = `Buy ${square.title}?`;
+        let content = null;
+
+        if (square.type === 'street') {
+            title = '';
+            content = player.square.deedDOM;
+        }
+
+        let buttons = {
+            'Buy': () => {
+                player.buyProperty();
+                game.handlePlayerTurnEnd();
+            },
+            'Pass': this.turnEndCallback
+        }
+
+        this.showModal(title, content, buttons);
+    }
+
+    get currentPlayer() {
+        return this.players[this.currentPlayerIndex];
     }
 }
 
