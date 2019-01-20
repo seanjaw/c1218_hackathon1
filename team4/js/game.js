@@ -86,15 +86,63 @@ class Game{
         dialog.css({display: 'block'});
     }
 
+    makeSellPropertyTable() {
+        var player = game.currentPlayer;
+        var divToHoldTable = $('<div>');
+        var table = document.createElement('table');
+        var index = 0;
+        var cellIndex = 0;
+        for(var key in player.myColorCount){
+            for(var insideKey in player.myColorCount[key].arrayOfHouseCount){
+                console.log(player.myColorCount[key].arrayOfHouseCount[insideKey]);
+                console.log(insideKey);
+                if( player.myColorCount[key].arrayOfHouseCount[insideKey] > 0){
+                    var row = table.insertRow(index);
+                    //title
+                    var cell0 = row.insertCell(0);
+                    // number of house
+                    var cell1 = row.insertCell(1);
+                    //button
+                    var cell2 = row.insertCell(2);
+                    var value = player.myColorCount[key].arrayOfHouseCount[insideKey];
+                    var buttonElement = document.createElement("BUTTON").innerText('Sell 1 House');
+                    for(var index = 0; index < game.squares.length; index++){
+                        if(game.squares[index].title === insideKey){
+                            var squareToSellHouse = game.squares[index];
+                            break;
+                        }
+                    }
+                    $(buttonElement).onClick(function(){
+                        game.currentPlayer.sellHouse(squareToSellHouse);
+                    });
+                    //var inputElement = document.createElement("INPUT");
+                    //inputElement.setAttribute("type", "number");
+                    //$(inputElement).css('width', '100px');
+                    cell0.innerHTML = insideKey;
+                    cell1.innerHTML = value;
+                   // cell2.innerHTML = inputElement;
+
+                    $(cell2).append(inputElement);
+                    index++;
+                }
+            }
+        }
+        divToHoldTable.append(table);
+        return divToHoldTable;
+    }
+
     /**
      * Show dialog that allows current player to conduct business or select End Turn
      */
     showInteractiveFrame() {
         // TODO: Add Mortgage|Unmortgage|Trade buttons here
+        var tableData = this.makeSellPropertyTable();
 
         let title = 'Please select an action';
-        let content = $('<div>');
-        let buttons = {'End Turn': game.handlePlayerTurnEnd};
+        let content = tableData;
+        let buttons = {
+            'End Turn': game.handlePlayerTurnEnd,
+        };
         this.currentPlayer.updateDisplay();
         this.showFrame(title, content, buttons);
     }
