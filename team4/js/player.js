@@ -21,6 +21,7 @@ class Player{
         this.addMoney = this.addMoney.bind(this);
         this.removeMoney = this.removeMoney.bind(this);
 
+    
         this.diceArray = null;
         this.diceTotal = null;
         this.jailCount = 0;
@@ -47,13 +48,16 @@ class Player{
     }
 
     rolldice(){
+        //to:do not hard coded make number of die up there. 
         let rollArray= [];
-        for (let die=0; die<2; die++ ){
-            let roll = Math.floor(Math.random()*5) + 1;
+        let total = 0;
+        
+        // to do: totally of dice should be done as they are calculated or after via a loop, not hard coded values
+        for (let die=0; die< DICE_NUMBER; die++ ){
+            let roll = Math.floor(Math.random()*(DICE_NUMBER_OF_SIDES-1)) + 1;
             rollArray.push(roll);
+            total+=rollArray[die];
         }
-
-        let total = rollArray[0] + rollArray[1];
         this.move( total );
         this.diceArray = rollArray;
         this.diceTotal = total;
@@ -125,10 +129,10 @@ class Player{
             }
         } else if (this.square.type === 'community-chest') {
             let card = game.communityChestCards.pop();
-            this.showCardModal( 'Community Chest', card);
+            this.showCardModal(card);
         } else if (this.square.type === 'chance') {
             let card = game.chanceCards.pop();
-            this.showCardModal( 'Chance', card);
+            this.showCardModal(card);
         } else {
             this.showLocationModal();
         }
@@ -332,10 +336,10 @@ class Player{
         });
     }
 
-    showCardModal(deckName, card) {
-        let message =  `${deckName}: ${card.text}`;
-        let dialog = $('<div>').text(message);
-        let cardDisplay = Card.createCardDOM(deckName, card);
+    showCardModal(card) {
+        // let message =  `${deckName}: ${card.text}`;
+        let dialog = $('<div>');
+        let cardDisplay = card.createCardDOM();
         dialog.append(cardDisplay);
         let okCallback;
         if (card.type === 'pay-bank') {

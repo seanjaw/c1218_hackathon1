@@ -1,8 +1,12 @@
+const COMMUNITY_CHEST_NAME = 'LOVE';
+const CHANCE_NAME = 'FRIENDSHIP'
+const DICE_NUMBER = 2;
+const DICE_NUMBER_OF_SIDES= 6;
 class Game{
     constructor(){
         this.players = [];
-        this.communityChestCards = Card.initCards(COMMUNITY_CHEST_DATA);
-        this.chanceCards = Card.initCards(CHANCE_DATA);
+        this.communityChestCards = Card.initCards(COMMUNITY_CHEST_NAME, COMMUNITY_CHEST_DATA);
+        this.chanceCards = Card.initCards(CHANCE_NAME, CHANCE_DATA);
         this.currentPlayerIndex = 0;
         this.squares = Square.initSquareData();
         this.handlePlayerTurnEnd = this.handlePlayerTurnEnd.bind(this);

@@ -6,17 +6,18 @@ class Card{
      * @param {string} amount - Money amount affected by card if applicable.
      * @param {string} text - Text to display on card 
      */
-    constructor( type, amount, text ) {
+    constructor( type, amount, text, deckName ) {
         this.type = type;
         this.amount = amount;
         this.text = text;
+        this.deckName= deckName;
     }
 
     /**
      * Parse
      * @return {Array:Card}
      */
-    static initCards( rawData ) {
+    static initCards( deckName, rawData ) {
         let cards = [];
         let lines = rawData.split('\n');
         for ( let lineIndex= lines.length - 1; lineIndex >= 0; lineIndex--){
@@ -26,34 +27,31 @@ class Card{
             if (props[1]) {
                 props[1] = Number(props[1]);
             }
-
+            props.push(deckName);
             cards.push(new Card(...props));
         }
 
         return cards;
     }
-    static createCardDOM(deckName, card){
-        let html=`<div class="chest">
-        <div class="chestBorder">
-            <div class="topContainer textAlign">
-                    <h2>Community Chest</h2>
-            </div>
+    createCardDOM(){
 
-            <div class="bottomContainer">
-                <div class="left">
-                        <p>Hospital Fees. Pay 100.</p>
-                </div>
-                
-                <div class="right">
-                        <p>image</p>
-                </div>
-                
-            </div>
-          
+    let informationP = $('<p>').text(this.text);
+    let leftDiv = $('<div>', {'class':'left'}).append(informationP);
+    let imageP  = $('<p>').text('image');
+    let rightDiv  = $('<div>',{'class':'right'}).append(imageP);
+    let bottomContainerDiv = $('<div>' , {'class':'bottomContainer'})
+        .append([leftDiv, rightDiv]);
+    let titleH2 = $('<h2>').text(this.deckName);
+    let topContainerDiv  = $('<div>', {'class':'topContainer textAlign'})
+        .append(titleH2);
+    let chestBorderDiv = $('<div>', {'class':'chestBorder'})
+        .append([topContainerDiv,bottomContainerDiv]);
+    let chestDiv =     $('<div>', {'class':'chest'})
+        .append(chestBorderDiv);
+    return chestDiv;
 
-        </div>
-    </div>`;
-    
-    return $(html);
+
+
+
     }
 }
