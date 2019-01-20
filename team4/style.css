@@ -842,6 +842,7 @@ h1 {
 
 /* css for deed card */
 .deed{
+    font-family: arial, helvetica, sans-serif;
     width: 220px;
     height: 250px;
     border: 1px solid black;
@@ -987,6 +988,10 @@ h1 {
     width: 100%;
     font-size: 1.5em;
     padding: 5px;
+}
+.action-dialog .action > .title  span {
+    display: block;
+    line-height: 2;
 }
 .action-dialog .action > .content {
     flex: 1;
