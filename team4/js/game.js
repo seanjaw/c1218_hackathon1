@@ -27,9 +27,9 @@ class Game{
 
         // Bindings
         this.handlePlayerTurnEnd = this.handlePlayerTurnEnd.bind(this);
-        this.showBuyModal = this.showBuyModal.bind(this);
-        this.showDiceModal = this.showDiceModal.bind(this);
-        this.showInteractiveModal = this.showInteractiveModal.bind(this);
+        this.showBuyFrame = this.showBuyFrame.bind(this);
+        this.showDiceFrame = this.showDiceFrame.bind(this);
+        this.showInteractiveFrame = this.showInteractiveFrame.bind(this);
     }
 
     play(addPlayers) {
@@ -44,7 +44,7 @@ class Game{
             newPlayer.updateDisplay();
         }
 
-        this.showDiceModal();
+        this.showDiceFrame();
     }
 
     handlePlayerTurnEnd() {
@@ -54,16 +54,16 @@ class Game{
         }
         
         this.displayCurrentMoney();
-        this.showDiceModal();
+        this.showDiceFrame();
     }
 
     /**
-     * Show main modal in center of board
-     * @param {string} title - Title for modal
-     * @param {*} content - DOM content for modal
+     * Show main dialog in center of board
+     * @param {string} title - Title for dialog
+     * @param {*} content - DOM content for dialog
      * @param {*} buttons - {buttonLabel1: callback1, ..., buttonLabelN: callbackN}
      */
-    showModal( title, content, buttons ) {
+    showFrame( title, content, buttons ) {
         let dialog = $('.action-dialog-container');
         dialog.find('.avatar .image').css({
             'background-image': this.currentPlayer.avatarSmall
@@ -86,32 +86,33 @@ class Game{
     }
 
     /**
-     * Show modal that allows current player to conduct business or select End Turn
+     * Show dialog that allows current player to conduct business or select End Turn
      */
-    showInteractiveModal() {
+    showInteractiveFrame() {
         // TODO: Add Mortgage|Unmortgage|Trade buttons here
 
         let title = 'Please select an action';
         let content = $('<div>');
         let buttons = {'End Turn': game.handlePlayerTurnEnd};
         this.currentPlayer.updateDisplay();
-        this.showModal(title, content, buttons);
+        this.showFrame(title, content, buttons);
     }
 
     /**
-     * Show modal that allows current player to roll dice
+     * Show frame that allows current player to roll dice
      */
-    showDiceModal() {
+    showDiceFrame() {
         let title = '';
         let content = $('<div>').addClass('dice');
         let buttons = {'Roll Dice': game.currentPlayer.rolldice};
-        this.showModal(title, content, buttons);
+        this.showFrame(title, content, buttons);
     }
 
     /**
-     * Show modal that allows current player to buy or pass on current property
+     * Show frame that allows current player to buy or pass on current property
      */
-    showBuyModal() {
+    showBuyFrame() {
+        // TODO: Implement property auction on Pass
         let player = this.currentPlayer;
         let square = player.square;
 
@@ -126,12 +127,40 @@ class Game{
         let buttons = {
             'Buy': () => {
                 player.buyProperty();
-                game.showInteractiveModal();
+                game.showInteractiveFrame();
             },
-            'Pass': game.showInteractiveModal
+            'Pass': game.showInteractiveFrame
         }
 
-        this.showModal(title, content, buttons);
+        this.showFrame(title, content, buttons);
+    }
+
+    /**
+     * Show frame that allows current player to buy or pass on current property
+     */
+    showCardFrame(card) {
+        let title = '';
+        let content = card.cardDOM;
+ 
+        let okCallback;
+        if (card.type === 'pay-bank') {
+            okCallback = () => {
+                this.currentPlayer.removeMoney(card.amount);
+                this.showInteractiveFrame();
+            };
+        } else if (card.type === 'receive-bank') {
+            okCallback = () => {
+                this.currentPlayer.addMoney(card.amount);
+                this.showInteractiveFrame();
+            };            
+        } else if (card.type === 'receive-players') {
+            okCallback = () => {
+                this.currentPlayer.receiveMoneyFromPlayers(card.amount);
+                this.showInteractiveFrame();
+            }; 
+        }
+
+        this.showFrame( title, content, {'OK': okCallback} );
     }
 
     get currentPlayer() {
