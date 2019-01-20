@@ -13,7 +13,7 @@ class Square {
         this.owner = null;
         this.next = null;
 
-
+        this.hotelCount = 0;
         this.houseCount = 0;
         this.squareDom = null;
         this.deedDOM = null;
