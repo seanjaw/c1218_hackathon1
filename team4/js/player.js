@@ -1,5 +1,5 @@
 class Player{
-    constructor( square, avatar, name, turnEndCallback, domElmPlayerInfo){
+    constructor( square, avatar, name, turnEndCallback, domElmPlayerInfo, playerColor){
 
         this.square = square;
         this.avatar = avatar;
@@ -12,7 +12,7 @@ class Player{
         this.money = 1500;
         this.properties = [];
         this.active = true;
-        this.playerColor = null;
+        this.playerColor = playerColor;
 
         this.playerDom = this.createDOM();
         this.playerDisplayDom = null;
@@ -380,7 +380,13 @@ class Player{
     highlightPropertiesOwned(){
         // game.player[index].
         
-        let currentplayerColorArray = $(game.players[0].domElmPlayerInfo[0].previousElementSibling).css("background-color");
+        
+
+        for (var propertyIndex = 0; propertyIndex < this.properties.length; propertyIndex++){
+            let currentplayerColorArray = game.players[propertyIndex].playerColor;
+            let propertyToChangeColor = game.players[propertyIndex].square.squareDom;
+            $(propertyToChangeColor).css("box-shadow", "inset 0 0 1em 0.25em " + currentplayerColorArray);
+        }
         // let playerProperties = game.players[0].properties[0].squareDom;
 
         // let currentplayerColorArray = game.players[0].domElmPlayerInfo.css("background-color");
@@ -530,10 +536,10 @@ class Player{
             .text("Player" + numOfPlayers);        
         $("#accordion").append(this.createPlayer);
 
-        this.color = this.playerColorArray[currentPlayerIndex];
+        this.playerColor = this.playerColorArray[currentPlayerIndex];
 
         $(this.createPlayer).after(this.playerDisplayDom);
-
+        
     }
 
     setPlayerList(){ //Set jQuery UI after players loaded

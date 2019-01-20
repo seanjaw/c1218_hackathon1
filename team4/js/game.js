@@ -5,6 +5,7 @@ const DICE_NUMBER_OF_SIDES= 6;
 class Game{
     constructor(){
         this.players = [];
+        this.playerColorArray = ["red", "blue", "green", "yellow"];
         this.communityChestCards = Card.initCards(COMMUNITY_CHEST_NAME, COMMUNITY_CHEST_DATA);
         this.chanceCards = Card.initCards(CHANCE_NAME, CHANCE_DATA);
         this.currentPlayerIndex = 0;
@@ -33,11 +34,11 @@ class Game{
         for (var playerIndex = 0; playerIndex < this.domElmPlayersList.length; playerIndex++){
             let tempName = "player"+(playerIndex + 1);
             let iconName = this.iconArray[playerIndex];
-            let newPlayer =  new Player(go, iconName, tempName, this.handlePlayerTurnEnd, this.domElmPlayersList[playerIndex]);
+            let newPlayer =  new Player(go, iconName, tempName, this.handlePlayerTurnEnd, this.domElmPlayersList[playerIndex], this.playerColorArray[playerIndex]);
             this.players.push(newPlayer);
             newPlayer.updateDisplay();
         }
-        //this.players[0].rolldice();
+        this.players[0].rolldice();
     }
 
     handlePlayerTurnEnd() {
@@ -45,7 +46,7 @@ class Game{
         if (this.currentPlayerIndex >= this.players.length) {
             this.currentPlayerIndex = 0;
         }
-       //this.players[this.currentPlayerIndex].rolldice();
+       this.players[this.currentPlayerIndex].rolldice();
         this.displayCurrentMoney();
     }
     displayCurrentMoney(){
@@ -103,7 +104,7 @@ class Modal {
 
         while (this.playerNumber > 0){
             temp = new Player;
-            temp.createNewPlayerList(this.playerNumber);
+            this.playerColorContainer = temp.createNewPlayerList(this.playerNumber);
             this.playerNumber--;
         }
         temp.setPlayerList();
@@ -112,12 +113,14 @@ class Modal {
     }
     createPlayersArray(){
         let tempArray = [];
+
         for (var playerIndex = 0; playerIndex < this.playerNumber; playerIndex++){
 
             let findPlayer = playerIndex + 1;
             let tempPlayer = $(".player" + findPlayer);
             tempArray.push(tempPlayer); 
             }
+
         game.play(tempArray);
     }
 }
