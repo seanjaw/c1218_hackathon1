@@ -37,8 +37,7 @@ class Game{
             this.players.push(newPlayer);
             newPlayer.updateDisplay();
         }
-
-        this.players[0].rolldice();
+        //this.players[0].rolldice();
     }
 
     handlePlayerTurnEnd() {
@@ -46,7 +45,15 @@ class Game{
         if (this.currentPlayerIndex >= this.players.length) {
             this.currentPlayerIndex = 0;
         }
-        this.players[this.currentPlayerIndex].rolldice();
+       //this.players[this.currentPlayerIndex].rolldice();
+        this.displayCurrentMoney();
+    }
+    displayCurrentMoney(){
+
+        let currentPlayer = this.players[this.currentPlayerIndex];
+        let currentMoney = (currentPlayer.money).toString();
+        let currentDomElmPlayer = currentPlayer.domElmPlayerInfo[game.currentPlayerIndex];
+        $(currentDomElmPlayer).text("Money $" + currentMoney);
     }
 }
 

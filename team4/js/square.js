@@ -14,7 +14,7 @@ class Square {
         this.next = null;
 
 
-        this.house = 0;
+        this.houseCount = 0;
         this.squareDom = null;
         this.deedDOM = null;
     }
