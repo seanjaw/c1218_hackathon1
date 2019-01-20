@@ -38,8 +38,8 @@ class Card{
     createCardDOM(){
         let informationP = $('<p>').text(this.text);
         let leftDiv = $('<div>', {'class':'left'}).append(informationP);
-        let imageP  = $('<p>').text('image');
-        let rightDiv  = $('<div>',{'class':'right'}).append(imageP);
+        let imageImg  = $('<img>' ,  {src: 'images/cat-chance-chest-logo.png','class': 'imgChestSizing'});
+        let rightDiv  = $('<div>',{'class':'right'}).append(imageImg);
         let bottomContainerDiv = $('<div>' , {'class':'bottomContainer'})
             .append([leftDiv, rightDiv]);
         let titleH2 = $('<h2>').text(this.deckName);
