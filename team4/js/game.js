@@ -11,6 +11,7 @@ class Game{
         this.currentPlayerIndex = 0;
         this.squares = Square.initSquareData();
         this.domElmPlayersList = [];
+        this.playerNameArray = [];
         this.iconArray = ["player-icons/1.png",
         "player-icons/2.png",
         "player-icons/3.png",
@@ -32,14 +33,15 @@ class Game{
         this.showInteractiveFrame = this.showInteractiveFrame.bind(this);
         this.showLocationFrame = this.showLocationFrame.bind(this);
         this.showRentFrame = this.showRentFrame.bind(this);
+        this.play = this.play.bind(this);
     }
 
-    play(addPlayers) {
-        
+    play(addPlayers, playerNames) {
+        this.playerNameArray = playerNames;
         this.domElmPlayersList = addPlayers;
         let go = this.squares[0];
         for (var playerIndex = 0; playerIndex < this.domElmPlayersList.length; playerIndex++){
-            let tempName = "player"+(playerIndex + 1);
+            let tempName = this.playerNameArray[playerIndex];
             let iconName = this.iconArray[playerIndex];
             let newPlayer =  new Player(go, iconName, tempName, this.handlePlayerTurnEnd, this.domElmPlayersList[playerIndex], this.playerColorArray[playerIndex]);
             this.players.push(newPlayer);
@@ -224,66 +226,118 @@ class Game{
 class Modal {
 
 	constructor(modalShadow, modalBody, submitPlayers){
-		this.modalShadow = modalShadow;
+        this.modalShadow = modalShadow;
 		this.modalBody = modalBody;
         this.playerNumber = 0;
         this.submitPlayers = submitPlayers;
+        this.domElmPlayersList = [];
+        this.playerNameArray = [];
+        this.enterNameIndex = null;
+        this.firstTimeModalClick = null; 
         this.submitPlayers = this.submitPlayers.bind(this);
         this.clickHandle = this.clickHandle.bind(this);
+        this.displayPlayers = this.displayPlayers.bind(this);
     }
   
 	show(){
 
 		$(this.modalShadow).show();
         $(this.modalBody).show();
-        // $(this.submitPlayers).show();
     }
     
 	hideModal(){
 
 		$(this.modalShadow).hide();
         $(this.modalBody).hide();
-        // $(this.submitPlayers).hide();
 	}
 	
 	init(){
 
         this.submitPlayers.click(this.clickHandle);
-        // $("input").val(2);
         this.show();
+        this.firstTimeModalClick = true; 
     }
 
     clickHandle() { 
 
-        this.playerNumber = $("input").val();
-        this.hideModal();
-        $(this.submitPlayers).off("click");
-        this.displayPlayers();
-        this.createPlayersArray();
+        console.log("Made it to click!");
+
+        if (this.firstTimeModalClick){
+
+            this.firstTimeModalClick = false; 
+            this.playerNumber = $("input").val();
+            this.playerNumberIndex = this.playerNumber;
+            
+            let tempInputElm = $("<input>")
+                .attr({
+                    "type": "text",
+                    "id": "playerName",
+                    "placeholder": "Enter Name Here!"
+            });
+            $("#modalMessage").after(tempInputElm);
+            $("#modalMessage").remove();
+            $("#submitPlayers").text("ENTER");
+            $(".num-of-players").remove();
+
+        } else {
+
+            let singlePlayerName = $("#playerName").val();
+            
+            if (singlePlayerName === ""){
+
+                $("#playerName")
+                    .attr({"placeholder": "Please Enter A Name!"})
+                    .css("background-color", "red");
+
+            } else {
+
+                this.collectPlayerNames(singlePlayerName);
+                console.log("Player Name is ", singlePlayerName);
+                this.playerNumberIndex--;
+                $("#playerName").val("");
+                $("#playerName")
+                    .attr({"placeholder": "Enter The Next Player Name!"})
+                    .css("background-color", "white");
+
+                if (this.playerNumberIndex === 0){
+
+                    console.log("Ended Name Requests");
+                    this.hideModal();
+                    this.displayPlayers();
+                    this.createPlayersArray();
+                }
+            }
+        }
+    }
+
+
+    collectPlayerNames(nameToEnter) { 
+        this.playerNameArray.push(nameToEnter);
+        console.log("PlayerArray ", this.playerNameArray);
     }
 
     displayPlayers(){ 
-        let temp = null;
 
-        while (this.playerNumber > 0){
+        let temp = null;
+        this.playerNumberIndex = this.playerNumber;
+
+        while (this.playerNumberIndex > 0){
+
             temp = new Player;
-            this.playerColorContainer = temp.createNewPlayerList(this.playerNumber);
-            this.playerNumber--;
+            this.playerColorContainer = temp.createNewPlayerList(this.playerNumber, this.playerNameArray[this.playerNumberIndex-1]);
+            this.playerNumberIndex--;
         }
         temp.setPlayerList();
-        this.playerNumber = $("input").val();
-        
     }
     createPlayersArray(){
-        let tempArray = [];
 
         for (var playerIndex = 0; playerIndex < this.playerNumber; playerIndex++){
 
             let findPlayer = playerIndex + 1;
             let tempPlayer = $(".player" + findPlayer);
-            tempArray.push(tempPlayer); 
+            this.domElmPlayersList.push(tempPlayer); 
             }
 
-        game.play(tempArray);
+        game.play(this.domElmPlayersList, this.playerNameArray);
     }
 }

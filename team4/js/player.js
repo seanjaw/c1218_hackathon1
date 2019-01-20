@@ -47,16 +47,19 @@ class Player{
             brown: {
                 colorCount: 0,
                 totalHouseCount: 0,
+                totalHotelCount: 0,
                 arrayOfHouseCount: [0, 0]
             },
             blue: {
                 colorCount: 0,
                 totalHouseCount: 0,
+                totalHotelCount: 0,
                 arrayOfHouseCount: [0, 0, 0]
             },
             pink: {
                 colorCount: 0,
                 totalHouseCount: 0,
+                totalHotelCount: 0,
                 arrayOfHouseCount: [0, 0, 0]
             },
             orange: {
@@ -205,6 +208,9 @@ class Player{
     }
 
     buyHotel(){
+        if(this.square.hotelCount === 4){
+            return;
+        }
         var colorInMyColorCount = this.myColorCount[this.square.color];
         var hotelPrice = this.houseCost();
         this.money -= hotelPrice;
@@ -220,8 +226,6 @@ class Player{
             colorInMyColorCount.arrayOfHouseCount[i] -= 1;
         }
         */
-
-
     }
 
     buyProperty() {
@@ -257,12 +261,22 @@ class Player{
         }
     }
 
+    sellHouse(property) {
+        this.money += property.price / 4;
+        property.houseCount--;
+        this.myColorCount[property.color].totalHouseCount--;
+    }
+
+    sellHotel(property){
+        this.money += (property.price) * 5 / 4;
+        property.hotelCount--;
+        this.myColorCount[property.color].totalHotelCount--;
+    }
 
     calculateRent( property, renter) {
         // Currently basic rent only
         let rent = 0;
         var count = 0;
-
         if (property.type === 'street') {
             var propertyColor = this.myColorCount[property.color];
             if(property.hotelCount > 0){
@@ -300,7 +314,6 @@ class Player{
                 rent = 4 * renter.diceTotal;
             }
         }
-
 
         return rent;
     }
@@ -423,7 +436,7 @@ class Player{
     }
 
     //Creating new player list with accordion settings
-    createNewPlayerList(numberOfPlayers){ 
+    createNewPlayerList(numberOfPlayers, playerName){ 
         
         let numOfPlayers = parseInt(numberOfPlayers);
 
@@ -435,7 +448,7 @@ class Player{
         let currentPlayerIndex = $(".trackPlayerIndex").length;
         this.createPlayer = $("<h1>")
             .css("background-color", this.playerColorArray[currentPlayerIndex])
-            .text("Player" + numOfPlayers);        
+            .text(playerName);        
         $("#accordion").append(this.createPlayer);
 
         this.playerColor = this.playerColorArray[currentPlayerIndex];
