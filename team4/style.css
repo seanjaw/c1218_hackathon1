@@ -919,12 +919,16 @@ h1 {
 
 .chest .bottomContainer{
     height: 80%;
+    text-align: center; 
 }
 
 .chest .left, .chest .right{
     display: inline-block;
 }
 
+.imgChestSizing{
+    width:100%;
+}
 /*
  * Sidebar: Action Dialog
  */
@@ -1010,7 +1014,7 @@ h1 {
     background-color: #010532;
     color: white;
 }
-
+/*duplicate right class and propinfo>.image class*/
 .right {
     width: 30%;
 }
