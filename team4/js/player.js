@@ -1,5 +1,5 @@
 class Player{
-    constructor( square, avatar, name, turnEndCallback, domElmPlayerInfo){
+    constructor( square, avatar, name, turnEndCallback, domElmPlayerInfo, playerColor){
 
         this.square = square;
         this.avatar = avatar;
@@ -8,11 +8,11 @@ class Player{
         this.domElmPlayerInfo = domElmPlayerInfo;
 
         this.createPlayer = null; //Used in createNewPlayerList()
-        this.playerColor = ["red", "blue", "green", "yellow"];//Colors used to store in individual players in createPlayer()
+        this.playerColorArray = ["red", "blue", "green", "yellow"];//TODO: setup with player object array Colors used to store in individual players in createPlayer()
         this.money = 1500;
         this.properties = [];
         this.active = true;
-        this.color = null;
+        this.playerColor = playerColor;
 
         this.playerDom = this.createDOM();
         this.playerDisplayDom = null;
@@ -406,7 +406,32 @@ class Player{
             'z-index': 4
         });
         $(this.domElmPlayerInfo).text("Money $" + this.money);
+        this.highlightPropertiesOwned();
     } 
+
+    highlightPropertiesOwned(){
+        // game.player[index].
+        
+        
+
+        for (var propertyIndex = 0; propertyIndex < this.properties.length; propertyIndex++){
+            let currentplayerColorArray = game.players[propertyIndex].playerColor;
+            let propertyToChangeColor = game.players[propertyIndex].square.squareDom;
+            $(propertyToChangeColor).css("box-shadow", "inset 0 0 1em 0.25em " + currentplayerColorArray);
+        }
+        // let playerProperties = game.players[0].properties[0].squareDom;
+
+        // let currentplayerColorArray = game.players[0].domElmPlayerInfo.css("background-color");
+        // let playerProperties =  game.players[game.currentPlayerIndex-1].properties;
+    //    $(temp[1].squareDom[0]).css("box-shadow", "inset 0 0 1em 0.25em rgb(255, 0, 0)")
+
+    
+        // let currentplayerColorArray = this.domElmPlayerInfocss("background-color");
+
+        // for (propIndex = 0; propIndex < this.properties.length; propIndex++){
+        //     $(this.properties[propIndex].squareDom[0]).css("box-shadow", "inset 0 0 1em 0.25em "+"rgb(255, 0, 0)");
+        // }
+    }
 
     showDiceModal() {
         let message =  `Roll Dice`;
@@ -539,14 +564,14 @@ class Player{
         
         let currentPlayerIndex = $(".trackPlayerIndex").length;
         this.createPlayer = $("<h1>")
-            .css("background-color", this.playerColor[currentPlayerIndex])
+            .css("background-color", this.playerColorArray[currentPlayerIndex])
             .text("Player" + numOfPlayers);        
         $("#accordion").append(this.createPlayer);
 
-        this.color = this.playerColor[currentPlayerIndex];
+        this.playerColor = this.playerColorArray[currentPlayerIndex];
 
         $(this.createPlayer).after(this.playerDisplayDom);
-
+        
     }
 
     setPlayerList(){ //Set jQuery UI after players loaded
