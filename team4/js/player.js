@@ -2,15 +2,16 @@ class Player{
     constructor( square, avatar, name, turnEndCallback, domElmPlayerInfo, playerColor){
         // Private Properties
         this._avatar = null;
-
+        this.avatarSmall = null;
+        
         // Passed In Properties
         this.square = square;
+        this.avatar = avatar;
         this.name = name;
         this.turnEndCallback = turnEndCallback;
         this.domElmPlayerInfo = domElmPlayerInfo;
 
         // Derived Properties
-        this.avatarSmall = null;
         this.createPlayer = null; //Used in createNewPlayerList()
         this.playerColorArray = ["red", "blue", "green", "yellow"];//TODO: setup with player object array Colors used to store in individual players in createPlayer()
         this.money = 1500;
