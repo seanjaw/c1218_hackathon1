@@ -31,6 +31,7 @@ class Game{
         this.showDiceFrame = this.showDiceFrame.bind(this);
         this.showInteractiveFrame = this.showInteractiveFrame.bind(this);
         this.showLocationFrame = this.showLocationFrame.bind(this);
+        this.showRentFrame = this.showRentFrame.bind(this);
     }
 
     play(addPlayers) {
@@ -57,7 +58,7 @@ class Game{
         this.displayCurrentMoney();
         this.showDiceFrame();
     }
-
+  
     /**
      * Show main dialog in center of board
      * @param {string} title - Title for dialog
@@ -66,11 +67,14 @@ class Game{
      */
     showFrame( title, content, buttons ) {
         let dialog = $('.action-dialog-container');
+
+        // Avatar
         dialog.find('.avatar .image').css({
-            'background-image': this.currentPlayer.avatarSmall
+            'background-image': `url(${this.currentPlayer.avatarSmall})`
         });
         dialog.find('.avatar .name').text(this.currentPlayer.name);
 
+        // Buttons
         let buttonsSection = dialog.find('.buttons');
         buttonsSection.empty();
         for (let buttonName in buttons) {
@@ -81,8 +85,17 @@ class Game{
             buttonsSection.append(button);
         }
 
+        // Content
         dialog.find('.action > .content').empty().append(content);
-        dialog.find('.action > .title').text(title);
+
+        // Title
+        let titleDiv = dialog.find('.action > .title');
+        titleDiv.empty();
+        if (!Array.isArray(title)) {
+            title = [title];
+        }
+        title.forEach(text => titleDiv.append($('<span>').text(text)));
+        // dialog.find('.action > .title').text(title);
         dialog.css({display: 'block'});
     }
 
@@ -171,6 +184,29 @@ class Game{
         let square = this.currentPlayer.square;
         let title =  `Landed on '${square.title}'`;
         this.showFrame(title, null, {'OK': this.showInteractiveFrame});
+    }
+
+    /**
+     * Show frame to indicate rent being paid
+     */
+    showRentFrame() {
+        let renter = this.currentPlayer;
+        let square = renter.square;
+        let rent = square.owner.calculateRent(square, renter);
+
+        let title = [
+            `Pay \$${rent} Rent`,
+            'to',
+            square.owner.name
+        ];
+        let content = null;
+
+        let okCallback = () => {
+            renter.payRent();
+            this.showInteractiveFrame();
+        };
+
+        this.showFrame(title, content, {'OK': okCallback});
     }
 
     get currentPlayer() {
