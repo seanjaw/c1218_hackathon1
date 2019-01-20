@@ -107,7 +107,7 @@ class Player{
             total+=rollArray[die];
         }
         this.move( total );
-        this.diceArray = roll;
+        this.diceArray = rollArray;
         this.diceTotal = total;
     }
 
