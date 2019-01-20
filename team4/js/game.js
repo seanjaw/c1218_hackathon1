@@ -188,10 +188,12 @@ class Game{
 class Modal {
 
 	constructor(modalShadow, modalBody, submitPlayers){
-		this.modalShadow = modalShadow;
+        this.modalShadow = modalShadow;
 		this.modalBody = modalBody;
         this.playerNumber = 0;
         this.submitPlayers = submitPlayers;
+        this.playerNameArray = [];
+        this.firstTimeModalClick = true; 
         this.submitPlayers = this.submitPlayers.bind(this);
         this.clickHandle = this.clickHandle.bind(this);
     }
@@ -219,9 +221,25 @@ class Modal {
 
     clickHandle() { 
 
-        this.playerNumber = $("input").val();
+        if (this.firstTimeModalClick){
+
+            this.firstTimeModalClick = false; 
+            this.playerNumber = $("input").val();
+            
+            
+            $("#")
+        }
+        while (playerNumberIndex > 0){
+
+            let playerNumberIndex = this.playerNumber;
+            //TODO: input names cycle 
+            //this.playerNameArray
+        }
+
+
+
         this.hideModal();
-        $(this.submitPlayers).off("click");
+        //$(this.submitPlayers).off("click");
         this.displayPlayers();
         this.createPlayersArray();
     }
