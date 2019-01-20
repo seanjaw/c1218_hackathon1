@@ -184,22 +184,27 @@ class Player{
             var houseCost = this.houseCost();
             this.money -= houseCost;
             colorInMyColorCount.totalHouseCount++;
+            // TODO: ADD FUNCTIONALITY FOR DISTRIBUTING HOUSE EVENLY
             var minimum = Math.min.apply(Math, colorInMyColorCount.arrayOfHouseCount);
             var indexOfHouseToAdd = colorInMyColorCount.arrayOfHouseCount.indexOf(minimum);
             colorInMyColorCount.arrayOfHouseCount[indexOfHouseToAdd]++;
+            this.square.houseCount++;
 
+
+
+/*
             var imageToAppend = $('<div>').css({
                 'background-image': 'url(../houseIcon/greenHouse.png)',
                 'background-size': 'contain',
                 'background-repeat': 'no-repeat',
-                'width': '20px',
-                'height': '20px',
-                'z-index': 3,
+                'width': '50px',
+                'height': '50px',
+                'z-index': 10,
             });
 
-            this.square.squareDom.append(imageToAppend);
+            this.square.squareDom.find('.propcolor').append(imageToAppend);
+*/
 
-            this.square.totalHouseCount++;
             console.log('Buy property: a house on', this.square.title, ' for $', this.square.price/2);
         } else {
             // buy street
@@ -357,7 +362,7 @@ class Player{
     updateDisplay() {
         this.square.squareDom.append(this.playerDom);
         this.playerDom.css({
-            position: 'relative',
+            position: 'absolute',
             bottom: 0,
             left: 5,
             height: '60px',
