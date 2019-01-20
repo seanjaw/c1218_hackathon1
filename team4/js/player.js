@@ -47,16 +47,19 @@ class Player{
             brown: {
                 colorCount: 0,
                 totalHouseCount: 0,
+                totalHotelCount: 0,
                 arrayOfHouseCount: [0, 0]
             },
             blue: {
                 colorCount: 0,
                 totalHouseCount: 0,
+                totalHotelCount: 0,
                 arrayOfHouseCount: [0, 0, 0]
             },
             pink: {
                 colorCount: 0,
                 totalHouseCount: 0,
+                totalHotelCount: 0,
                 arrayOfHouseCount: [0, 0, 0]
             },
             orange: {
@@ -155,7 +158,7 @@ class Player{
             this.freeParking();
         } else if (this.square.type === 'go-to-jail'){
             this.updateDisplay();
-            this.showLocationModal();
+            game.showLocationFrame();
             this.goToJail();
             this.jailCount++;
         }
@@ -179,7 +182,7 @@ class Player{
             let card = game.chanceCards.pop();
             game.showCardFrame(card);
         } else {
-            this.showLocationModal();
+            game.showLocationFrame();
         }
     }
 
@@ -205,6 +208,9 @@ class Player{
     }
 
     buyHotel(){
+        if(this.square.hotelCount === 4){
+            return;
+        }
         var colorInMyColorCount = this.myColorCount[this.square.color];
         var hotelPrice = this.houseCost();
         this.money -= hotelPrice;
@@ -220,8 +226,6 @@ class Player{
             colorInMyColorCount.arrayOfHouseCount[i] -= 1;
         }
         */
-
-
     }
 
     buyProperty() {
@@ -257,12 +261,22 @@ class Player{
         }
     }
 
+    sellHouse(property) {
+        this.money += property.price / 4;
+        property.houseCount--;
+        this.myColorCount[property.color].totalHouseCount--;
+    }
+
+    sellHotel(property){
+        this.money += (property.price) * 5 / 4;
+        property.hotelCount--;
+        this.myColorCount[property.color].totalHotelCount--;
+    }
 
     calculateRent( property, renter) {
         // Currently basic rent only
         let rent = 0;
         var count = 0;
-
         if (property.type === 'street') {
             var propertyColor = this.myColorCount[property.color];
             if(property.hotelCount > 0){
@@ -300,7 +314,6 @@ class Player{
                 rent = 4 * renter.diceTotal;
             }
         }
-
 
         return rent;
     }
@@ -466,23 +479,6 @@ class Player{
         let okCallback = () => {
             dialog.dialog('close');
             this.payRent();
-        };
-
-        dialog.dialog({
-            modal: true, 
-            dialogClass: "no-close", 
-            height: 300,
-            buttons: [{text: "OK", click: okCallback}]
-        });
-    }
-
-    showLocationModal() {
-        let message =  `Landed on '${this.square.title}'`;
-        let dialog = $('<div>').text(message);
-
-        let okCallback = () => {
-            dialog.dialog('close');
-            this.turnEndCallback();
         };
 
         dialog.dialog({

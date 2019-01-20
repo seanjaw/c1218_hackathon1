@@ -27,9 +27,10 @@ class Game{
 
         // Bindings
         this.handlePlayerTurnEnd = this.handlePlayerTurnEnd.bind(this);
-        this.showBuyModal = this.showBuyModal.bind(this);
-        this.showDiceModal = this.showDiceModal.bind(this);
-        this.showInteractiveModal = this.showInteractiveModal.bind(this);
+        this.showBuyFrame = this.showBuyFrame.bind(this);
+        this.showDiceFrame = this.showDiceFrame.bind(this);
+        this.showInteractiveFrame = this.showInteractiveFrame.bind(this);
+        this.showLocationFrame = this.showLocationFrame.bind(this);
     }
 
     play(addPlayers) {
@@ -132,6 +133,15 @@ class Game{
         }
 
         this.showModal(title, content, buttons);
+    }
+
+    /**
+     * Show frame that indicates location player moved to if there is no action involved
+     */
+    showLocationFrame() {
+        let square = this.currentPlayer.square;
+        let title =  `Landed on '${square.title}'`;
+        this.showFrame(title, null, {'OK': this.showInteractiveFrame});
     }
 
     get currentPlayer() {
