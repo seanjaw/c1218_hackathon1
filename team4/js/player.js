@@ -1,18 +1,21 @@
 class Player{
-    constructor( square, avatar, name, turnEndCallback){
+    constructor( square, avatar, name, turnEndCallback, domElmPlayerInfo){
 
         this.square = square;
         this.avatar = avatar;
         this.name = name;
         this.turnEndCallback = turnEndCallback;
+        this.domElmPlayerInfo = domElmPlayerInfo;
 
         this.createPlayer = null; //Used in createNewPlayerList()
         this.playerColor = ["red", "blue", "green", "yellow"];//Colors used to store in individual players in createPlayer()
         this.money = 1500;
         this.properties = [];
         this.active = true;
+        this.color = null;
 
         this.playerDom = this.createDOM();
+        this.playerDisplayDom = null;
 
         this.buyProperty = this.buyProperty.bind(this);
         this.rolldice = this.rolldice.bind(this);
@@ -22,12 +25,12 @@ class Player{
     
         this.diceArray = null;
         this.diceTotal = null;
-        this.divToAppend = null;
         this.jailCount = 0;
 
         this.totalColorCount = {
             brown: 2,
             blue: 3,
+            pink: 3,
             orange: 3,
             yellow: 3,
             red: 3,
@@ -36,13 +39,46 @@ class Player{
         };
 
         this.myColorCount = {
-            brown: 0,
-            blue: 0,
-            orange: 0,
-            yellow: 0,
-            red: 0,
-            green: 0,
-            grey: 0,
+            brown: {
+                colorCount: 0,
+                totalHouseCount: 0,
+                arrayOfHouseCount: [0, 0]
+            },
+            blue: {
+                colorCount: 0,
+                totalHouseCount: 0,
+                arrayOfHouseCount: [0, 0, 0]
+            },
+            pink: {
+                colorCount: 0,
+                totalHouseCount: 0,
+                arrayOfHouseCount: [0, 0, 0]
+            },
+            orange: {
+                colorCount: 0,
+                totalHouseCount: 0,
+                arrayOfHouseCount: [0, 0, 0]
+            },
+            yellow: {
+                colorCount: 0,
+                totalHouseCount: 0,
+                arrayOfHouseCount: [0, 0, 0]
+            },
+            red: {
+                colorCount: 0,
+                totalHouseCount: 0,
+                arrayOfHouseCount: [0, 0, 0]
+            },
+            green: {
+                colorCount: 0,
+                totalHouseCount: 0,
+                arrayOfHouseCount: [0, 0, 0]
+            },
+            grey: {
+                colorCount: 0,
+                totalHouseCount: 0,
+                arrayOfHouseCount: [0, 0]
+            },
         }
     }
 
@@ -119,9 +155,9 @@ class Player{
         if (PROPERTY_TYPES.indexOf(this.square.type) !== -1 && this.square.owner === null && this.money >= this.square.price) {
             this.showBuyModal();
         } else if (PROPERTY_TYPES.indexOf(this.square.type) !== -1 && this.square.owner !== null) {
-            if(this.square.owner === this && this.square.type === 'utility'){
+            if(this.square.owner === this && this.square.type !== 'street'){
                 return;
-            }else if(this.square.owner === this && this.suqare.type !== 'utility'){
+            }else if(this.square.owner === this && this.square.type === 'street'){
                 this.showBuyModal();
             } else {
                 this.showRentModal();
@@ -140,18 +176,48 @@ class Player{
     /*
      * Buy property for current square
      */
+    houseCost() {
+        return this.square.price / 2;
+    }
+
     buyProperty() {
-        if(this.totalColorCount[this.square.color] === this.myColorCount[this.square.color]){
+        var colorInMyColorCount = this.myColorCount[this.square.color];
+        if(this.square.type === 'street' && this.totalColorCount[this.square.color] === colorInMyColorCount.colorCount){
             // buy house
             // house price
-            this.money -= this.square.price / 2;
-            this.square.house++;
+            var houseCost = this.houseCost();
+            this.money -= houseCost;
+            colorInMyColorCount.totalHouseCount++;
+            // TODO: ADD FUNCTIONALITY FOR DISTRIBUTING HOUSE EVENLY
+            var minimum = Math.min.apply(Math, colorInMyColorCount.arrayOfHouseCount);
+            var indexOfHouseToAdd = colorInMyColorCount.arrayOfHouseCount.indexOf(minimum);
+            colorInMyColorCount.arrayOfHouseCount[indexOfHouseToAdd]++;
+            this.square.houseCount++;
+
+
+
+/*
+            var imageToAppend = $('<div>').css({
+                'background-image': 'url(../houseIcon/greenHouse.png)',
+                'background-size': 'contain',
+                'background-repeat': 'no-repeat',
+                'width': '50px',
+                'height': '50px',
+                'z-index': 10,
+            });
+
+            this.square.squareDom.find('.propcolor').append(imageToAppend);
+*/
+
             console.log('Buy property: a house on', this.square.title, ' for $', this.square.price/2);
         } else {
             // buy street
             this.money -= this.square.price;
             this.addProperty(this.square);
-            this.myColorCount[this.square.color]++;
+            if(this.square.type === 'street'){
+                colorInMyColorCount.colorCount++;
+            }
+
             console.log('Buy property: ', this.square.title, ' for $', this.square.price);
         }
     }
@@ -161,34 +227,26 @@ class Player{
         // Currently basic rent only
         let rent = 0;
         var count = 0;
-        var houseCount = 0;
 
         if (property.type === 'street') {
-
-            var propertyColor = property.color;
-            for(var index = 0; index < this.properties.length; index++){
-                if(this.properties[index].type === 'street' && propertyColor === this.properties[index].color){
-                    count++;
-                    houseCount += this.properties[index].house;
-                }
-            }
-            if(houseCount>0){
-                rent = property.rentCosts[houseCount + 1];
-            } else if(count === this.totalColorCount[propertyColor]){
-                rent = parseInt(property.rentCosts[0]) * 2;
+            var propertyColor = this.myColorCount[property.color];
+            if(propertyColor.totalHouseCount > 0) {
+                rent = property.rentCosts[propertyColor.totalHouseCount + 1];
+            } else if(this.totalColorCount[property.color] === propertyColor.colorCount) {
+                rent = property.rentCosts[1];
             } else {
-                rent = parseInt(property.rentCosts[0]);
+                rent = property.rentCosts[0];
             }
         } else if (property.type === 'railroad') {
             for(var index = 0; index < this.properties.length; index++){
                 if(this.properties[index].type === 'railroad'){
                     count++;
                 }
-                if(count >= 2){
-                    rent =  property.rentCosts[1];
-                } else {
-                    rent = property.rentCosts[0];
-                }
+            }
+            if(count >= 2){
+                rent =  property.rentCosts[1];
+            } else {
+                rent = property.rentCosts[0];
             }
         } else if (property.type === 'utility') {
             // TODO: Store current die rolls for players
@@ -308,13 +366,14 @@ class Player{
     updateDisplay() {
         this.square.squareDom.append(this.playerDom);
         this.playerDom.css({
-            position: 'relative',
-            top: 5,
+            position: 'absolute',
+            bottom: 0,
             left: 5,
             height: '60px',
             width: '60px',
-            'z-index': 2
+            'z-index': 4
         });
+        $(this.domElmPlayerInfo).text("Money $" + this.money);
     } 
 
     showDiceModal() {
@@ -441,7 +500,7 @@ class Player{
         
         let numOfPlayers = parseInt(numberOfPlayers);
 
-        this.divToAppend = $("<div>")
+        this.playerDisplayDom = $("<div>")
             .addClass("player" + numOfPlayers)
             .addClass("trackPlayerIndex")
             .text("Input Information");
@@ -451,7 +510,11 @@ class Player{
             .css("background-color", this.playerColor[currentPlayerIndex])
             .text("Player" + numOfPlayers);        
         $("#accordion").append(this.createPlayer);
-        $(this.createPlayer).after(this.divToAppend);
+
+        this.color = this.playerColor[currentPlayerIndex];
+
+        $(this.createPlayer).after(this.playerDisplayDom);
+
     }
 
     setPlayerList(){ //Set jQuery UI after players loaded
