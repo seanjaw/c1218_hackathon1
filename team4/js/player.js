@@ -1,27 +1,32 @@
 class Player{
-    constructor( square, avatar, name, turnEndCallback, domElmPlayerInfo){
+    constructor( square, avatar, name, turnEndCallback, domElmPlayerInfo, playerColor){
+        // Private Properties
+        this._avatar = null;
+        this.avatarSmall = null;
 
+        // Passed In Properties
         this.square = square;
         this.avatar = avatar;
         this.name = name;
         this.turnEndCallback = turnEndCallback;
         this.domElmPlayerInfo = domElmPlayerInfo;
 
+        // Derived Properties
         this.createPlayer = null; //Used in createNewPlayerList()
-        this.playerColor = ["red", "blue", "green", "yellow"];//Colors used to store in individual players in createPlayer()
+        this.playerColorArray = ["red", "blue", "green", "yellow"];//TODO: setup with player object array Colors used to store in individual players in createPlayer()
         this.money = 1500;
         this.properties = [];
-        this.active = true;
-        this.color = null;
+        this.playerColor = playerColor;
 
+        // DOM Properties
         this.playerDom = this.createDOM();
         this.playerDisplayDom = null;
 
+        // Bindings
         this.buyProperty = this.buyProperty.bind(this);
         this.rolldice = this.rolldice.bind(this);
         this.addMoney = this.addMoney.bind(this);
         this.removeMoney = this.removeMoney.bind(this);
-
     
         this.diceArray = null;
         this.diceTotal = null;
@@ -153,7 +158,7 @@ class Player{
             this.freeParking();
         } else if (this.square.type === 'go-to-jail'){
             this.updateDisplay();
-            this.showLocationModal();
+            game.showLocationFrame();
             this.goToJail();
             this.jailCount++;
         }
@@ -161,23 +166,23 @@ class Player{
         this.updateDisplay();
 
         if (PROPERTY_TYPES.indexOf(this.square.type) !== -1 && this.square.owner === null && this.money >= this.square.price) {
-            this.showBuyModal();
+            game.showBuyFrame();
         } else if (PROPERTY_TYPES.indexOf(this.square.type) !== -1 && this.square.owner !== null) {
             if(this.square.owner === this && this.square.type !== 'street'){
                 return;
-            }else if(this.square.owner === this && this.square.type === 'street'){
-                this.showBuyModal();
+            }else if(this.square.owner === this && this.suqare.type !== 'utility'){
+                game.showBuyFrame();
             } else {
                 this.showRentModal();
             }
         } else if (this.square.type === 'community-chest') {
             let card = game.communityChestCards.pop();
-            this.showCardModal(card);
+            game.showCardFrame(card);
         } else if (this.square.type === 'chance') {
             let card = game.chanceCards.pop();
-            this.showCardModal(card);
+            game.showCardFrame(card);
         } else {
-            this.showLocationModal();
+            game.showLocationFrame();
         }
     }
 
@@ -419,57 +424,15 @@ class Player{
             'z-index': 4
         });
         $(this.domElmPlayerInfo).text("Money $" + this.money);
+        this.highlightPropertiesOwned();
     } 
 
-    showDiceModal() {
-        let message =  `Roll Dice`;
-        let dialog = $('<div>').text(message);
-
-        let rollDiceCallback = () => {
-            dialog.dialog('close');
-            this.rolldice();
-        };
-
-        dialog.dialog({
-            modal: true, 
-            dialogClass: "no-close", 
-            height: 300,
-            buttons: [{text: "Roll Dice", click: rollDiceCallback}]
-        });
-    }
-
-    showCardModal(card) {
-        // let message =  `${deckName}: ${card.text}`;
-        let dialog = $('<div>');
-        let cardDisplay = card.createCardDOM();
-        dialog.append(cardDisplay);
-        let okCallback;
-        if (card.type === 'pay-bank') {
-            okCallback = () => {
-                dialog.dialog('close');
-                this.removeMoney(card.amount);
-                this.turnEndCallback();
-            };
-        } else if (card.type === 'receive-bank') {
-            okCallback = () => {
-                dialog.dialog('close');
-                this.addMoney(card.amount);
-                this.turnEndCallback();
-            };            
-        } else if (card.type === 'receive-players') {
-            okCallback = () => {
-                dialog.dialog('close');
-                this.receiveMoneyFromPlayers(card.amount);
-                this.turnEndCallback();
-            }; 
+    highlightPropertiesOwned(){
+        let color = this.playerColor;
+        for (var propertyIndex = 0; propertyIndex < this.properties.length; propertyIndex++){
+            let domToChangeColor = this.properties[propertyIndex].squareDom;
+            $(domToChangeColor).css("box-shadow", "inset 0 0 1em 0.25em " + color);
         }
-
-        dialog.dialog({
-            modal: true, 
-            dialogClass: "no-close", 
-            height: 300,
-            buttons: [{text: "OK", click: okCallback}]
-        });
     }
 
     showRentModal() {
@@ -492,54 +455,6 @@ class Player{
         });
     }
 
-    showBuyModal() {
-        const {square} = this;
-
-        let message =  `Buy '${square.title}' for \$${square.price}?`;
-        let dialog = $('<div>').text(message);
-        if(square.type === 'street'){
-            let deed = square.deedDOM;
-            dialog.append(deed);
-        }
-        let buyCallback = () => {
-            dialog.dialog('close');
-            this.buyProperty();
-            this.turnEndCallback();
-        };
-
-        let auctionCallback = () => {
-            dialog.dialog('close');
-            this.turnEndCallback();
-        };
-
-        dialog.dialog({
-            modal: true, 
-            dialogClass: "no-close", 
-            height: 520,
-            buttons: [
-                {text: "Buy", click: buyCallback},
-                {text: "Auction", click: auctionCallback}
-            ]
-        });
-    }
-
-    showLocationModal() {
-        let message =  `Landed on '${this.square.title}'`;
-        let dialog = $('<div>').text(message);
-
-        let okCallback = () => {
-            dialog.dialog('close');
-            this.turnEndCallback();
-        };
-
-        dialog.dialog({
-            modal: true, 
-            dialogClass: "no-close", 
-            height: 300,
-            buttons: [{text: "OK", click: okCallback}]
-        });
-    }
-
     //Creating new player list with accordion settings
     createNewPlayerList(numberOfPlayers){ 
         
@@ -552,20 +467,34 @@ class Player{
         
         let currentPlayerIndex = $(".trackPlayerIndex").length;
         this.createPlayer = $("<h1>")
-            .css("background-color", this.playerColor[currentPlayerIndex])
+            .css("background-color", this.playerColorArray[currentPlayerIndex])
             .text("Player" + numOfPlayers);        
         $("#accordion").append(this.createPlayer);
 
-        this.color = this.playerColor[currentPlayerIndex];
+        this.playerColor = this.playerColorArray[currentPlayerIndex];
 
         $(this.createPlayer).after(this.playerDisplayDom);
-
+        
     }
 
     setPlayerList(){ //Set jQuery UI after players loaded
         $("#accordion").accordion({
             collapsible: "true"
           });
+    }
+
+    /**
+     * Always set avatar and avatarSmall at same time
+     */
+    set avatar(newAvatar) {
+        this._avatar = newAvatar;
+        if (newAvatar) {
+            this.avatarSmall = this._avatar.replace('.png', '-face.png');
+        }
+    }
+
+    get avatar() {
+        return this._avatar;
     }
 }
 

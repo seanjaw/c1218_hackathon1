@@ -1,12 +1,13 @@
 body {
     height: 100vh;
     margin: 0;
+    background-color: black;
 }
 
 .frame {
+    box-sizing: border-box;
     width: 100vw;
     height: 100vh;
-    background-color: black;
     display: inline-flex;
 }
 
@@ -19,8 +20,7 @@ body {
 
 .playersBox {
     background-color: black;
-    height: 100vh;
-    width: 25vw;
+    flex: 1;
     box-sizing: border-box;
     display: block;
     align-items: center;
@@ -32,7 +32,6 @@ body {
     display: flex;
     align-items: center;
     margin: auto;
-    background-color: green; /*TODO: change when done editing!!*/
 }
 
 .playerContainer {
@@ -40,17 +39,6 @@ body {
     position: relative;
     width: 100%;
     height: 50%;
-    background-color: red; /* TODO: Remove when finishing setup! */
-}
-
-.displayPlayerActions {
-    display: block;
-    position: relative;
-    align-content: center;
-    margin: auto;
-    width: 50%;
-    height: 50%;
-    background-color: blue; /* TODO: Remove when finishing setup! */
 }
 
 .topProp {
@@ -799,6 +787,7 @@ h1 {
     position: absolute;
     top: 9%;
     left: -1%;
+    z-index: 5;
 }
 
 .middleHeader img {
@@ -806,6 +795,7 @@ h1 {
     transform: rotate(-45deg);
     position: absolute;
     top: 15%;
+    z-index: 5;
 }
 
 .loveDeck {
@@ -892,6 +882,19 @@ h1 {
     justify-content: flex-start;
     width:75%;
 }
+
+.left{
+    width: 60%;
+}
+
+.right{
+    width: 30%;
+}
+
+.propInfo > .image {
+    opacity: 0.4;
+}
+
 /* css for chance and chest card */
 .chest{
     height:180px;
@@ -922,13 +925,107 @@ h1 {
     display: inline-block;
 }
 
-.left{
-    width: 60%;
+/*
+ * Sidebar: Action Dialog
+ */
+.action-dialog-container {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+
+    display: none;
+    box-sizing: border-box;
+    height: 90%;
+    width: 90%;
+    background-image: url('images/images (1).jpg');
+    padding: 15px;
+
+    z-index: 3;
+}
+.action-dialog {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    padding: 10px;
+}
+.action-dialog .avatar {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    width: 100%;
+    height: 60px;
+}
+.action-dialog .avatar .image {
+    height: 50px;
+    width: 50px;
+    background-image: url('player-icons/1-face.png');
+    background-position: center;
+    background-color: #FBF176;
+    background-repeat: no-repeat;
+    background-size: contain;
+    border-radius: 50%;
+}
+.action-dialog .avatar .name {
+    font-family: 'Anton', sans-serif;
+    text-align: center;
+    font-size: .8em;
+}
+.action-dialog .action {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.action-dialog .action > .title {
+    font-family: 'Anton', sans-serif;
+    box-sizing: border-box;
+    text-align: center;
+    width: 100%;
+    font-size: 1.5em;
+    padding: 5px;
+}
+.action-dialog .action > .content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.action-dialog .action .buttons {
+    box-sizing: border-box;
+    text-align: center;
+    width: 100%;
+    height: 50px;
+    padding: 5px;
+}
+.action-dialog .action .buttons button {
+    margin: 0px 5px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    background-color: #010532;
+    color: white;
 }
 
 .right {
     width: 30%;
 }
+
 .propInfo > .image {
     opacity: 0.4;
+}
+/*
+ * Roll Dice Dialog
+ */
+.dice {
+    background-image: url('images/dice.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100%;
+    width: 30%;
 }
