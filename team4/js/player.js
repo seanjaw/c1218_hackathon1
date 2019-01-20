@@ -170,7 +170,7 @@ class Player{
         } else if (PROPERTY_TYPES.indexOf(this.square.type) !== -1 && this.square.owner !== null) {
             if(this.square.owner === this && this.square.type !== 'street'){
                 return;
-            }else if(this.square.owner === this && this.suqare.type !== 'utility'){
+            }else if(this.square.owner === this && this.square.type !== 'utility'){
                 game.showBuyFrame();
             } else {
                 game.showRentFrame();

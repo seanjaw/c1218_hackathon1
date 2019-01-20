@@ -50,6 +50,9 @@ class Game{
 
         this.showDiceFrame();
     }
+    //remove player if their money goes below zero. 
+    //remove and update display. if there is only one player left, they lose 
+
 
     handlePlayerTurnEnd() {
         this.currentPlayerIndex++;
