@@ -265,6 +265,22 @@
                     </div>  
                 </div>
                 <div class="middleFrame">
+                    <div class="action-dialog-container">
+                        <div class="action-dialog">
+                            <div class="avatar">
+                                <div class="image"></div>
+                                <div class="name">Karen</div>
+                            </div>
+                            <div class="action">
+                                    <div class="title">My Title</div>
+                                    <div class="content">
+                                        <div>A Deed Div</div>
+                                    </div>
+                                    <div class="buttons">
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="topHeader">
                         <img src="images/Sailor_Moon_Updated_Logo.svg.png">
                     </div>
@@ -523,16 +539,18 @@
                 </div>
             </div>
         </div>
-        <div class="players">      
+        <div class="playersBox">      
             <div class="playerInformation">
                 <div id="accordion" class="playerContainer"></div>
+            </div>
+            <div class="playerInformation">
             </div>
         </div>
         <div id="modalShadow"></div>
         <div id="modalBody">
-            <div id="modalMessage">Choose The Number of Players</div>
             <button id="submitPlayers">Start</button>
-            <input type="number" min="2" max="4">
+            <input class="num-of-players" value="2" type="number" min="2" max="4">
+            <div id="modalMessage">Choose The Number of Players</div>
         </div>  
     </div>
 </body>

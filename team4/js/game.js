@@ -1,8 +1,13 @@
+const COMMUNITY_CHEST_NAME = 'LOVE';
+const CHANCE_NAME = 'FRIENDSHIP'
+const DICE_NUMBER = 2;
+const DICE_NUMBER_OF_SIDES= 6;
 class Game{
     constructor(){
         this.players = [];
-        this.communityChestCards = Card.initCards(COMMUNITY_CHEST_DATA);
-        this.chanceCards = Card.initCards(CHANCE_DATA);
+        this.playerColorArray = ["red", "blue", "green", "yellow"];
+        this.communityChestCards = Card.initCards(COMMUNITY_CHEST_NAME, COMMUNITY_CHEST_DATA);
+        this.chanceCards = Card.initCards(CHANCE_NAME, CHANCE_DATA);
         this.currentPlayerIndex = 0;
         this.squares = Square.initSquareData();
         this.handlePlayerTurnEnd = this.handlePlayerTurnEnd.bind(this);
@@ -25,20 +30,16 @@ class Game{
     play(addPlayers) {
         
         this.domElmPlayersList = addPlayers;
-        console.log("Dome Elm ", this.domElmPlayersList)
         let go = this.squares[0];
-console.log("Passing Array ", addPlayers);
         for (var playerIndex = 0; playerIndex < this.domElmPlayersList.length; playerIndex++){
             let tempName = "player"+(playerIndex + 1);
             let iconName = this.iconArray[playerIndex];
-            let newPlayer =  new Player(go, iconName, tempName, this.handlePlayerTurnEnd, this.domElmPlayersList[playerIndex]);
-            console.log("added ", this.domElmPlayersList[playerIndex])
+            let newPlayer =  new Player(go, iconName, tempName, this.handlePlayerTurnEnd, this.domElmPlayersList[playerIndex], this.playerColorArray[playerIndex]);
             this.players.push(newPlayer);
             newPlayer.updateDisplay();
         }
-        
-        this.players[0].rolldice();
-        this.displayCurrentMoney();
+
+        this.showDiceModal();
     }
 
     handlePlayerTurnEnd() {
@@ -46,20 +47,93 @@ console.log("Passing Array ", addPlayers);
         if (this.currentPlayerIndex >= this.players.length) {
             this.currentPlayerIndex = 0;
         }
-        this.players[this.currentPlayerIndex].rolldice();
+        
         this.displayCurrentMoney();
+        this.showDiceModal();
     }
-    displayCurrentMoney(){
 
+    /**
+     * Show main modal in center of board
+     * @param {string} title - Title for modal
+     * @param {*} content - DOM content for modal
+     * @param {*} buttons - {buttonLabel1: callback1, ..., buttonLabelN: callbackN}
+     */
+    showModal( title, content, buttons ) {
+        let dialog = $('.action-dialog-container');
+        dialog.find('.avatar .image').css({
+            'background-image': this.currentPlayer.avatarSmall
+        });
+        dialog.find('.avatar .name').text(this.currentPlayer.name);
+
+        let buttonsSection = dialog.find('.buttons');
+        buttonsSection.empty();
+        for (let buttonName in buttons) {
+            let callback = buttons[buttonName];
+            let button = $('<button>')
+                .text(buttonName)
+                .click(callback);
+            buttonsSection.append(button);
+        }
+
+        dialog.find('.action > .content').empty().append(content);
+        dialog.find('.action > .title').text(title);
+        dialog.css({display: 'block'});
+    }
+
+    /**
+     * Show modal that allows current player to conduct business or select End Turn
+     */
+    showInteractiveModal() {
+        // TODO: Add Mortgage|Unmortgage|Trade buttons here
+
+        let title = 'Please select an action';
+        let content = $('<div>');
+        let buttons = {'End Turn': game.handlePlayerTurnEnd};
+        this.showModal(title, content, buttons);
+    }
+
+    showDiceModal() {
+        let title = '';
+        let content = $('<div>').addClass('dice');
+        let buttons = {'Roll Dice': game.currentPlayer.rolldice};
+        this.showModal(title, content, buttons);
+    }
+
+    showBuyModal() {
+        let player = this.currentPlayer;
+        let square = player.square;
+
+        let title = `Buy ${square.title}?`;
+        let content = null;
+
+        if (square.type === 'street') {
+            title = '';
+            content = player.square.deedDOM;
+        }
+
+        let buttons = {
+            'Buy': () => {
+                player.buyProperty();
+                game.showInteractiveModal();
+            },
+            'Pass': this.turnEndCallback
+        }
+
+        this.showModal(title, content, buttons);
+    }
+
+    get currentPlayer() {
+        return this.players[this.currentPlayerIndex];
+    }
+
+    displayCurrentMoney(){
         let currentPlayer = this.players[this.currentPlayerIndex];
-            console.log("Current Player ",currentPlayer);
         let currentMoney = (currentPlayer.money).toString();
-            console.log("Curent Money ", "Money " + currentMoney);
         let currentDomElmPlayer = currentPlayer.domElmPlayerInfo[game.currentPlayerIndex];
-            console.log(currentDomElmPlayer);
-        $(currentDomElmPlayer).text("Money $" + currentMoney); 
+        $(currentDomElmPlayer).text("Money $" + currentMoney);
     }
 }
+
 class Modal {
 
 	constructor(modalShadow, modalBody, submitPlayers){
@@ -88,7 +162,7 @@ class Modal {
 	init(){
 
         this.submitPlayers.click(this.clickHandle);
-        $("input").val(2);
+        // $("input").val(2);
         this.show();
     }
 
@@ -106,20 +180,23 @@ class Modal {
 
         while (this.playerNumber > 0){
             temp = new Player;
-            temp.createNewPlayerList();
+            this.playerColorContainer = temp.createNewPlayerList(this.playerNumber);
             this.playerNumber--;
         }
         temp.setPlayerList();
+        this.playerNumber = $("input").val();
         
     }
     createPlayersArray(){
         let tempArray = [];
-        for (var playerIndex = 0; playerIndex < $("h1").length; playerIndex++){
+
+        for (var playerIndex = 0; playerIndex < this.playerNumber; playerIndex++){
 
             let findPlayer = playerIndex + 1;
             let tempPlayer = $(".player" + findPlayer);
             tempArray.push(tempPlayer); 
             }
+
         game.play(tempArray);
     }
 }
