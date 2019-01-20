@@ -37,7 +37,7 @@ street	Eating Usagi	300	26;52;130;390;900;1100;1275	green	sailor%20moon%20pic.pn
 street	Kamen	300	26;52;130;390;900;1100;1275	green	sailor%20moon%20pic24.png
 community-chest	LOVE				
 street	Queen Serenity	320	28;56;150;450;1000;1200;1400	green	Neo_Queen_Serenity.png
-utility	Electric Company	150;		
+utility	Electric Company	150		
 chance	FRIENDSHIP				
 street	Mercury and Mars	350	35;70;175;500;1100;1300;1500	grey	sailor%20moon%20pic10.png
 luxury-tax	Attack				
