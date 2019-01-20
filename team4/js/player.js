@@ -414,10 +414,7 @@ class Player{
     } 
 
     highlightPropertiesOwned(){
-        // game.player[index].
         
-        
-
         for (var propertyIndex = 0; propertyIndex < this.properties.length; propertyIndex++){
             let currentplayerColorArray = game.players[propertyIndex].playerColor;
             let propertyToChangeColor = game.players[propertyIndex].square.squareDom;

@@ -181,10 +181,22 @@ class Modal {
     clickHandle() { 
 
         this.playerNumber = $("input").val();
-        this.hideModal();
-        $(this.submitPlayers).off("click");
-        this.displayPlayers();
-        this.createPlayersArray();
+        // this.hideModal();
+        let tempInputElm = $("<input>")
+            .attr({
+                "type": "text",
+                "class": "playerName",
+                "placeholder": "Enter Name Here!"
+            });
+        $("#modalMessage").after(tempInputElm);
+        $("#modalMessage").remove();
+        $("#submitPlayers").text("ENTER");
+        $(".num-of-players").remove();
+
+
+
+        // this.displayPlayers();
+        // this.createPlayersArray();
     }
 
     displayPlayers(){ 
