@@ -1,8 +1,12 @@
+const COMMUNITY_CHEST_NAME = 'LOVE';
+const CHANCE_NAME = 'FRIENDSHIP'
+const DICE_NUMBER = 2;
+const DICE_NUMBER_OF_SIDES= 6;
 class Game{
     constructor(){
         this.players = [];
-        this.communityChestCards = Card.initCards(COMMUNITY_CHEST_DATA);
-        this.chanceCards = Card.initCards(CHANCE_DATA);
+        this.communityChestCards = Card.initCards(COMMUNITY_CHEST_NAME, COMMUNITY_CHEST_DATA);
+        this.chanceCards = Card.initCards(CHANCE_NAME, CHANCE_DATA);
         this.currentPlayerIndex = 0;
         this.squares = Square.initSquareData();
         this.handlePlayerTurnEnd = this.handlePlayerTurnEnd.bind(this);
@@ -33,8 +37,7 @@ class Game{
             this.players.push(newPlayer);
             newPlayer.updateDisplay();
         }
-
-        this.players[0].rolldice();
+        //this.players[0].rolldice();
     }
 
     handlePlayerTurnEnd() {
@@ -42,7 +45,15 @@ class Game{
         if (this.currentPlayerIndex >= this.players.length) {
             this.currentPlayerIndex = 0;
         }
-        this.players[this.currentPlayerIndex].rolldice();
+       //this.players[this.currentPlayerIndex].rolldice();
+        this.displayCurrentMoney();
+    }
+    displayCurrentMoney(){
+
+        let currentPlayer = this.players[this.currentPlayerIndex];
+        let currentMoney = (currentPlayer.money).toString();
+        let currentDomElmPlayer = currentPlayer.domElmPlayerInfo[game.currentPlayerIndex];
+        $(currentDomElmPlayer).text("Money $" + currentMoney);
     }
 }
 

@@ -920,3 +920,7 @@ h1 {
 .chest .left, .chest .right{
     display: inline-block;
 }
+
+.propInfo > .image {
+    opacity: 0.4;
+}
