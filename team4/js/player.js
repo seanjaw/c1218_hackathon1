@@ -2,15 +2,16 @@ class Player{
     constructor( square, avatar, name, turnEndCallback, domElmPlayerInfo, playerColor){
         // Private Properties
         this._avatar = null;
+        this.avatarSmall = null;
 
         // Passed In Properties
         this.square = square;
+        this.avatar = avatar;
         this.name = name;
         this.turnEndCallback = turnEndCallback;
         this.domElmPlayerInfo = domElmPlayerInfo;
 
         // Derived Properties
-        this.avatarSmall = null;
         this.createPlayer = null; //Used in createNewPlayerList()
         this.playerColorArray = ["red", "blue", "green", "yellow"];//TODO: setup with player object array Colors used to store in individual players in createPlayer()
         this.money = 1500;
@@ -162,21 +163,21 @@ class Player{
         this.updateDisplay();
 
         if (PROPERTY_TYPES.indexOf(this.square.type) !== -1 && this.square.owner === null && this.money >= this.square.price) {
-            game.showBuyModal();
+            game.showBuyFrame();
         } else if (PROPERTY_TYPES.indexOf(this.square.type) !== -1 && this.square.owner !== null) {
             if(this.square.owner === this && this.square.type !== 'street'){
                 return;
             }else if(this.square.owner === this && this.suqare.type !== 'utility'){
-                game.showBuyModal();
+                game.showBuyFrame();
             } else {
                 this.showRentModal();
             }
         } else if (this.square.type === 'community-chest') {
             let card = game.communityChestCards.pop();
-            this.showCardModal(card);
+            game.showCardFrame(card);
         } else if (this.square.type === 'chance') {
             let card = game.chanceCards.pop();
-            this.showCardModal(card);
+            game.showCardFrame(card);
         } else {
             this.showLocationModal();
         }
@@ -416,9 +417,8 @@ class Player{
     highlightPropertiesOwned(){
         
         for (var propertyIndex = 0; propertyIndex < this.properties.length; propertyIndex++){
-            let currentplayerColorArray = game.players[propertyIndex].playerColor;
-            let propertyToChangeColor = game.players[propertyIndex].square.squareDom;
-            $(propertyToChangeColor).css("box-shadow", "inset 0 0 1em 0.25em " + currentplayerColorArray);
+            let domToChangeColor = this.properties[propertyIndex].squareDom;
+            $(domToChangeColor).css("box-shadow", "inset 0 0 1em 0.25em " + color);
         }
     }
 
