@@ -38,7 +38,8 @@ class Game{
             this.players.push(newPlayer);
             newPlayer.updateDisplay();
         }
-        this.players[0].rolldice();
+
+        this.showDiceModal();
     }
 
     handlePlayerTurnEnd() {
@@ -46,11 +47,86 @@ class Game{
         if (this.currentPlayerIndex >= this.players.length) {
             this.currentPlayerIndex = 0;
         }
-       this.players[this.currentPlayerIndex].rolldice();
+        
         this.displayCurrentMoney();
+        this.showDiceModal();
     }
-    displayCurrentMoney(){
 
+    /**
+     * Show main modal in center of board
+     * @param {string} title - Title for modal
+     * @param {*} content - DOM content for modal
+     * @param {*} buttons - {buttonLabel1: callback1, ..., buttonLabelN: callbackN}
+     */
+    showModal( title, content, buttons ) {
+        let dialog = $('.action-dialog-container');
+        dialog.find('.avatar .image').css({
+            'background-image': this.currentPlayer.avatarSmall
+        });
+        dialog.find('.avatar .name').text(this.currentPlayer.name);
+
+        let buttonsSection = dialog.find('.buttons');
+        buttonsSection.empty();
+        for (let buttonName in buttons) {
+            let callback = buttons[buttonName];
+            let button = $('<button>')
+                .text(buttonName)
+                .click(callback);
+            buttonsSection.append(button);
+        }
+
+        dialog.find('.action > .content').empty().append(content);
+        dialog.find('.action > .title').text(title);
+        dialog.css({display: 'block'});
+    }
+
+    /**
+     * Show modal that allows current player to conduct business or select End Turn
+     */
+    showInteractiveModal() {
+        // TODO: Add Mortgage|Unmortgage|Trade buttons here
+
+        let title = 'Please select an action';
+        let content = $('<div>');
+        let buttons = {'End Turn': game.handlePlayerTurnEnd};
+        this.showModal(title, content, buttons);
+    }
+
+    showDiceModal() {
+        let title = '';
+        let content = $('<div>').addClass('dice');
+        let buttons = {'Roll Dice': game.currentPlayer.rolldice};
+        this.showModal(title, content, buttons);
+    }
+
+    showBuyModal() {
+        let player = this.currentPlayer;
+        let square = player.square;
+
+        let title = `Buy ${square.title}?`;
+        let content = null;
+
+        if (square.type === 'street') {
+            title = '';
+            content = player.square.deedDOM;
+        }
+
+        let buttons = {
+            'Buy': () => {
+                player.buyProperty();
+                game.showInteractiveModal();
+            },
+            'Pass': this.turnEndCallback
+        }
+
+        this.showModal(title, content, buttons);
+    }
+
+    get currentPlayer() {
+        return this.players[this.currentPlayerIndex];
+    }
+
+    displayCurrentMoney(){
         let currentPlayer = this.players[this.currentPlayerIndex];
         let currentMoney = (currentPlayer.money).toString();
         let currentDomElmPlayer = currentPlayer.domElmPlayerInfo[game.currentPlayerIndex];
