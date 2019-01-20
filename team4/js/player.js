@@ -155,7 +155,7 @@ class Player{
             this.freeParking();
         } else if (this.square.type === 'go-to-jail'){
             this.updateDisplay();
-            this.showLocationModal();
+            game.showLocationFrame();
             this.goToJail();
             this.jailCount++;
         }
@@ -179,7 +179,7 @@ class Player{
             let card = game.chanceCards.pop();
             game.showCardFrame(card);
         } else {
-            this.showLocationModal();
+            game.showLocationFrame();
         }
     }
 
@@ -432,23 +432,6 @@ class Player{
         let okCallback = () => {
             dialog.dialog('close');
             this.payRent();
-        };
-
-        dialog.dialog({
-            modal: true, 
-            dialogClass: "no-close", 
-            height: 300,
-            buttons: [{text: "OK", click: okCallback}]
-        });
-    }
-
-    showLocationModal() {
-        let message =  `Landed on '${this.square.title}'`;
-        let dialog = $('<div>').text(message);
-
-        let okCallback = () => {
-            dialog.dialog('close');
-            this.turnEndCallback();
         };
 
         dialog.dialog({
