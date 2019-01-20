@@ -257,7 +257,7 @@ class Player{
         // Currently basic rent only
         let rent = 0;
         var count = 0;
-        debugger;
+
         if (property.type === 'street') {
             var propertyColor = this.myColorCount[property.color];
             if(property.hotelCount > 0){
@@ -419,18 +419,6 @@ class Player{
             let propertyToChangeColor = game.players[propertyIndex].square.squareDom;
             $(propertyToChangeColor).css("box-shadow", "inset 0 0 1em 0.25em " + currentplayerColorArray);
         }
-        // let playerProperties = game.players[0].properties[0].squareDom;
-
-        // let currentplayerColorArray = game.players[0].domElmPlayerInfo.css("background-color");
-        // let playerProperties =  game.players[game.currentPlayerIndex-1].properties;
-    //    $(temp[1].squareDom[0]).css("box-shadow", "inset 0 0 1em 0.25em rgb(255, 0, 0)")
-
-    
-        // let currentplayerColorArray = this.domElmPlayerInfocss("background-color");
-
-        // for (propIndex = 0; propIndex < this.properties.length; propIndex++){
-        //     $(this.properties[propIndex].squareDom[0]).css("box-shadow", "inset 0 0 1em 0.25em "+"rgb(255, 0, 0)");
-        // }
     }
 
     showDiceModal() {
