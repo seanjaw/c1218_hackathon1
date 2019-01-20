@@ -30,6 +30,7 @@ class Game{
         this.showBuyFrame = this.showBuyFrame.bind(this);
         this.showDiceFrame = this.showDiceFrame.bind(this);
         this.showInteractiveFrame = this.showInteractiveFrame.bind(this);
+        this.showLocationFrame = this.showLocationFrame.bind(this);
     }
 
     play(addPlayers) {
@@ -161,6 +162,15 @@ class Game{
         }
 
         this.showFrame( title, content, {'OK': okCallback} );
+    }
+
+    /**
+     * Show frame that indicates location player moved to if there is no action involved
+     */
+    showLocationFrame() {
+        let square = this.currentPlayer.square;
+        let title =  `Landed on '${square.title}'`;
+        this.showFrame(title, null, {'OK': this.showInteractiveFrame});
     }
 
     get currentPlayer() {
