@@ -223,6 +223,10 @@ class Game{
             title = '';
             content = player.square.railroadDOM;
         }
+        if (square.type === 'utility') {
+            title = '';
+            content = player.square.utilityDOM;
+        }
 
         let buttons = {
             'Buy': () => {
