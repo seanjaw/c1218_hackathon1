@@ -12,8 +12,8 @@ body {
 }
 
 .boardFrame {
-    height: 100%;
-    width: 100vh;
+    height: 55vw;
+    width: 55vw;
     border: 2px solid black;
     box-sizing: border-box;
 }
@@ -27,7 +27,11 @@ body {
     /*display: block; TODO: toggle to this when done with modal*/
     align-items: center;
 }
-
+audio {
+    display: flex;
+    align-items: center;
+    margin: auto;
+}
 .playerInformation {
     width: 90%;
     height: 50%;
