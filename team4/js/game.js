@@ -25,6 +25,7 @@ class Game{
         this.showLostFrame = this.showLostFrame.bind(this);
         this.diceSound = this.diceSound.bind(this);
         this.moneySound = this.moneySound.bind(this);
+        //this.mortgageButtonClickHandler = this. mortgageButtonClickHandler.bind(this);
 
     }
 
@@ -200,35 +201,11 @@ class Game{
             }
         }
         if(squareToMortgage.houseCount !== 0 || squareToMortgage.hotelCount !== 0){
-            var mortgageErrorDiv = $('<div>').css({
-                'width': '50%',
-                'height': '40%',
-                'position': 'absolute',
-                'top': '50%',
-                'left': '50%',
-                'transform': 'translate(-50%, -50%)',
-                'z-index': 6,
-                'background-color': 'black',
-                'color': 'white',
-            }).text('Please sell all of your houses and hotels').addClass('hideDiv');
-            var closeButton = $('<button>').css({
-                'position': 'absolute',
-                'top': '50%',
-                'left': '50%',
-                'transform': 'translate(-50%, -50%)',
-            }).text('X');
-
-            $(closeButton).click(this.closeButtonMethod);
-            $(mortgageErrorDiv).append(closeButton);
-            $('.middleFrame').append(mortgageErrorDiv);
+            game.showMortgageErrorFrame();
         } else {
             game.currentPlayer.mortgage(squareToMortgage);
+            game.showMortgageSuccessFrame(title, squareToMortgage);
         }
-    }
-
-    closeButtonMethod(){
-        $(this).remove();
-        $('.hideDiv').remove();
     }
 
     sellHotelButtonClickHandler(){
@@ -397,6 +374,27 @@ class Game{
 
         let buttons = {
             'End Turn': game.handlePlayerTurnEnd,
+        };
+        game.showFrame(title, content, buttons);
+    }
+
+    showMortgageErrorFrame(){
+        let title = `Please sell all of your houses and hotels`;
+        let content = null;
+
+        let buttons = {
+            'Back': game.showInteractiveFrame,
+        };
+        game.showFrame(title, content, buttons);
+    }
+
+    showMortgageSuccessFrame(propertyName, square){
+        let loan = square.price / 2;
+        let title = `Success!${propertyName} is mortgaged. Loaned $${loan}`;
+        let content = null;
+
+        let buttons = {
+            'Back': game.showInteractiveFrame,
         };
         game.showFrame(title, content, buttons);
     }
