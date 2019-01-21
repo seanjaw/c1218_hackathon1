@@ -488,8 +488,9 @@ class Modal {
         this.playerNumberIndex = this.playerNumber;
 
         for (var displayIndex = 0; displayIndex < this.playerNameArray.length; displayIndex++){
+            let className = "player" + (displayIndex+1);
             temp = new Player;
-            this.playerColorContainer = temp.createNewPlayerList(this.playerNumber, this.playerNameArray[displayIndex]);
+            this.playerColorContainer = temp.createNewPlayerList(this.playerNumber, this.playerNameArray[displayIndex], className);
         }
         // while (this.playerNumberIndex > 0){
 

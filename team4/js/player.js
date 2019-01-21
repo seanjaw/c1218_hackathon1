@@ -544,12 +544,12 @@ class Player{
     }
 
     //Creating new player list with accordion settings
-    createNewPlayerList(numberOfPlayers, playerName){ 
+    createNewPlayerList(numberOfPlayers, playerName, className){ 
         
         let numOfPlayers = parseInt(numberOfPlayers);
 
         this.playerDisplayDom = $("<div>")
-            .addClass("player" + numOfPlayers)
+            .addClass(className)
             .addClass("trackPlayerIndex")
             .text("Input Information");
         
