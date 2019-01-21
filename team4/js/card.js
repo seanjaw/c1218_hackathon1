@@ -12,6 +12,7 @@ class Card{
         this.text = text;
         this.deckName= deckName;
         this.cardDOM = this.createCardDOM();
+    
     }
 
     /**

@@ -17,6 +17,7 @@ class Square {
         this.houseCount = 0;
         this.squareDom = null;
         this.deedDOM = this.createDeedDOM();
+        this.railroadDOM = this.createRailroadDOM();
     }
 
 
@@ -124,7 +125,7 @@ class Square {
         
         return deedDiv;
     }
-    // createRailroadDOM(){
+    createRailroadDOM(){
     //     <div class="railroadCard">
     //     <div class="title">
     //         <img src="images/railroad-moon-logo.png" class= "railroadImageSizing">
@@ -140,8 +141,24 @@ class Square {
 
     //     </div>
     // </div>
-
-    // }
+       
+        let railroadHeader =$('<h4>').text('Railroad');
+        let imgImg= $('<img>' , {src: 'images/railroad-moon-logo.png','class': 'railroadImageSizing'});
+        let titleDiv = $('<div>' , {'class': 'title'})
+            .append([railroadHeader,imgImg]);
+        let rentP = $('<p>').text('Rent');    
+        let leftDiv= $('<div>', {'class': 'left'})
+            .append(rentP);
+        let rentPriceP = $('<p>').text('$25');    
+        let rightDiv= $('<div>', {'class': 'right'})
+            .append(rentPriceP);
+        let contentDiv= $('<div>', {'class': 'content'})
+            .append([leftDiv,rightDiv]);
+        let railroadCardDiv= $('<div>', {'class': 'railroadCard'})
+            .append([titleDiv,contentDiv]);
+        return railroadCardDiv;
+        
+    }
 
     createGoDOM(){
     
