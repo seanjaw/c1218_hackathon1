@@ -1068,5 +1068,50 @@ h1 {
     background-repeat: no-repeat;
     background-position: center;
     height: 100%;
-    width: 50%;
+    width: 30%;
+}
+
+/* css for railroad */
+.railroadCard{
+    width: 220px;
+    height: 250px;
+    border: 1px solid black;
+    position: flex;
+    padding: 5px;
+
+}
+.railroadCard p,{
+    padding: 0px;
+    margin: 0;
+    
+}
+.railroadCard .title{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.railroadImageSizing{
+    width: 40%;
+}
+
+.railroadCard .content{
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+.railroadCard .left{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width:25%;
+}
+
+.railroadCard .right{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+    width:75%;
 }
