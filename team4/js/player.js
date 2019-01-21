@@ -19,13 +19,7 @@ class Player{
         this.playerColor = playerColor;
 
         // DOM Properties
-        this.playerDom = this.createDOM();if (this.playerNumberIndex === 0){
-
-            console.log("Ended Name Requests");
-            this.hideModal();
-            this.displayPlayers();
-            this.createPlayersArray();
-        }
+        this.playerDom = this.createDOM();
         this.playerDisplayDom = null;
 
         // Bindings
@@ -54,117 +48,49 @@ class Player{
                 colorCount: 0,
                 totalHouseCount: 0,
                 totalHotelCount: 0,
-                arrayOfHouseCount: {
-                    'Luna': 0,
-                    'Sailor Pluto': 0
-                },
-                objectOfHotelCount: {
-                    'Luna': 0,
-                    'Sailor Pluto': 0
-                }
+                arrayOfHouseCount: [0, 0]
             },
             blue: {
                 colorCount: 0,
                 totalHouseCount: 0,
                 totalHotelCount: 0,
-                arrayOfHouseCount: {
-                    'Sailor Neptune': 0,
-                    'Sailor Uranus': 0,
-                    'Sailor Saturn': 0
-                },
-                objectOfHotelCount: {
-                    'Sailor Neptune': 0,
-                    'Sailor Uranus': 0,
-                    'Sailor Saturn': 0
-                }
+                arrayOfHouseCount: [0, 0, 0]
             },
             pink: {
                 colorCount: 0,
                 totalHouseCount: 0,
                 totalHotelCount: 0,
-                arrayOfHouseCount: {
-                    'Sailor Mercury': 0,
-                    'Chibiusa': 0,
-                    'Sailor Venus': 0
-                },
-                objectOfHotelCount: {
-                    'Sailor Mercury': 0,
-                    'Chibiusa': 0,
-                    'Sailor Venus': 0
-                }
+                arrayOfHouseCount: [0, 0, 0]
             },
             orange: {
                 colorCount: 0,
                 totalHouseCount: 0,
                 totalHotelCount: 0,
-                arrayOfHouseCount: {
-                    'Sailor Mars': 0,
-                    'Sailor Jupiter': 0,
-                    'Sailor Moon': 0
-                },
-                objectOfHotelCount: {
-                    'Sailor Mars': 0,
-                    'Sailor Jupiter': 0,
-                    'Sailor Moon': 0
-                }
+                arrayOfHouseCount: [0, 0, 0]
             },
             yellow: {
                 colorCount: 0,
                 totalHouseCount: 0,
                 totalHotelCount: 0,
-                arrayOfHouseCount: {
-                    'Tuxedo': 0,
-                    'Usagi': 0,
-                    'Jupiter and Venus': 0
-                },
-                objectOfHotelCount: {
-                    'Tuxedo': 0,
-                    'Usagi': 0,
-                    'Jupiter and Venus': 0
-                }
+                arrayOfHouseCount: [0, 0, 0]
             },
             red: {
                 colorCount: 0,
                 totalHouseCount: 0,
                 totalHotelCount: 0,
-                arrayOfHouseCount: {
-                    'Sad Jupiter': 0,
-                    'Happy Venus': 0,
-                    'Artemis': 0
-                },
-                objectOfHotelCount: {
-                    'Sad Jupiter': 0,
-                    'Happy Venus': 0,
-                    'Artemis': 0
-                }
+                arrayOfHouseCount: [0, 0, 0]
             },
             green: {
                 colorCount: 0,
                 totalHouseCount: 0,
                 totalHotelCount: 0,
-                arrayOfHouseCount: {
-                    'Eating Usagi': 0,
-                    'Kamen': 0,
-                    'Queen Serenity': 0
-                },
-                objectOfHotelCount: {
-                    'Eating Usagi': 0,
-                    'Kamen': 0,
-                    'Queen Serenity': 0
-                }
+                arrayOfHouseCount: [0, 0, 0]
             },
             grey: {
                 colorCount: 0,
                 totalHouseCount: 0,
                 totalHotelCount: 0,
-                arrayOfHouseCount: {
-                    'Mercury and Mars': 0,
-                    'Princess': 0
-                },
-                objectOfHotelCount: {
-                    'Mercury and Mars': 0,
-                    'Princess': 0
-                }
+                arrayOfHouseCount: [0, 0]
             },
         }
     }
@@ -187,7 +113,6 @@ class Player{
 
     rewardFromPassingGo() {
         this.money += 200;
-        this.updateDisplay();
     }
     payTax() {
         this.money -= 200;
@@ -245,10 +170,10 @@ class Player{
         } else if (PROPERTY_TYPES.indexOf(this.square.type) !== -1 && this.square.owner !== null) {
             if(this.square.owner === this && this.square.type !== 'street'){
                 return;
-            }else if(this.square.owner === this && this.square.type !== 'utility'){
+            }else if(this.square.owner === this && this.suqare.type !== 'utility'){
                 game.showBuyFrame();
             } else {
-                game.showRentFrame();
+                this.showRentModal();
             }
         } else if (this.square.type === 'community-chest') {
             let card = game.communityChestCards.pop();
@@ -275,53 +200,11 @@ class Player{
         var houseCost = this.houseCost();
         this.money -= houseCost;
         colorInMyColorCount.totalHouseCount++;
-        // ADD FUNCTIONALITY FOR DISTRIBUTING HOUSE EVENLY
-        //var minimum = Math.min.apply(Math, colorInMyColorCount.arrayOfHouseCount);
-        //var indexOfHouseToAdd = colorInMyColorCount.arrayOfHouseCount.indexOf(minimum);
-        var minHouseCount = this.square.title;
-        for(var key in colorInMyColorCount.arrayOfHouseCount){
-            if(colorInMyColorCount.arrayOfHouseCount[minHouseCount] > colorInMyColorCount.arrayOfHouseCount[key]){
-                minHouseCount = key;
-            }
-        }
-        colorInMyColorCount.arrayOfHouseCount[minHouseCount]++;
-
-        for(var index = 0; index < game.squares.length; index++){
-            if(game.squares[index].title === minHouseCount){
-                var squareToAddHouse = game.squares[index];
-                break;
-            }
-        }
-        squareToAddHouse.houseCount++;
-    }
-
-    deductHouseCount(remainingHouseToDeduct) {
-        var colorInMyColorCount = this.myColorCount[this.square.color];
-        var numberOfHouseToDeduct = null;
-        for(var key in colorInMyColorCount.arrayOfHouseCount){
-            if(remainingHouseToDeduct === 0){
-                break;
-            }
-            if(colorInMyColorCount.arrayOfHouseCount[key] > 0){
-                if(remainingHouseToDeduct > colorInMyColorCount.arrayOfHouseCount[key]){
-                    remainingHouseToDeduct = remainingHouseToDeduct - colorInMyColorCount.arrayOfHouseCount[key];
-                    numberOfHouseToDeduct = colorInMyColorCount.arrayOfHouseCount[key];
-                    colorInMyColorCount.arrayOfHouseCount[key] = 0;
-                } else {
-                    colorInMyColorCount.arrayOfHouseCount[key] = colorInMyColorCount.arrayOfHouseCount[key] - remainingHouseToDeduct;
-                    numberOfHouseToDeduct = remainingHouseToDeduct;
-                    remainingHouseToDeduct = 0;
-                }
-                for(var index = 0; index < game.squares.length; index++){
-                    if(game.squares[index].title === key){
-                        var squareToDeductHouse = game.squares[index];
-                        squareToDeductHouse.houseCount -= numberOfHouseToDeduct;
-                        break;
-                    }
-                }
-
-            }
-        }
+        // TODO: ADD FUNCTIONALITY FOR DISTRIBUTING HOUSE EVENLY
+        var minimum = Math.min.apply(Math, colorInMyColorCount.arrayOfHouseCount);
+        var indexOfHouseToAdd = colorInMyColorCount.arrayOfHouseCount.indexOf(minimum);
+        colorInMyColorCount.arrayOfHouseCount[indexOfHouseToAdd]++;
+        this.square.houseCount++;
     }
 
     buyHotel(){
@@ -332,14 +215,8 @@ class Player{
         var hotelPrice = this.houseCost();
         this.money -= hotelPrice;
         colorInMyColorCount.totalHotelCount++;
-        colorInMyColorCount.objectOfHotelCount[this.square.title]++;
         this.square.hotelCount++;
-        //this.square.houseCount -= 4;
-
-        var remainingHouseToDeduct = 4 - this.square.houseCount;
-        this.square.houseCount = 0;
-        colorInMyColorCount.arrayOfHouseCount[this.square.title] = 0;
-        this.deductHouseCount(remainingHouseToDeduct);
+        this.square.houseCount -= 4;
         colorInMyColorCount.totalHouseCount -= 4;
         /*
         for(var i = 0; i < 4; i++){
@@ -354,6 +231,18 @@ class Player{
     buyProperty() {
         var colorInMyColorCount = this.myColorCount[this.square.color];
         if(this.square.type === 'street' && this.totalColorCount[this.square.color] === colorInMyColorCount.colorCount){
+/*
+            var imageToAppend = $('<div>').css({
+                'background-image': 'url(../houseIcon/greenHouse.png)',
+                'background-size': 'contain',
+                'background-repeat': 'no-repeat',
+                'width': '50px',
+                'height': '50px',
+                'z-index': 10,
+            });
+
+            this.square.squareDom.find('.propcolor').append(imageToAppend);
+*/
             if(colorInMyColorCount.totalHouseCount === 4){
                 this.buyHotel()
             }else {
@@ -376,16 +265,13 @@ class Player{
         this.money += property.price / 4;
         property.houseCount--;
         this.myColorCount[property.color].totalHouseCount--;
-        this.myColorCount[property.color].arrayOfHouseCount[property.title]--;
     }
 
     sellHotel(property){
         this.money += (property.price) * 5 / 4;
         property.hotelCount--;
         this.myColorCount[property.color].totalHotelCount--;
-        this.myColorCount[property.color].objectOfHotelCount[property.title]--;
     }
-
 
     calculateRent( property, renter) {
         // Currently basic rent only
@@ -422,11 +308,7 @@ class Player{
                     count++;
                 }
             }
-            if(count === 4){
-                rent = 20 * renter.diceTotal;
-            } else if (count ===3){
-                rent = 15 * renter.diceTotal;
-            } else if(count === 2){
+            if(count >= 2){
                 rent = 10 * renter.diceTotal;
             } else {
                 rent = 4 * renter.diceTotal;
@@ -523,6 +405,8 @@ class Player{
         dom.addClass('player');
         dom.css({
             'background-image': `url(${this.avatar})`,
+            'background-size': 'contain',
+            'background-repeat': 'no-repeat'
         });
 
         $('body').append(dom);
@@ -531,6 +415,14 @@ class Player{
 
     updateDisplay() {
         this.square.squareDom.append(this.playerDom);
+        this.playerDom.css({
+            position: 'absolute',
+            bottom: 0,
+            left: 5,
+            height: '60px',
+            width: '60px',
+            'z-index': 4
+        });
         $(this.domElmPlayerInfo).text("Money $" + this.money);
         this.highlightPropertiesOwned();
     } 
@@ -541,6 +433,26 @@ class Player{
             let domToChangeColor = this.properties[propertyIndex].squareDom;
             $(domToChangeColor).css("box-shadow", "inset 0 0 1em 0.25em " + color);
         }
+    }
+
+    showRentModal() {
+        let square = this.square;
+        let rent = square.owner.calculateRent(square, this);
+
+        let message =  `${this.name} pay ${square.owner.name} rent of \$${rent} for ${square.title}`;
+        let dialog = $('<div>').text(message);
+
+        let okCallback = () => {
+            dialog.dialog('close');
+            this.payRent();
+        };
+
+        dialog.dialog({
+            modal: true, 
+            dialogClass: "no-close", 
+            height: 300,
+            buttons: [{text: "OK", click: okCallback}]
+        });
     }
 
     //Creating new player list with accordion settings
