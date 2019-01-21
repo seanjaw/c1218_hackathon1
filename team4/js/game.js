@@ -167,7 +167,7 @@ class Game{
             return;
         }
         var title = $(this).parents('tr').find('.title').text();
-        console.log(title);
+
         for(var index = 0; index < game.squares.length; index++){
             if(game.squares[index].title === title){
                 var squareToSellHouse = game.squares[index];

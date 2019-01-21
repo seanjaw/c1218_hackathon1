@@ -376,6 +376,7 @@ class Player{
         property.houseCount--;
         this.myColorCount[property.color].totalHouseCount--;
         this.myColorCount[property.color].arrayOfHouseCount[property.title]--;
+        game.displayCurrentMoney();
     }
 
     sellHotel(property){
