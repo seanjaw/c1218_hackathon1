@@ -292,12 +292,11 @@ class Player{
                 break;
             }
             if(colorInMyColorCount.objectOfHotelCount[key] > 0){
-                colorInMyColorCount.objectOfHotelCount[key]--;
-                remainingHouseToDeduct--;
+                if(remainingHouseToDeduct > colorInMyColorCount.objectOfHotelCount[key]){
+                    
+                }
+                remainingHouselToDeduct = remainingHouseToDeduct - colorInMyColorCount.objectOfHotelCount[key];
             }
-        }
-        if(remainingHouseToDeduct > 0){
-            this.deductHouseCount(remainingHouseToDeduct);
         }
     }
 
