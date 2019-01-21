@@ -24,7 +24,7 @@ street	Sailor Jupiter	180	14;28;70;200;550;750;950	orange	sailor%20moon%20pic15.
 street	Sailor Moon	200	16;32;80;220;600;800;1000	orange	sailor%20moon%20pic6.png
 parking	Parking				ab37dd7a85c3dd06347ef3d3ca1fc7aa_car-clip-art-car-images_500-453.png
 street	Tuxedo	280	24;48;120;360;850;1025;1200	yellow	sailor%20moon%20pic25.png
-utility	Water Works     150			
+utility	Water Works	150		
 street	Usagi	260	22;44;110;330;800;975;1150	yellow	sailor%20moon%20pic4.png
 street	Jupiter and Venus	260	22;44;110;330;800;975;1150	yellow	sailor%20moon%20pic20.png
 railroad	Railroad	200	50;100;150;200		
@@ -37,7 +37,7 @@ street	Eating Usagi	300	26;52;130;390;900;1100;1275	green	sailor%20moon%20pic.pn
 street	Kamen	300	26;52;130;390;900;1100;1275	green	sailor%20moon%20pic24.png
 community-chest	LOVE				
 street	Queen Serenity	320	28;56;150;450;1000;1200;1400	green	Neo_Queen_Serenity.png
-utility	Electric Company	150		
+utility	Water Works	150	
 chance	FRIENDSHIP				
 street	Mercury and Mars	350	35;70;175;500;1100;1300;1500	grey	sailor%20moon%20pic10.png
 luxury-tax	Attack				

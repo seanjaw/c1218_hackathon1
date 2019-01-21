@@ -147,9 +147,9 @@ class Game{
                 cellHotelButton.append(hotelButton);
 
             } else if (player.properties[index].type === 'railroad'){
-                var cellHouseValue = $('<td>').text(player.railroadCount).addClass('value').css('font-size', '75%');
+                var cellHouseValue = $('<td>').text('1').addClass('value').css('font-size', '75%');
             } else if (player.properties[index].type === 'utility') {
-                var cellHouseValue = $('<td>').text(player.utilityCount).addClass('value').css('font-size', '75%');
+                var cellHouseValue = $('<td>').text('1').addClass('value').css('font-size', '75%');
             }
 
             var cellMortgageButton = $('<td>');
