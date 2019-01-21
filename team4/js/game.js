@@ -23,7 +23,7 @@ class Game{
         this.showRentFrame = this.showRentFrame.bind(this);
         this.play = this.play.bind(this);
         this.diceSound = this.diceSound.bind(this);
-        this.moneySound = this.moneySound.bind(this)
+        this.moneySound = this.moneySound.bind(this);
     }
 
     play(addPlayers, playerNames, playerIcons) {
