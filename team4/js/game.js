@@ -176,6 +176,7 @@ class Game{
 
         }
         divToHoldTable.append(table);
+        this.displayCurrentMoney();
         return divToHoldTable;
     }
 
@@ -184,6 +185,7 @@ class Game{
         for(var index = 0; index < game.squares.length; index++){
             if(game.squares[index].title === title){
                 var squareToUnmortgage = game.squares[index];
+                this.displayCurrentMoney();
                 break;
             }
         }
@@ -191,6 +193,7 @@ class Game{
             game.currentPlayer.unmortgage(squareToUnmortgage);
             game.showUnmortgageSuccessFrame(title, squareToUnmortgage);
         }
+        this.displayCurrentMoney();
     }
 
     mortgageButtonClickHandler(){
@@ -198,6 +201,7 @@ class Game{
         for(var index = 0; index < game.squares.length; index++){
             if(game.squares[index].title === title){
                 var squareToMortgage = game.squares[index];
+                this.displayCurrentMoney();
                 break;
             }
         }
