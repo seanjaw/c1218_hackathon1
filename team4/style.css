@@ -1141,3 +1141,18 @@ h1 {
     justify-content: flex-start;
     width:75%;
 }
+
+.hideDiv {
+    animation-name: hid;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+}
+
+@keyframes hide {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}

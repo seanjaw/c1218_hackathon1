@@ -47,7 +47,11 @@ class Game{
         }
         
         this.displayCurrentMoney();
-        this.showDiceFrame();
+        if(game.currentPlayer.money === 0){
+            this.showLostFrame();
+        } else {
+            this.showDiceFrame();
+        }
     }
   
     /**
@@ -118,31 +122,105 @@ class Game{
         var firstRowHotel = $('<td>').text('Hotel').css('font-size', '75%');
         firstRow.append(firstRowTitle, firstRowHouse,firstRowHotel);
         table.append(firstRow);
-        for(var key in player.myColorCount){
-            for(var insideKey in player.myColorCount[key].arrayOfHouseCount){
-                if( player.myColorCount[key].arrayOfHouseCount[insideKey] > 0 || player.myColorCount[key].objectOfHotelCount[insideKey] > 0){
+        for(var index = 0; index<player.properties.length; index++){
 
-                    var row = $('<tr>');
-                    var cellTitle = $('<td>').text(insideKey).addClass('title').css('font-size', '75%');
-                    var cellHouseValue = $('<td>').text(player.myColorCount[key].arrayOfHouseCount[insideKey]).addClass('value').css('font-size', '75%');
-                    var cellHotelValue = $('<td>').text(player.myColorCount[key].objectOfHotelCount[insideKey]).addClass('hotelValue').css('font-size', '75%');
-                    var cellButton = $('<td>');
-                    var cellHotelButton = $('<td>');
-                    var button = $('<button>').text('Sell 1 House').css('font-size', '65%');
-                    var hotelButton = $('<button>').text('Sell 1 Hotel').css('font-size', '65%');
-                    cellButton.append(button);
-                    cellHotelButton.append(hotelButton);
-                    row.append(cellTitle, cellHouseValue, cellHotelValue, cellButton, cellHotelButton);
+            var insideKey = player.properties[index].title;
+            var key = player.properties[index].color;
 
-                    $(button).click(this.sellButtonClickHandler);
-                    $(hotelButton).click(this.sellHotelButtonClickHandler);
-
-                    table.append(row);
-                }
+            var row = $('<tr>');
+            var cellTitle = $('<td>').text(insideKey).addClass('title').css('font-size', '75%');
+            if(player.properties[index].type === 'street'){
+                var cellHouseValue = $('<td>').text(player.myColorCount[key].arrayOfHouseCount[insideKey]).addClass('value').css('font-size', '75%');
+                var cellHotelValue = $('<td>').text(player.myColorCount[key].objectOfHotelCount[insideKey]).addClass('hotelValue').css('font-size', '75%');
+                var cellButton = $('<td>');
+                var cellHotelButton = $('<td>');
+                var button = $('<button>').text('Sell House').css('font-size', '60%');
+                var hotelButton = $('<button>').text('Sell Hotel').css('font-size', '60%');
+                cellButton.append(button);
+                cellHotelButton.append(hotelButton);
+            } else if (player.properties[index].type === 'railroad'){
+                var cellHouseValue = $('<td>').text(player.railroadCount).addClass('value').css('font-size', '75%');
+            } else if (player.properties[index].type === 'utility') {
+                var cellHouseValue = $('<td>').text(player.utilityCount).addClass('value').css('font-size', '75%');
             }
+
+            var cellMortgageButton = $('<td>');
+            var cellUnmortgageButton = $('<td>');
+            var mortgageButton = $('<button>').text('Mortgage').css('font-size', '60%');
+            var unmortgageButton = $('<button>').text('Unmortgage').css('font-size', '60%');
+
+            cellMortgageButton.append(mortgageButton);
+            cellUnmortgageButton.append(unmortgageButton);
+            if(player.properties[index].type === 'street'){
+                row.append(cellTitle, cellHouseValue, cellHotelValue, cellButton, cellHotelButton, cellMortgageButton, cellUnmortgageButton);
+                $(button).click(this.sellButtonClickHandler);
+                $(hotelButton).click(this.sellHotelButtonClickHandler);
+            } else if (player.properties[index].type === 'railroad' || player.properties[index].type === 'utility'){
+                row.append(cellTitle, cellHouseValue, cellMortgageButton, cellUnmortgageButton);
+            }
+
+            $(mortgageButton).click(this.mortgageButtonClickHandler);
+            $(unmortgageButton).click(this.unmortgageButtonClickHandler);
+
+            table.append(row);
+
+
         }
         divToHoldTable.append(table);
         return divToHoldTable;
+    }
+
+    unmortgageButtonClickHandler(){
+        var title = $(this).parents('tr').find('.title').text();
+        for(var index = 0; index < game.squares.length; index++){
+            if(game.squares[index].title === title){
+                var squareToUnmortgage = game.squares[index];
+                break;
+            }
+        }
+        if(squareToUnmortgage.mortgaged === true){
+            game.currentPlayer.unmortgage(squareToUnmortgage);
+        }
+    }
+
+    mortgageButtonClickHandler(){
+        var title = $(this).parents('tr').find('.title').text();
+        for(var index = 0; index < game.squares.length; index++){
+            if(game.squares[index].title === title){
+                var squareToMortgage = game.squares[index];
+                break;
+            }
+        }
+        if(squareToMortgage.houseCount !== 0 || squareToMortgage.hotelCount !== 0){
+            var mortgageErrorDiv = $('<div>').css({
+                'width': '50%',
+                'height': '40%',
+                'position': 'absolute',
+                'top': '50%',
+                'left': '50%',
+                'transform': 'translate(-50%, -50%)',
+                'z-index': 6,
+                'background-color': 'black',
+                'color': 'white',
+            }).text('Please sell all of your houses and hotels').addClass('hideDiv');
+            var closeButton = $('<button>').css({
+                'position': 'absolute',
+                'top': '50%',
+                'left': '50%',
+                'transform': 'translate(-50%, -50%)',
+            }).text('X');
+
+            $(closeButton).click(this.closeButtonMethod);
+            $(mortgageErrorDiv).append(closeButton);
+            $('.middleFrame').append(mortgageErrorDiv);
+        } else {
+            game.currentPlayer.mortgage(squareToMortgage);
+        }
+    }
+
+    closeButtonMethod(){
+        $(this).remove();
+        $('.hideDiv').remove();
     }
 
     sellHotelButtonClickHandler(){
@@ -292,6 +370,16 @@ class Game{
         game.showFrame(title, content, {'OK': game.showInteractiveFrame});
     }
 
+    showLostFrame(){
+        let title = `Sorry you have lost`;
+        let content = null;
+
+        let lostCallback = () => {
+            game.handlePlayerTurnEnd
+        };
+        game.showFrame(title, content, {'End Turn': lostCallback});
+    }
+
     /**
      * Show frame to indicate rent being paid
      */
@@ -299,7 +387,9 @@ class Game{
         let renter = this.currentPlayer;
         let square = renter.square;
         let rent = square.owner.calculateRent(square, renter);
-
+        if(square.mortgaged === true){
+            rent = 0;
+        }
         let title = [
             `Pay \$${rent} Rent`,
             'to',

@@ -49,9 +49,12 @@ class Player{
             grey: 2,
         };
 
+        this.railroadCount = 0;
+        this.utilityCount = 0;
         this.myColorCount = {
             brown: {
                 colorCount: 0,
+                mortgaged: false,
                 totalHouseCount: 0,
                 totalHotelCount: 0,
                 arrayOfHouseCount: {
@@ -65,6 +68,7 @@ class Player{
             },
             blue: {
                 colorCount: 0,
+                mortgaged: false,
                 totalHouseCount: 0,
                 totalHotelCount: 0,
                 arrayOfHouseCount: {
@@ -80,6 +84,7 @@ class Player{
             },
             pink: {
                 colorCount: 0,
+                mortgaged: false,
                 totalHouseCount: 0,
                 totalHotelCount: 0,
                 arrayOfHouseCount: {
@@ -95,6 +100,7 @@ class Player{
             },
             orange: {
                 colorCount: 0,
+                mortgaged: false,
                 totalHouseCount: 0,
                 totalHotelCount: 0,
                 arrayOfHouseCount: {
@@ -110,6 +116,7 @@ class Player{
             },
             yellow: {
                 colorCount: 0,
+                mortgaged: false,
                 totalHouseCount: 0,
                 totalHotelCount: 0,
                 arrayOfHouseCount: {
@@ -125,6 +132,7 @@ class Player{
             },
             red: {
                 colorCount: 0,
+                mortgaged: false,
                 totalHouseCount: 0,
                 totalHotelCount: 0,
                 arrayOfHouseCount: {
@@ -140,6 +148,7 @@ class Player{
             },
             green: {
                 colorCount: 0,
+                mortgaged: false,
                 totalHouseCount: 0,
                 totalHotelCount: 0,
                 arrayOfHouseCount: {
@@ -155,6 +164,7 @@ class Player{
             },
             grey: {
                 colorCount: 0,
+                mortgaged: false,
                 totalHouseCount: 0,
                 totalHotelCount: 0,
                 arrayOfHouseCount: {
@@ -248,6 +258,13 @@ class Player{
                 game.showBuyFrame();
             } else {
                 game.showRentFrame();
+                /*
+                if(this.square.mortgaged === false){
+                    game.showRentFrame();
+                } else {
+                    game.showLocationFrame();
+                }
+                */
             }
         } else if (this.square.type === 'community-chest') {
             let card = game.communityChestCards.pop();
@@ -363,12 +380,28 @@ class Player{
             // buy street
             this.money -= this.square.price;
             this.addProperty(this.square);
-            if(this.square.type === 'street'){
-                colorInMyColorCount.colorCount++;
+            if(this.square.type === 'railroad'){
+                this.railroadCount++;
+            } else if (this.square.type === 'utility'){
+                this.utilityCount++;
             }
 
             console.log('Buy property: ', this.square.title, ' for $', this.square.price);
         }
+    }
+
+    mortgage(property){
+        this.money += property.price / 2;
+        property.mortgaged = true;
+        this.myColorCount[property.color].mortgaged = true;
+    }
+
+    unmortgage(property){
+        var interest = (property.price / 2) * 0.1;
+        var total = interest + property.price/2;
+        this.money -= total;
+        property.mortgaged = false;
+        this.myColorCount[property.color].mortgaged = false;
     }
 
     sellHouse(property) {
@@ -432,6 +465,9 @@ class Player{
                 rent = 4 * renter.diceTotal;
             }
         }
+        if(property.mortgaged === true){
+            rent = 0;
+        }
 
         return rent;
     }
@@ -441,14 +477,23 @@ class Player{
      */
     payRent() {
         let square = this.square;
+
+
         let rent = square.owner.calculateRent(square, this);
 
         // TODO: Mortgage property or lose if not enough money to pay rent
+        if(square.mortgaged === true){
+            rent = 0;
+        }
+
         let amountToPay = rent;
         if (this.money < amountToPay) {
             amountToPay = this.money;
         }
         this.money -= amountToPay;
+        if(this.money === 0){
+
+        }
         square.owner.money += amountToPay;
         for(var i = 0; i < this.square.owner.properties.length; i++){
             console.log(this.square.owner.properties[i].type);
