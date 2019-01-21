@@ -21,7 +21,7 @@ class Player{
         // DOM Properties
         this.playerDom = this.createDOM();if (this.playerNumberIndex === 0){
 
-            console.log("Ended Name Requests");
+            ("Ended Name Requests");
             this.hideModal();
             this.displayPlayers();
             this.createPlayersArray();
@@ -374,7 +374,7 @@ class Player{
             }else {
                 this.buyHouse();
             }
-            console.log('Buy property: a house on', this.square.title, ' for $', this.square.price/2);
+            ('Buy property: a house on', this.square.title, ' for $', this.square.price/2);
         } else {
             // buy street
             this.money -= this.square.price;
@@ -390,7 +390,7 @@ class Player{
             }
 
 
-            console.log('Buy property: ', this.square.title, ' for $', this.square.price);
+            ('Buy property: ', this.square.title, ' for $', this.square.price);
         }
         game.displayCurrentMoney();
     }
@@ -508,7 +508,7 @@ class Player{
             game.showLostFrame();
         }
         for(var i = 0; i < this.square.owner.properties.length; i++){
-            console.log(this.square.owner.properties[i].type);
+            (this.square.owner.properties[i].type);
         }
         game.displayCurrentMoney();
         this.turnEndCallback();
@@ -537,7 +537,7 @@ class Player{
      */
     addMoney( amount ) {
         this.money += amount;
-        console.log('In addMoney');
+        ('In addMoney');
         game.displayCurrentMoney();
     }
 
@@ -554,7 +554,7 @@ class Player{
         }
         this.money -= amountToRemove;
 
-        console.log('In removeMoney');
+        ('In removeMoney');
         game.displayCurrentMoney();
         return amountToRemove;
     }

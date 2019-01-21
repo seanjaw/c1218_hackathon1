@@ -55,8 +55,8 @@ class Modal {
 
     clickHandle(event) { 
         
-        console.log("this event was ",event);
-        console.log("Made it to click!");
+        ("this event was ",event);
+        ("Made it to click!");
         
         //TODO: Need to prevent enter when selection icons.
         if (this.firstTimeModalClick){
@@ -92,7 +92,6 @@ class Modal {
             } else {
 
                 this.collectPlayerNames(singlePlayerName);
-                console.log("Player Name is ", singlePlayerName);
                 $(this.tempIconContainerElm).css("display", "flex");
                 
                 this.iconDisplay();
@@ -129,17 +128,17 @@ class Modal {
         let getImgElm = $(this.eventClick.currentTarget).children();
         let imagesrc = $(getImgElm).attr("src");
 
-        console.log("Event is ",event);
-        console.log("Made it to Icon!");
+        ("Event is ",event);
+        ("Made it to Icon!");
         this.playerIconArray.push(imagesrc);
-        console.log("icon was ", imagesrc);
+        ("icon was ", imagesrc);
         let iconToRemove = this.iconArray.indexOf(imagesrc);
         this.iconArray.splice(iconToRemove, 1);
         $(this.tempIconContainerElm).css("display", "none");
         $(".icon").remove();
         if (this.playerNumberIndex === 0){
 
-            console.log("Ended Name Requests");
+            ("Ended Name Requests");
             this.hideModal();
             this.displayPlayers();
             this.createPlayersArray();
@@ -149,7 +148,7 @@ class Modal {
     collectPlayerNames(nameToEnter) { 
 
         this.playerNameArray.push(nameToEnter);
-        console.log("PlayerArray ", this.playerNameArray);
+        ("PlayerArray ", this.playerNameArray);
         $(".playersBox").css("display", "block");
     }
 
