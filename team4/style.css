@@ -1141,3 +1141,27 @@ h1 {
     justify-content: flex-start;
     width:75%;
 }
+
+/* css for utility card */
+.utilityCard{
+    width: 220px;
+    height: 250px;
+    border: 1px solid black;
+    position: flex;
+    padding: 5px;
+
+}
+
+.utilityCard .title{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.utilityImageSizing{
+    width: 40%;
+}
+
+.utilityCard .content{
+    text-align: center;
+}
