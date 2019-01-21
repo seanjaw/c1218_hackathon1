@@ -17,6 +17,11 @@ class Square {
         this.houseCount = 0;
         this.squareDom = null;
         this.deedDOM = this.createDeedDOM();
+        this.railroadDOM = this.createRailroadDOM();
+
+        this.mortgaged = false;
+        this.utilityDOM = this.createUtilityDOM();
+
     }
 
 
@@ -124,7 +129,65 @@ class Square {
         
         return deedDiv;
     }
+    createRailroadDOM(){
+    //     <div class="railroadCard">
+    //     <div class="title">
+    //         <img src="images/railroad-moon-logo.png" class= "railroadImageSizing">
+    //         <h4>Railroad</h4>
+    //     </div>
+    //     <div class="content">
+    //         <div class="left">
+    //             <p>Rent</p>
+    //         </div>
+    //         <div class="right">
+    //             <p>$25</p>
+    //         </div>
 
+    //     </div>
+    // </div>
+       
+        let railroadHeader =$('<h4>').text('Railroad');
+        let imgImg= $('<img>' , {src: 'images/railroad-moon-logo.png','class': 'railroadImageSizing'});
+        let titleDiv = $('<div>' , {'class': 'title'})
+            .append([railroadHeader,imgImg]);
+        let rentP = $('<p>').text('Rent');    
+        let leftDiv= $('<div>', {'class': 'left'})
+            .append(rentP);
+        let rentPriceP = $('<p>').text('$25');    
+        let rightDiv= $('<div>', {'class': 'right'})
+            .append(rentPriceP);
+        let contentDiv= $('<div>', {'class': 'content'})
+            .append([leftDiv,rightDiv]);
+        let railroadCardDiv= $('<div>', {'class': 'railroadCard'})
+            .append([titleDiv,contentDiv]);
+        return railroadCardDiv;
+        
+    }
+
+    createUtilityDOM(){
+    //     <div class="utilityCard">
+    //     <div class="title">
+    //         <img src="images/railroad-moon-logo.png" class= "utilityImageSizing">
+    //         <h4>Water Works</h4>
+    //     </div>
+    //     <div class="content">
+    //         <p>If one Utility is owned, rent is 4 times amount shown on dice.</p>
+    //         <p>If two Utilities are owned, ren is 10 times amount shown on dice</p>
+
+    //     </div>
+    // </div>
+        
+        let imgImg= $('<img>' , {src: 'images/railroad-moon-logo.png','class': 'utilityImageSizing'});
+        let utilityHeader =$('<h4>').text('Water Works');
+        let titleDiv = $('<div>' , {'class': 'title'})
+            .append([imgImg, utilityHeader]);
+        let utilityInfoP = $('<p>').text('If one Utility is owned, rent is 4 times amount shown on dice.');      
+        let contentDiv= $('<div>', {'class': 'content'})
+            .append(utilityInfoP);
+        let utilityCardDiv= $('<div>', {'class': 'utilityCard'})
+            .append([titleDiv,contentDiv]);
+        return utilityCardDiv;
+    }
     createGoDOM(){
     
         let html =`<div class="goStart square">
@@ -199,28 +262,15 @@ class Square {
         return goToJailDiv;
 
     }
+
+    
+
     createSquareDOM(){
         if (this.type === 'go') return this.createGoDOM();
         if (this.type === 'jail') return this.createJailDOM();
         if (this.type === 'go-to-jail') return this.createGoToJailDOM();
         if (this.type === 'parking') return this.createParkingDOM();
 
-    //     <div class="prop1">
-    //     <div class="propInfo square topPropInfo">
-    //         <div class="text topText">
-    //             <p>Sad Jupiter</p>
-    //         </div>
-    //         <div class="image">
-    //             <img src="images/sailor%20moon%20pic19.png" alt="happy venus" class="topImg">
-    //         </div>
-    //         <div class="text topMoney">
-    //             <p>$220</p>
-    //         </div>
-    //     </div>
-    //     <div class="propcolor red"></div>
-    // </div>
-        // let textDiv = $('<div>', {'class':'text'}).text(this.title);
-        
         let titleDiv = $('<p>').text(this.title);
         let titleContainerDiv = $('<div>', {'class':'text'}).append(titleDiv);
 

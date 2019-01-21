@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>
+    <script src="js/modal.js" type="text/javascript" ></script>
     <script src="js/card-data.js"></script>
     <script src="js/card.js"></script>
     <script src="js/square.js"></script>
@@ -17,6 +18,9 @@
     <script src="js/main.js" type="text/javascript" ></script>
 </head>
 <body>
+    <audio loop controls >
+        <source src="sound/themeSong.mp3" type="audio/mp3">
+    </audio>
     <div class="frame">
         <div class="boardFrame">    
             <div class="topProp">
@@ -25,7 +29,7 @@
                         <p>Parking</p>
                     </div>
                     <div class="image square">
-                        <img src="images/ab37dd7a85c3dd06347ef3d3ca1fc7aa_car-clip-art-car-images_500-453.png" class="car">
+                        <img src="images/parking.png" class="car">
                     </div>
                     <div class="free">
                         <p>Free</p>
@@ -146,7 +150,7 @@
                         <p>Jail</p>
                     </div>
                     <div class="image square">
-                        <img src="images/park-ranger-clipart.gif" class="jailImg">
+                        <img src="images/go-to-jail.png" class="jailImg">
                     </div>
                     <div class="goTo">
                         <p>Go To</p>
@@ -414,7 +418,7 @@
                         <P class="startGo">GO</P>
                     </div>
                     <div class="arrowImage">
-                        <img src="images/585e4695cb11b227491c3373.png">
+                        <img src="images/go.png">
                     </div>
                 </div>
                 <div class="bottomPropContainer">
@@ -527,7 +531,7 @@
                 <div class="jail square-10">
                     <div class="jailImageContainer">
                         <div class="jail square jailBarContainer">
-                            <img src="images/hands-holding-prison-bars-vector-1840918.jpg" class="jailBar">
+                            <img src="images/jail.png" class="jailBar">
                         </div>
                     </div>
                     <div class="justLeft">
@@ -550,7 +554,7 @@
         <div id="modalBody">
             <button id="submitPlayers">Start</button>
             <input class="num-of-players" value="2" type="number" min="2" max="4">
-            <div id="modalMessage">Choose The Number of Players</div>
+            <div id="modalMessage">Choose The Number of Players</div>   
         </div>  
     </div>
 </body>
