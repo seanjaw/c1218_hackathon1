@@ -19,7 +19,13 @@ class Player{
         this.playerColor = playerColor;
 
         // DOM Properties
-        this.playerDom = this.createDOM();
+        this.playerDom = this.createDOM();if (this.playerNumberIndex === 0){
+
+            console.log("Ended Name Requests");
+            this.hideModal();
+            this.displayPlayers();
+            this.createPlayersArray();
+        }
         this.playerDisplayDom = null;
 
         // Bindings

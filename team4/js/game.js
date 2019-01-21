@@ -410,12 +410,16 @@ class Modal {
         let temp = null;
         this.playerNumberIndex = this.playerNumber;
 
-        while (this.playerNumberIndex > 0){
-
+        for (var displayIndex = 0; displayIndex < this.playerNameArray.length; displayIndex++){
             temp = new Player;
-            this.playerColorContainer = temp.createNewPlayerList(this.playerNumber, this.playerNameArray[this.playerNumberIndex-1]);
-            this.playerNumberIndex--;
+            this.playerColorContainer = temp.createNewPlayerList(this.playerNumber, this.playerNameArray[displayIndex]);
         }
+        // while (this.playerNumberIndex > 0){
+
+        //     temp = new Player;
+        //     this.playerColorContainer = temp.createNewPlayerList(this.playerNumber, this.playerNameArray[this.playerNumberIndex-1]);
+        //     this.playerNumberIndex--;
+        // }
         temp.setPlayerList();
     }
     createPlayersArray(){
