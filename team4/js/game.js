@@ -147,9 +147,9 @@ class Game{
                 cellHotelButton.append(hotelButton);
 
             } else if (player.properties[index].type === 'railroad'){
-                var cellHouseValue = $('<td>').text(player.railroadCount).addClass('value').css('font-size', '75%');
+                var cellHouseValue = $('<td>').text('1').addClass('value').css('font-size', '75%');
             } else if (player.properties[index].type === 'utility') {
-                var cellHouseValue = $('<td>').text(player.utilityCount).addClass('value').css('font-size', '75%');
+                var cellHouseValue = $('<td>').text('1').addClass('value').css('font-size', '75%');
             }
 
             var cellMortgageButton = $('<td>');
@@ -176,6 +176,7 @@ class Game{
 
         }
         divToHoldTable.append(table);
+        this.currentPlayer.updateDisplay();
         return divToHoldTable;
     }
 
@@ -207,6 +208,7 @@ class Game{
             game.currentPlayer.mortgage(squareToMortgage);
             game.showMortgageSuccessFrame(title, squareToMortgage);
         }
+        this.currentPlayer.updateDisplay();
     }
 
     sellHotelButtonClickHandler(){
@@ -225,6 +227,7 @@ class Game{
         var value = $(this).parents('tr').find('.hotelValue').text() - 1;
         $(this).parents('tr').find('.hotelValue').text(value);
         this.moneySound();
+        this.currentPlayer.updateDisplay();
     }
 
     sellButtonClickHandler(){
@@ -243,6 +246,7 @@ class Game{
         var value = $(this).parents('tr').find('.value').text() - 1;
         $(this).parents('tr').find('.value').text(value);
         this.moneySound();
+        this.currentPlayer.updateDisplay();
     }
     /**
      * Show dialog that allows current player to conduct business or select End Turn
@@ -258,6 +262,7 @@ class Game{
         };
         this.currentPlayer.updateDisplay();
         this.showFrame(title, content, buttons);
+        this.currentPlayer.updateDisplay();
     }
 
     /**
@@ -273,6 +278,7 @@ class Game{
         let buttons = {'Roll Dice': game.currentPlayer.rolldice};
         this.showFrame(title, content, buttons, true);
         this.diceSound();
+        this.currentPlayer.updateDisplay();
     }
 
     /**
@@ -309,7 +315,7 @@ class Game{
         }
 
         this.showFrame(title, content, buttons);
-
+        this.currentPlayer.updateDisplay();
     }
 
     /**
@@ -338,6 +344,8 @@ class Game{
         }
 
         this.showFrame( title, content, {'OK': okCallback} );
+        game.showInteractiveFrame();
+        this.currentPlayer.updateDisplay();
     }
 
     /**
@@ -443,7 +451,7 @@ class Game{
     displayCurrentMoney(){
         let currentPlayer = this.players[this.currentPlayerIndex];
         let currentMoney = (currentPlayer.money).toString();
-        let currentDomElmPlayer = currentPlayer.domElmPlayerInfo[game.currentPlayerIndex];
+        let currentDomElmPlayer = currentPlayer.domElmPlayerInfo; //[game.currentPlayerIndex];
         $(currentDomElmPlayer).text("Money $" + currentMoney);
     }
     diceSound(){

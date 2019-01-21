@@ -21,7 +21,7 @@ class Player{
         // DOM Properties
         this.playerDom = this.createDOM();if (this.playerNumberIndex === 0){
 
-            console.log("Ended Name Requests");
+            ("Ended Name Requests");
             this.hideModal();
             this.displayPlayers();
             this.createPlayersArray();
@@ -180,7 +180,7 @@ class Player{
     }
 
     rolldice(){
-        //to:do not hard coded make number of die up there. 
+        //TODO: not hard coded make number of die up there. 
         let rollArray= [];
         let total = 0;
         
@@ -219,6 +219,7 @@ class Player{
         } else if ( this.diceArray[0] !== this.diceArray[1]){
             this.jailCount++;
             this.updateDisplay();
+            game.showInteractiveFrame();
         }
 
     }
@@ -363,14 +364,6 @@ class Player{
         this.deductHouseCount(remainingHouseToDeduct);
         colorInMyColorCount.totalHouseCount -= 4;
         game.displayCurrentMoney();
-        /*
-        for(var i = 0; i < 4; i++){
-            if(i >= colorInMyColorCount.arrayOfHouseCount.length){
-                i = i - colorInMyColorCount.arrayOfHouseCount.length;
-            }
-            colorInMyColorCount.arrayOfHouseCount[i] -= 1;
-        }
-        */
     }
 
     buyProperty() {
@@ -381,16 +374,12 @@ class Player{
             }else {
                 this.buyHouse();
             }
-            console.log('Buy property: a house on', this.square.title, ' for $', this.square.price/2);
+            ('Buy property: a house on', this.square.title, ' for $', this.square.price/2);
         } else {
             // buy street
             this.money -= this.square.price;
             this.addProperty(this.square);
-            if(this.square.type === 'railroad'){
-                this.railroadCount++;
-            } else if (this.square.type === 'utility'){
-                this.utilityCount++;
-            }
+
             this.square.owner = this;
             if(this.square.type === 'street'){
                 colorInMyColorCount.colorCount++;
@@ -401,7 +390,7 @@ class Player{
             }
 
 
-            console.log('Buy property: ', this.square.title, ' for $', this.square.price);
+            ('Buy property: ', this.square.title, ' for $', this.square.price);
         }
         game.displayCurrentMoney();
     }
@@ -519,11 +508,10 @@ class Player{
             game.showLostFrame();
         }
         for(var i = 0; i < this.square.owner.properties.length; i++){
-            console.log(this.square.owner.properties[i].type);
+            (this.square.owner.properties[i].type);
         }
         game.displayCurrentMoney();
         this.turnEndCallback();
-        this.displayCurrentMoney();
     }
 
     /*
@@ -549,7 +537,7 @@ class Player{
      */
     addMoney( amount ) {
         this.money += amount;
-        console.log('In addMoney');
+        ('In addMoney');
         game.displayCurrentMoney();
     }
 
@@ -566,7 +554,7 @@ class Player{
         }
         this.money -= amountToRemove;
 
-        console.log('In removeMoney');
+        ('In removeMoney');
         game.displayCurrentMoney();
         return amountToRemove;
     }
