@@ -27,7 +27,7 @@ street	Tuxedo	280	24;48;120;360;850;1025;1200	yellow	sailor%20moon%20pic25.png
 utility	Water Works	150			
 street	Usagi	260	22;44;110;330;800;975;1150	yellow	sailor%20moon%20pic4.png
 street	Jupiter and Venus	260	22;44;110;330;800;975;1150	yellow	sailor%20moon%20pic20.png
-street	Railroad	200	50;100;150;200		
+railroad	Railroad	200	50;100;150;200		
 street	Sad Jupiter	240	20;40;100;300;750;925;1100	red	sailor%20moon%20pic21.png
 street	Happy Venus	220	18;36;90;250;700;875;1050	red	sailor%20moon%20pic19.png
 chance	FRIENDSHIP				
