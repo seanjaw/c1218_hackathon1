@@ -296,15 +296,29 @@ class Player{
 
     deductHouseCount(remainingHouseToDeduct) {
         var colorInMyColorCount = this.myColorCount[this.square.color];
-        for(var key in colorInMyColorCount.objectOfHotelCount){
+        var numberOfHouseToDeduct = null;
+        for(var key in colorInMyColorCount.arrayOfHouseCount){
             if(remainingHouseToDeduct === 0){
                 break;
             }
-            if(colorInMyColorCount.objectOfHotelCount[key] > 0){
-                if(remainingHouseToDeduct > colorInMyColorCount.objectOfHotelCount[key]){
-                    
+            if(colorInMyColorCount.arrayOfHouseCount[key] > 0){
+                if(remainingHouseToDeduct > colorInMyColorCount.arrayOfHouseCount[key]){
+                    remainingHouseToDeduct = remainingHouseToDeduct - colorInMyColorCount.arrayOfHouseCount[key];
+                    numberOfHouseToDeduct = colorInMyColorCount.arrayOfHouseCount[key];
+                    colorInMyColorCount.arrayOfHouseCount[key] = 0;
+                } else {
+                    colorInMyColorCount.arrayOfHouseCount[key] = colorInMyColorCount.arrayOfHouseCount[key] - remainingHouseToDeduct;
+                    numberOfHouseToDeduct = remainingHouseToDeduct;
+                    remainingHouseToDeduct = 0;
                 }
-                remainingHouselToDeduct = remainingHouseToDeduct - colorInMyColorCount.objectOfHotelCount[key];
+                for(var index = 0; index < game.squares.length; index++){
+                    if(game.squares[index].title === key){
+                        var squareToDeductHouse = game.squares[index];
+                        squareToDeductHouse.houseCount -= numberOfHouseToDeduct;
+                        break;
+                    }
+                }
+
             }
         }
     }
@@ -320,7 +334,10 @@ class Player{
         colorInMyColorCount.objectOfHotelCount[this.square.title]++;
         this.square.hotelCount++;
         //this.square.houseCount -= 4;
+
         var remainingHouseToDeduct = 4 - this.square.houseCount;
+        this.square.houseCount = 0;
+        colorInMyColorCount.arrayOfHouseCount[this.square.title] = 0;
         this.deductHouseCount(remainingHouseToDeduct);
         colorInMyColorCount.totalHouseCount -= 4;
         /*
@@ -336,18 +353,6 @@ class Player{
     buyProperty() {
         var colorInMyColorCount = this.myColorCount[this.square.color];
         if(this.square.type === 'street' && this.totalColorCount[this.square.color] === colorInMyColorCount.colorCount){
-/*
-            var imageToAppend = $('<div>').css({
-                'background-image': 'url(../houseIcon/greenHouse.png)',
-                'background-size': 'contain',
-                'background-repeat': 'no-repeat',
-                'width': '50px',
-                'height': '50px',
-                'z-index': 10,
-            });
-
-            this.square.squareDom.find('.propcolor').append(imageToAppend);
-*/
             if(colorInMyColorCount.totalHouseCount === 4){
                 this.buyHotel()
             }else {
@@ -370,18 +375,6 @@ class Player{
         this.money += property.price / 4;
         property.houseCount--;
         this.myColorCount[property.color].totalHouseCount--;
-    }
-
-    sellHotel(property){
-        this.money += (property.price) * 5 / 4;
-        property.hotelCount--;
-        this.myColorCount[property.color].totalHotelCount--;
-    }
-
-    sellHouse(property) {
-        this.money += property.price / 4;
-        property.houseCount--;
-        this.myColorCount[property.color].totalHouseCount--;
         this.myColorCount[property.color].arrayOfHouseCount[property.title]--;
     }
 
@@ -389,6 +382,7 @@ class Player{
         this.money += (property.price) * 5 / 4;
         property.hotelCount--;
         this.myColorCount[property.color].totalHotelCount--;
+        this.myColorCount[property.color].objectOfHotelCount[property.title]--;
     }
 
 
