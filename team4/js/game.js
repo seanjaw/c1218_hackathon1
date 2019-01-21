@@ -20,6 +20,7 @@ class Game{
         this.showLocationFrame = this.showLocationFrame.bind(this);
         this.showRentFrame = this.showRentFrame.bind(this);
         this.play = this.play.bind(this);
+        this.showLostFrame = this.showLostFrame.bind(this);
     }
 
     play(addPlayers, playerNames, playerIcons) {
@@ -47,11 +48,9 @@ class Game{
         }
         
         this.displayCurrentMoney();
-        if(game.currentPlayer.money === 0){
-            this.showLostFrame();
-        } else {
-            this.showDiceFrame();
-        }
+
+        this.showDiceFrame();
+
     }
   
     /**
@@ -138,6 +137,7 @@ class Game{
                 var hotelButton = $('<button>').text('Sell Hotel').css('font-size', '60%');
                 cellButton.append(button);
                 cellHotelButton.append(hotelButton);
+
             } else if (player.properties[index].type === 'railroad'){
                 var cellHouseValue = $('<td>').text(player.railroadCount).addClass('value').css('font-size', '75%');
             } else if (player.properties[index].type === 'utility') {
@@ -148,6 +148,7 @@ class Game{
             var cellUnmortgageButton = $('<td>');
             var mortgageButton = $('<button>').text('Mortgage').css('font-size', '60%');
             var unmortgageButton = $('<button>').text('Unmortgage').css('font-size', '60%');
+
 
             cellMortgageButton.append(mortgageButton);
             cellUnmortgageButton.append(unmortgageButton);
@@ -276,6 +277,10 @@ class Game{
      * Show frame that allows current player to roll dice
      */
     showDiceFrame() {
+        if(game.currentPlayer.money === 0){
+            this.showLostFrame();
+            return;
+        }
         let title = '';
         let content = $('<div>').addClass('dice');
         let buttons = {'Roll Dice': game.currentPlayer.rolldice};
@@ -374,10 +379,10 @@ class Game{
         let title = `Sorry you have lost`;
         let content = null;
 
-        let lostCallback = () => {
-            game.handlePlayerTurnEnd
+        let buttons = {
+            'End Turn': game.handlePlayerTurnEnd,
         };
-        game.showFrame(title, content, {'End Turn': lostCallback});
+        game.showFrame(title, content, buttons);
     }
 
     /**

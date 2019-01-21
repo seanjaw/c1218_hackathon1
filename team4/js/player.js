@@ -368,6 +368,7 @@ class Player{
     }
 
     buyProperty() {
+        debugger;
         var colorInMyColorCount = this.myColorCount[this.square.color];
         if(this.square.type === 'street' && this.totalColorCount[this.square.color] === colorInMyColorCount.colorCount){
             if(colorInMyColorCount.totalHouseCount === 4){
@@ -385,6 +386,15 @@ class Player{
             } else if (this.square.type === 'utility'){
                 this.utilityCount++;
             }
+            this.square.owner = this;
+            if(this.square.type === 'street'){
+                colorInMyColorCount.colorCount++;
+            } else if (this.square.type === 'railroad'){
+                this.railroadCount++;
+            } else if (this.square.type === 'utility') {
+                this.utilityCount++;
+            }
+
 
             console.log('Buy property: ', this.square.title, ' for $', this.square.price);
         }
@@ -491,10 +501,12 @@ class Player{
             amountToPay = this.money;
         }
         this.money -= amountToPay;
-        if(this.money === 0){
 
-        }
         square.owner.money += amountToPay;
+
+        if(this.money === 0){
+            game.showLostFrame;
+        }
         for(var i = 0; i < this.square.owner.properties.length; i++){
             console.log(this.square.owner.properties[i].type);
         }
