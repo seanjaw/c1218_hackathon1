@@ -17,14 +17,14 @@ street	Sailor Mercury	140	10;20;50;150;450;625;750	pink	bbacf47ead84bd053b6ae390
 utility	Water Works	150			
 street	Chibiusa	140	10;20;50;150;450;625;750	pink	Little-Princess-Serenity-sailor-mini-moon-rini-9658735-200-239.gif
 street	Sailor Venus	160	12;24;60;180;500;700;900	pink	sailor%20moon%20pic18.png
-utility	Electric Company	150		
+utility	Water Works     150		
 street	Sailor Mars	180	14;28;70;200;550;750;950	orange	tumblr_mkph7z6fmA1r49apoo1_500.png
 community-chest	LOVE				
 street	Sailor Jupiter	180	14;28;70;200;550;750;950	orange	sailor%20moon%20pic15.png
 street	Sailor Moon	200	16;32;80;220;600;800;1000	orange	sailor%20moon%20pic6.png
 parking	Parking				ab37dd7a85c3dd06347ef3d3ca1fc7aa_car-clip-art-car-images_500-453.png
 street	Tuxedo	280	24;48;120;360;850;1025;1200	yellow	sailor%20moon%20pic25.png
-utility	Water Works	150			
+utility	Water Works     150			
 street	Usagi	260	22;44;110;330;800;975;1150	yellow	sailor%20moon%20pic4.png
 street	Jupiter and Venus	260	22;44;110;330;800;975;1150	yellow	sailor%20moon%20pic20.png
 railroad	Railroad	200	50;100;150;200		

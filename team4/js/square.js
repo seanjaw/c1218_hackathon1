@@ -18,7 +18,10 @@ class Square {
         this.squareDom = null;
         this.deedDOM = this.createDeedDOM();
         this.railroadDOM = this.createRailroadDOM();
+
         this.mortgaged = false;
+        this.utilityDOM = this.createUtilityDOM();
+
     }
 
 
@@ -161,6 +164,30 @@ class Square {
         
     }
 
+    createUtilityDOM(){
+    //     <div class="utilityCard">
+    //     <div class="title">
+    //         <img src="images/railroad-moon-logo.png" class= "utilityImageSizing">
+    //         <h4>Water Works</h4>
+    //     </div>
+    //     <div class="content">
+    //         <p>If one Utility is owned, rent is 4 times amount shown on dice.</p>
+    //         <p>If two Utilities are owned, ren is 10 times amount shown on dice</p>
+
+    //     </div>
+    // </div>
+        
+        let imgImg= $('<img>' , {src: 'images/railroad-moon-logo.png','class': 'utilityImageSizing'});
+        let utilityHeader =$('<h4>').text('Water Works');
+        let titleDiv = $('<div>' , {'class': 'title'})
+            .append([imgImg, utilityHeader]);
+        let utilityInfoP = $('<p>').text('If one Utility is owned, rent is 4 times amount shown on dice.');      
+        let contentDiv= $('<div>', {'class': 'content'})
+            .append(utilityInfoP);
+        let utilityCardDiv= $('<div>', {'class': 'utilityCard'})
+            .append([titleDiv,contentDiv]);
+        return utilityCardDiv;
+    }
     createGoDOM(){
     
         let html =`<div class="goStart square">
