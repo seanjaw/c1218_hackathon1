@@ -374,7 +374,6 @@ class Player{
     }
 
     buyProperty() {
-        debugger;
         var colorInMyColorCount = this.myColorCount[this.square.color];
         if(this.square.type === 'street' && this.totalColorCount[this.square.color] === colorInMyColorCount.colorCount){
             if(colorInMyColorCount.totalHouseCount === 4){
@@ -486,6 +485,9 @@ class Player{
         if(property.mortgaged === true){
             rent = 0;
         }
+        if(renter.money < rent){
+            rent = renter.money;
+        }
         game.displayCurrentMoney();
 
         return rent;
@@ -514,7 +516,7 @@ class Player{
         square.owner.money += amountToPay;
 
         if(this.money === 0){
-            game.showLostFrame;
+            game.showLostFrame();
         }
         for(var i = 0; i < this.square.owner.properties.length; i++){
             console.log(this.square.owner.properties[i].type);
