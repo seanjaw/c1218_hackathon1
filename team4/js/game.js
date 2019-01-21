@@ -113,9 +113,9 @@ class Game{
         var divToHoldTable = $('<div>');
         var table = $('<table>');
         var firstRow = $('<tr>');
-        var firstRowTitle = $('<td>').text('Title');
-        var firstRowHouse = $('<td>').text('House');
-        var firstRowHotel = $('<td>').text('Hotel');
+        var firstRowTitle = $('<td>').text('Title').css('font-size', '75%');
+        var firstRowHouse = $('<td>').text('House').css('font-size', '75%');
+        var firstRowHotel = $('<td>').text('Hotel').css('font-size', '75%');
         firstRow.append(firstRowTitle, firstRowHouse,firstRowHotel);
         table.append(firstRow);
         for(var key in player.myColorCount){
@@ -123,13 +123,13 @@ class Game{
                 if( player.myColorCount[key].arrayOfHouseCount[insideKey] > 0 || player.myColorCount[key].objectOfHotelCount[insideKey] > 0){
 
                     var row = $('<tr>');
-                    var cellTitle = $('<td>').text(insideKey).addClass('title');
-                    var cellHouseValue = $('<td>').text(player.myColorCount[key].arrayOfHouseCount[insideKey]).addClass('value');
-                    var cellHotelValue = $('<td>').text(player.myColorCount[key].objectOfHotelCount[insideKey]).addClass('hotelValue');
+                    var cellTitle = $('<td>').text(insideKey).addClass('title').css('font-size', '75%');
+                    var cellHouseValue = $('<td>').text(player.myColorCount[key].arrayOfHouseCount[insideKey]).addClass('value').css('font-size', '75%');
+                    var cellHotelValue = $('<td>').text(player.myColorCount[key].objectOfHotelCount[insideKey]).addClass('hotelValue').css('font-size', '75%');
                     var cellButton = $('<td>');
                     var cellHotelButton = $('<td>');
-                    var button = $('<button>').text('Sell 1 House');
-                    var hotelButton = $('<button>').text('Sell 1 Hotel');
+                    var button = $('<button>').text('Sell 1 House').css('font-size', '65%');
+                    var hotelButton = $('<button>').text('Sell 1 Hotel').css('font-size', '65%');
                     cellButton.append(button);
                     cellHotelButton.append(hotelButton);
                     row.append(cellTitle, cellHouseValue, cellHotelValue, cellButton, cellHotelButton);
@@ -143,6 +143,23 @@ class Game{
         }
         divToHoldTable.append(table);
         return divToHoldTable;
+    }
+
+    sellHotelButtonClickHandler(){
+        if($(this).parents('tr').find('.hotelValue').text() === '0'){
+            return;
+        }
+        var title = $(this).parents('tr').find('.title').text();
+
+        for(var index = 0; index < game.squares.length; index++){
+            if(game.squares[index].title === title){
+                var squareToSellHotel = game.squares[index];
+                break;
+            }
+        }
+        game.currentPlayer.sellHotel(squareToSellHotel);
+        var value = $(this).parents('tr').find('.hotelValue').text() - 1;
+        $(this).parents('tr').find('.hotelValue').text(value);
     }
 
     sellButtonClickHandler(){
