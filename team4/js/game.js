@@ -443,7 +443,7 @@ class Game{
     displayCurrentMoney(){
         let currentPlayer = this.players[this.currentPlayerIndex];
         let currentMoney = (currentPlayer.money).toString();
-        let currentDomElmPlayer = currentPlayer.domElmPlayerInfo[game.currentPlayerIndex];
+        let currentDomElmPlayer = currentPlayer.domElmPlayerInfo; //[game.currentPlayerIndex];
         $(currentDomElmPlayer).text("Money $" + currentMoney);
     }
     diceSound(){
