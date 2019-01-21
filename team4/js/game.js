@@ -12,8 +12,8 @@ class Game{
         this.squares = Square.initSquareData(); 
         this.domElmPlayersList = [];
         this.playerNameArray = [];
-        this.diceSound = null;
-        this.moneySound = null;
+        this.storeDiceSound = null;
+        this.storeMoneySound = null;
         // Bindings
         this.handlePlayerTurnEnd = this.handlePlayerTurnEnd.bind(this);
         this.showBuyFrame = this.showBuyFrame.bind(this);
@@ -164,6 +164,7 @@ class Game{
         game.currentPlayer.sellHotel(squareToSellHotel);
         var value = $(this).parents('tr').find('.hotelValue').text() - 1;
         $(this).parents('tr').find('.hotelValue').text(value);
+        this.moneySound();
     }
 
     sellButtonClickHandler(){
@@ -181,6 +182,7 @@ class Game{
         game.currentPlayer.sellHouse(squareToSellHouse);
         var value = $(this).parents('tr').find('.value').text() - 1;
         $(this).parents('tr').find('.value').text(value);
+        this.moneySound();
     }
     /**
      * Show dialog that allows current player to conduct business or select End Turn
@@ -206,6 +208,7 @@ class Game{
         let content = $('<div>').addClass('dice');
         let buttons = {'Roll Dice': game.currentPlayer.rolldice};
         this.showFrame(title, content, buttons, true);
+        this.diceSound();
     }
 
     /**
@@ -228,11 +231,13 @@ class Game{
             'Buy': () => {
                 player.buyProperty();
                 game.showInteractiveFrame();
+                this.moneySound();
             },
             'Pass': game.showInteractiveFrame
         }
 
         this.showFrame(title, content, buttons);
+
     }
 
     /**
@@ -326,14 +331,11 @@ class Game{
         $(currentDomElmPlayer).text("Money $" + currentMoney);
     }
     diceSound(){
-        this.diceSound = new Audio(sound/diceSound.wav);
-        showDiceFrame.play();
+        this.storeDiceSound = new Audio("sound/diceSound.wav");
+        this.storeDiceSound.play();
     }
     moneySound(){
-        this.moneySound = new Audio(sound/moneySound.wav);
-        sellButtonClickHandler.play();
-        sellHotelButtonClickHandler.play();
-        makeSellPropertyTable.play();
-        showBuyFrame.play();
+        this.storeMoneySound = new Audio("sound/moneySound.wav");
+        this.storeMoneySound.play();
     }
 }
