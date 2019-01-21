@@ -378,11 +378,7 @@ class Player{
             // buy street
             this.money -= this.square.price;
             this.addProperty(this.square);
-            if(this.square.type === 'railroad'){
-                this.railroadCount++;
-            } else if (this.square.type === 'utility'){
-                this.utilityCount++;
-            }
+
             this.square.owner = this;
             if(this.square.type === 'street'){
                 colorInMyColorCount.colorCount++;
