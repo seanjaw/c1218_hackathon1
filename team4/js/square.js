@@ -18,7 +18,10 @@ class Square {
         this.squareDom = null;
         this.deedDOM = this.createDeedDOM();
         this.railroadDOM = this.createRailroadDOM();
+
+        this.mortgaged = false;
         this.utilityDOM = this.createUtilityDOM();
+
     }
 
 

@@ -1142,6 +1142,21 @@ h1 {
     width:75%;
 }
 
+.hideDiv {
+    animation-name: hid;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+}
+
+@keyframes hide {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
 /* css for utility card */
 .utilityCard{
     width: 220px;
@@ -1165,3 +1180,4 @@ h1 {
 .utilityCard .content{
     text-align: center;
 }
+

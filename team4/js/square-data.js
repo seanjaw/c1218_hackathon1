@@ -14,7 +14,7 @@ street	Sailor Uranus	100	6;12;30;90;270;400;550	blue	dea4208dd0bf75304ccfcd5cfed
 street	Sailor Saturn	120	8;16;40;100;300;450;600	blue	Sailor.Saturn..png
 jail	Just Visiting				hands-holding-prison-bars-vector-1840918.jpg
 street	Sailor Mercury	140	10;20;50;150;450;625;750	pink	bbacf47ead84bd053b6ae3908ea2ba3c.png
-utility	Electric Company	150			
+utility	Water Works	150			
 street	Chibiusa	140	10;20;50;150;450;625;750	pink	Little-Princess-Serenity-sailor-mini-moon-rini-9658735-200-239.gif
 street	Sailor Venus	160	12;24;60;180;500;700;900	pink	sailor%20moon%20pic18.png
 utility	Water Works     150		
