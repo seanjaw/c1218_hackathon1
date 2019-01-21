@@ -274,19 +274,12 @@ class Modal {
                 
 
 
-                this.playerNumberIndex--;
+                
                 $("#playerName").val("");
                 $("#playerName")
                     .attr({"placeholder": "Enter The Next Player Name!"})
                     .css("background-color", "white");
-
-                if (this.playerNumberIndex === 0){
-
-                    console.log("Ended Name Requests");
-                    this.hideModal();
-                    this.displayPlayers();
-                    this.createPlayersArray();
-                }
+                    this.playerNumberIndex--;
             }
         }
     }
@@ -319,6 +312,13 @@ class Modal {
         this.iconArray.splice(iconToRemove, 1);
         $(this.tempIconContainerElm).css("display", "none");
         $(".icon").remove();
+        if (this.playerNumberIndex === 0){
+
+            console.log("Ended Name Requests");
+            this.hideModal();
+            this.displayPlayers();
+            this.createPlayersArray();
+        }
     }
 
     collectPlayerNames(nameToEnter) { 
