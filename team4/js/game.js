@@ -69,39 +69,57 @@ class Game{
      * @param {string} title - Title for dialog
      * @param {*} content - DOM content for dialog
      * @param {*} buttons - {buttonLabel1: callback1, ..., buttonLabelN: callbackN}
+     * @param {boolean} dissolve - Dissolve out and back in between content?
      */
-    showFrame( title, content, buttons ) {
+    showFrame( title, content, buttons, dissolve ) {
         let dialog = $('.action-dialog-container');
 
-        // Avatar
-        dialog.find('.avatar .image').css({
-            'background-image': `url(${this.currentPlayer.avatarSmall})`
-        });
-        dialog.find('.avatar .name').text(this.currentPlayer.name);
+        function doDisplay() {
+            if (dissolve) {
+                dialog.css({display: 'none'});
+            }
 
-        // Buttons
-        let buttonsSection = dialog.find('.buttons');
-        buttonsSection.empty();
-        for (let buttonName in buttons) {
-            let callback = buttons[buttonName];
-            let button = $('<button>')
-                .text(buttonName)
-                .click(callback);
-            buttonsSection.append(button);
+            // Avatar
+            dialog.find('.avatar .image').css({
+                'background-image': `url(${game.currentPlayer.avatarSmall})`,
+                'background-color': game.currentPlayer.playerColor
+            });
+            dialog.find('.avatar .name').text(game.currentPlayer.name);
+
+            // Buttons
+            let buttonsSection = dialog.find('.buttons');
+            buttonsSection.empty();
+            for (let buttonName in buttons) {
+                let callback = buttons[buttonName];
+                let button = $('<button>')
+                    .text(buttonName)
+                    .click(callback);
+                buttonsSection.append(button);
+            }
+
+            // Content
+            dialog.find('.action > .content').empty().append(content);
+
+            // Title
+            let titleDiv = dialog.find('.action > .title');
+            titleDiv.empty();
+            if (!Array.isArray(title)) {
+                title = [title];
+            }
+            title.forEach(text => titleDiv.append($('<span>').text(text)));
+
+            if (dissolve) {
+                dialog.fadeIn(1000);
+            } else {
+                dialog.css({display: 'block'});
+            }
         }
 
-        // Content
-        dialog.find('.action > .content').empty().append(content);
-
-        // Title
-        let titleDiv = dialog.find('.action > .title');
-        titleDiv.empty();
-        if (!Array.isArray(title)) {
-            title = [title];
+        if (dissolve) {
+            dialog.fadeOut(1000, doDisplay);
+        } else {
+            doDisplay();
         }
-        title.forEach(text => titleDiv.append($('<span>').text(text)));
-        // dialog.find('.action > .title').text(title);
-        dialog.css({display: 'block'});
     }
 
     /**
@@ -124,7 +142,7 @@ class Game{
         let title = '';
         let content = $('<div>').addClass('dice');
         let buttons = {'Roll Dice': game.currentPlayer.rolldice};
-        this.showFrame(title, content, buttons);
+        this.showFrame(title, content, buttons, true);
     }
 
     /**
@@ -164,18 +182,18 @@ class Game{
         let okCallback;
         if (card.type === 'pay-bank') {
             okCallback = () => {
-                this.currentPlayer.removeMoney(card.amount);
-                this.showInteractiveFrame();
+                game.currentPlayer.removeMoney(card.amount);
+                game.showInteractiveFrame();
             };
         } else if (card.type === 'receive-bank') {
             okCallback = () => {
-                this.currentPlayer.addMoney(card.amount);
-                this.showInteractiveFrame();
+                game.currentPlayer.addMoney(card.amount);
+                game.showInteractiveFrame();
             };            
         } else if (card.type === 'receive-players') {
             okCallback = () => {
-                this.currentPlayer.receiveMoneyFromPlayers(card.amount);
-                this.showInteractiveFrame();
+                game.currentPlayer.receiveMoneyFromPlayers(card.amount);
+                game.showInteractiveFrame();
             }; 
         }
 
@@ -186,9 +204,29 @@ class Game{
      * Show frame that indicates location player moved to if there is no action involved
      */
     showLocationFrame() {
-        let square = this.currentPlayer.square;
-        let title =  `Landed on '${square.title}'`;
-        this.showFrame(title, null, {'OK': this.showInteractiveFrame});
+        //TODO: Code for handling square visualization should go with Square or Property objects
+        //      However, need to refactor code to do so.  For instance,
+        //      if player landed on Go To Jail, by the time they reach this dialog, they are already in Jail.
+
+        //TODO: Need to handle STILL IN JAIL
+        const CORNERS = ['go','jail','go-to-jail','parking'];
+
+        let square = game.currentPlayer.square;
+        let content = null;
+
+        if (CORNERS.indexOf(square.type) !== -1) {
+
+            if (game.currentPlayer.jailCount == 1 && square.type == 'jail') {
+                square = game.squares.filter(square => square.type == 'go-to-jail')[0];
+            }
+
+            content = $('<div>')
+                .addClass('image')
+                .css({'background-image': 'url(images/' + square.type + '.png)'});
+        }
+
+        let title = `Landed on ${square.title.toUpperCase()}`;
+        game.showFrame(title, content, {'OK': game.showInteractiveFrame});
     }
 
     /**
@@ -208,10 +246,10 @@ class Game{
 
         let okCallback = () => {
             renter.payRent();
-            this.showInteractiveFrame();
+            game.showInteractiveFrame();
         };
 
-        this.showFrame(title, content, {'OK': okCallback});
+        game.showFrame(title, content, {'OK': okCallback});
     }
 
     get currentPlayer() {
