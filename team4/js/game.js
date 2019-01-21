@@ -9,23 +9,9 @@ class Game{
         this.communityChestCards = Card.initCards(COMMUNITY_CHEST_NAME, COMMUNITY_CHEST_DATA);
         this.chanceCards = Card.initCards(CHANCE_NAME, CHANCE_DATA);
         this.currentPlayerIndex = 0;
-        this.squares = Square.initSquareData();
+        this.squares = Square.initSquareData(); 
         this.domElmPlayersList = [];
         this.playerNameArray = [];
-        this.iconArray = ["player-icons/1.png",
-        "player-icons/2.png",
-        "player-icons/3.png",
-        "player-icons/4.png",
-        "player-icons/5.png",
-        "player-icons/6.png",
-        "player-icons/7.gif",
-        "player-icons/7.png",
-        "player-icons/8.png",
-        "player-icons/9.png",
-        "player-icons/10.png",
-        "player-icons/11.png",
-        "player-icons/12.png"];
-
         // Bindings
         this.handlePlayerTurnEnd = this.handlePlayerTurnEnd.bind(this);
         this.showBuyFrame = this.showBuyFrame.bind(this);
@@ -36,13 +22,13 @@ class Game{
         this.play = this.play.bind(this);
     }
 
-    play(addPlayers, playerNames) {
+    play(addPlayers, playerNames, playerIcons) {
         this.playerNameArray = playerNames;
         this.domElmPlayersList = addPlayers;
         let go = this.squares[0];
         for (var playerIndex = 0; playerIndex < this.domElmPlayersList.length; playerIndex++){
             let tempName = this.playerNameArray[playerIndex];
-            let iconName = this.iconArray[playerIndex];
+            let iconName = playerIcons[playerIndex];
             let newPlayer =  new Player(go, iconName, tempName, this.handlePlayerTurnEnd, this.domElmPlayersList[playerIndex], this.playerColorArray[playerIndex]);
             this.players.push(newPlayer);
             newPlayer.updateDisplay();
@@ -274,12 +260,33 @@ class Modal {
         this.domElmPlayersList = [];
         this.playerNameArray = [];
         this.enterNameIndex = null;
+        this.playerIconArray = [];
+        this.sendChosenIcons = [];
         this.firstTimeModalClick = null; 
+        this.tempIconContainerElm = null;
+        this.eventClick = null; 
+        this.iconArray = 
+        ["player-icons/1.png",
+        "player-icons/2.png",
+        "player-icons/3.png",
+        "player-icons/4.png",
+        "player-icons/5.png",
+        "player-icons/6.png",
+        "player-icons/7.gif",
+        "player-icons/8.png",
+        "player-icons/9.png",
+        "player-icons/10.png",
+        "player-icons/11.png",
+        "player-icons/12.png"];
+
         this.submitPlayers = this.submitPlayers.bind(this);
         this.clickHandle = this.clickHandle.bind(this);
         this.displayPlayers = this.displayPlayers.bind(this);
+        this.collectPlayersIcon = this.collectPlayersIcon.bind(this);
+        this.iconDisplay = this.iconDisplay.bind(this);
+        
     }
-  
+
 	show(){
 
 		$(this.modalShadow).show();
@@ -293,16 +300,17 @@ class Modal {
 	}
 	
 	init(){
-
         this.submitPlayers.click(this.clickHandle);
         this.show();
         this.firstTimeModalClick = true; 
     }
 
-    clickHandle() { 
-
+    clickHandle(event) { 
+        
+        console.log("this event was ",event);
         console.log("Made it to click!");
-
+        
+        //TODO: Need to prevent enter when selection icons.
         if (this.firstTimeModalClick){
 
             this.firstTimeModalClick = false; 
@@ -315,11 +323,14 @@ class Modal {
                     "id": "playerName",
                     "placeholder": "Enter Name Here!"
             });
+            this.tempIconContainerElm = $("<div>")
+                .addClass("icon-container");
+            $("#modalBody").after(this.tempIconContainerElm);
             $("#modalMessage").after(tempInputElm);
             $("#modalMessage").remove();
             $("#submitPlayers").text("ENTER");
             $(".num-of-players").remove();
-
+            //TODO: Toggle playercontainer when done!
         } else {
 
             let singlePlayerName = $("#playerName").val();
@@ -334,27 +345,64 @@ class Modal {
 
                 this.collectPlayerNames(singlePlayerName);
                 console.log("Player Name is ", singlePlayerName);
-                this.playerNumberIndex--;
+                $(this.tempIconContainerElm).css("display", "flex");
+                
+                this.iconDisplay();
+                
+
+
+                
                 $("#playerName").val("");
                 $("#playerName")
                     .attr({"placeholder": "Enter The Next Player Name!"})
                     .css("background-color", "white");
-
-                if (this.playerNumberIndex === 0){
-
-                    console.log("Ended Name Requests");
-                    this.hideModal();
-                    this.displayPlayers();
-                    this.createPlayersArray();
-                }
+                    this.playerNumberIndex--;
             }
         }
     }
 
+    iconDisplay(){
+        
+        for (var playerIconIndex = 0; playerIconIndex < this.iconArray.length; playerIconIndex++){
+
+            let tempIconStorage = this.iconArray[playerIconIndex];
+            let tempIconDev = $("<div>")
+            .addClass("icon")
+            .click(this.collectPlayersIcon);
+            $(tempIconDev).append("<img id='imageIcon' src='"+tempIconStorage+"'/>");
+            $(this.tempIconContainerElm).append(tempIconDev);
+        }        
+         //TODO: Display the array  
+    }
+
+    collectPlayersIcon(event){ 
+        //TODO: Save the icons
+        this.eventClick = event;
+        let getImgElm = $(this.eventClick.currentTarget).children();
+        let imagesrc = $(getImgElm).attr("src");
+
+        console.log("Event is ",event);
+        console.log("Made it to Icon!");
+        this.playerIconArray.push(imagesrc);
+        console.log("icon was ", imagesrc);
+        let iconToRemove = this.iconArray.indexOf(imagesrc);
+        this.iconArray.splice(iconToRemove, 1);
+        $(this.tempIconContainerElm).css("display", "none");
+        $(".icon").remove();
+        if (this.playerNumberIndex === 0){
+
+            console.log("Ended Name Requests");
+            this.hideModal();
+            this.displayPlayers();
+            this.createPlayersArray();
+        }
+    }
 
     collectPlayerNames(nameToEnter) { 
+
         this.playerNameArray.push(nameToEnter);
         console.log("PlayerArray ", this.playerNameArray);
+        $(".playersBox").css("display", "block");
     }
 
     displayPlayers(){ 
@@ -362,12 +410,16 @@ class Modal {
         let temp = null;
         this.playerNumberIndex = this.playerNumber;
 
-        while (this.playerNumberIndex > 0){
-
+        for (var displayIndex = 0; displayIndex < this.playerNameArray.length; displayIndex++){
             temp = new Player;
-            this.playerColorContainer = temp.createNewPlayerList(this.playerNumber, this.playerNameArray[this.playerNumberIndex-1]);
-            this.playerNumberIndex--;
+            this.playerColorContainer = temp.createNewPlayerList(this.playerNumber, this.playerNameArray[displayIndex]);
         }
+        // while (this.playerNumberIndex > 0){
+
+        //     temp = new Player;
+        //     this.playerColorContainer = temp.createNewPlayerList(this.playerNumber, this.playerNameArray[this.playerNumberIndex-1]);
+        //     this.playerNumberIndex--;
+        // }
         temp.setPlayerList();
     }
     createPlayersArray(){
@@ -379,6 +431,6 @@ class Modal {
             this.domElmPlayersList.push(tempPlayer); 
             }
 
-        game.play(this.domElmPlayersList, this.playerNameArray);
+        game.play(this.domElmPlayersList, this.playerNameArray, this.playerIconArray);
     }
 }

@@ -19,10 +19,12 @@ body {
 }
 
 .playersBox {
+    display: none; /* TODO: Toggle display when done with modal*/
+
     background-color: black;
     flex: 1;
     box-sizing: border-box;
-    display: block;
+    /*display: block; TODO: toggle to this when done with modal*/
     align-items: center;
 }
 
@@ -246,6 +248,30 @@ body {
 
 #playerName:focus {
     color: blue;
+}
+
+.icon-container {
+    position: absolute;
+    width: 100%;
+    height: 45%;
+    background-color: rgba(0, 26, 26, 0.486);
+    z-index: 1000;
+    display: none;
+    display: none
+}
+
+.icon {
+    height: 100px;
+    width: 50px;
+    margin: auto;
+    display: content; 
+    cursor: pointer;
+}
+
+#imageIcon {
+   height: 100%;
+   width: 100%;
+   object-fit: contain;
 }
 
 .num-of-players{
