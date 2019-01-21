@@ -187,6 +187,7 @@ class Player{
 
     rewardFromPassingGo() {
         this.money += 200;
+        this.updateDisplay();
     }
     payTax() {
         this.money -= 200;
