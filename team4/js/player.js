@@ -219,6 +219,7 @@ class Player{
         } else if ( this.diceArray[0] !== this.diceArray[1]){
             this.jailCount++;
             this.updateDisplay();
+            game.showInteractiveFrame();
         }
 
     }
