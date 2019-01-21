@@ -72,6 +72,7 @@ body {
     flex-direction: column;
     background-image: url("images/sailor-moon-back.jpg");
     background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .sidePropContainer {
@@ -402,11 +403,11 @@ h1 {
 }
 
 .leftImg {
-    width: 43%;
     transform: rotate(90deg);
-    position: absolute;
-    left: 0;
-    top: -22%;
+    position: static;
+    object-fit: contain;
+    height: 100%;
+    width: 100%;
 }
 
 .leftText {
@@ -548,10 +549,11 @@ h1 {
 }
 
 .rightImg {
-    width: 130%;
-    position: relative;
-    left: 18%;
-    bottom: 10%;
+    
+    position: static;
+    object-fit: contain;
+    height: 100%;
+    width: 100%;
 }
 
 .rightPropContainer .propInfo {
@@ -716,8 +718,8 @@ h1 {
     width: 50%;
     transform: rotate(140deg);
     position: absolute;
-    left: 24%;
-    top: 38%;
+    left: 22%;
+    top: 27%;
 }
 
 .parking > p {
