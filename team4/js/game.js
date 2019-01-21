@@ -189,6 +189,7 @@ class Game{
         }
         if(squareToUnmortgage.mortgaged === true){
             game.currentPlayer.unmortgage(squareToUnmortgage);
+            game.showUnmortgageSuccessFrame(title, squareToUnmortgage);
         }
     }
 
@@ -391,6 +392,17 @@ class Game{
     showMortgageSuccessFrame(propertyName, square){
         let loan = square.price / 2;
         let title = `Success!${propertyName} is mortgaged. Loaned $${loan}`;
+        let content = null;
+
+        let buttons = {
+            'Back': game.showInteractiveFrame,
+        };
+        game.showFrame(title, content, buttons);
+    }
+
+    showUnmortgageSuccessFrame(propertyName, square){
+        let payback = square.price / 2 + (square.price / 2) * 0.1;
+        let title = `Success!${propertyName} is unmortgaged. Paid to the bank $${payback}`;
         let content = null;
 
         let buttons = {
