@@ -54,49 +54,117 @@ class Player{
                 colorCount: 0,
                 totalHouseCount: 0,
                 totalHotelCount: 0,
-                arrayOfHouseCount: [0, 0]
+                arrayOfHouseCount: {
+                    'Luna': 0,
+                    'Sailor Pluto': 0
+                },
+                objectOfHotelCount: {
+                    'Luna': 0,
+                    'Sailor Pluto': 0
+                }
             },
             blue: {
                 colorCount: 0,
                 totalHouseCount: 0,
                 totalHotelCount: 0,
-                arrayOfHouseCount: [0, 0, 0]
+                arrayOfHouseCount: {
+                    'Sailor Neptune': 0,
+                    'Sailor Uranus': 0,
+                    'Sailor Saturn': 0
+                },
+                objectOfHotelCount: {
+                    'Sailor Neptune': 0,
+                    'Sailor Uranus': 0,
+                    'Sailor Saturn': 0
+                }
             },
             pink: {
                 colorCount: 0,
                 totalHouseCount: 0,
                 totalHotelCount: 0,
-                arrayOfHouseCount: [0, 0, 0]
+                arrayOfHouseCount: {
+                    'Sailor Mercury': 0,
+                    'Chibiusa': 0,
+                    'Sailor Venus': 0
+                },
+                objectOfHotelCount: {
+                    'Sailor Mercury': 0,
+                    'Chibiusa': 0,
+                    'Sailor Venus': 0
+                }
             },
             orange: {
                 colorCount: 0,
                 totalHouseCount: 0,
                 totalHotelCount: 0,
-                arrayOfHouseCount: [0, 0, 0]
+                arrayOfHouseCount: {
+                    'Sailor Mars': 0,
+                    'Sailor Jupiter': 0,
+                    'Sailor Moon': 0
+                },
+                objectOfHotelCount: {
+                    'Sailor Mars': 0,
+                    'Sailor Jupiter': 0,
+                    'Sailor Moon': 0
+                }
             },
             yellow: {
                 colorCount: 0,
                 totalHouseCount: 0,
                 totalHotelCount: 0,
-                arrayOfHouseCount: [0, 0, 0]
+                arrayOfHouseCount: {
+                    'Tuxedo': 0,
+                    'Usagi': 0,
+                    'Jupiter and Venus': 0
+                },
+                objectOfHotelCount: {
+                    'Tuxedo': 0,
+                    'Usagi': 0,
+                    'Jupiter and Venus': 0
+                }
             },
             red: {
                 colorCount: 0,
                 totalHouseCount: 0,
                 totalHotelCount: 0,
-                arrayOfHouseCount: [0, 0, 0]
+                arrayOfHouseCount: {
+                    'Sad Jupiter': 0,
+                    'Happy Venus': 0,
+                    'Artemis': 0
+                },
+                objectOfHotelCount: {
+                    'Sad Jupiter': 0,
+                    'Happy Venus': 0,
+                    'Artemis': 0
+                }
             },
             green: {
                 colorCount: 0,
                 totalHouseCount: 0,
                 totalHotelCount: 0,
-                arrayOfHouseCount: [0, 0, 0]
+                arrayOfHouseCount: {
+                    'Eating Usagi': 0,
+                    'Kamen': 0,
+                    'Queen Serenity': 0
+                },
+                objectOfHotelCount: {
+                    'Eating Usagi': 0,
+                    'Kamen': 0,
+                    'Queen Serenity': 0
+                }
             },
             grey: {
                 colorCount: 0,
                 totalHouseCount: 0,
                 totalHotelCount: 0,
-                arrayOfHouseCount: [0, 0]
+                arrayOfHouseCount: {
+                    'Mercury and Mars': 0,
+                    'Princess': 0
+                },
+                objectOfHotelCount: {
+                    'Mercury and Mars': 0,
+                    'Princess': 0
+                }
             },
         }
     }
@@ -206,11 +274,39 @@ class Player{
         var houseCost = this.houseCost();
         this.money -= houseCost;
         colorInMyColorCount.totalHouseCount++;
-        // TODO: ADD FUNCTIONALITY FOR DISTRIBUTING HOUSE EVENLY
-        var minimum = Math.min.apply(Math, colorInMyColorCount.arrayOfHouseCount);
-        var indexOfHouseToAdd = colorInMyColorCount.arrayOfHouseCount.indexOf(minimum);
-        colorInMyColorCount.arrayOfHouseCount[indexOfHouseToAdd]++;
-        this.square.houseCount++;
+        // ADD FUNCTIONALITY FOR DISTRIBUTING HOUSE EVENLY
+        //var minimum = Math.min.apply(Math, colorInMyColorCount.arrayOfHouseCount);
+        //var indexOfHouseToAdd = colorInMyColorCount.arrayOfHouseCount.indexOf(minimum);
+        var minHouseCount = this.square.title;
+        for(var key in colorInMyColorCount.arrayOfHouseCount){
+            if(colorInMyColorCount.arrayOfHouseCount[minHouseCount] > colorInMyColorCount.arrayOfHouseCount[key]){
+                minHouseCount = key;
+            }
+        }
+        colorInMyColorCount.arrayOfHouseCount[minHouseCount]++;
+
+        for(var index = 0; index < game.squares.length; index++){
+            if(game.squares[index].title === minHouseCount){
+                var squareToAddHouse = game.squares[index];
+                break;
+            }
+        }
+        squareToAddHouse.houseCount++;
+    }
+
+    deductHouseCount(remainingHouseToDeduct) {
+        var colorInMyColorCount = this.myColorCount[this.square.color];
+        for(var key in colorInMyColorCount.objectOfHotelCount){
+            if(remainingHouseToDeduct === 0){
+                break;
+            }
+            if(colorInMyColorCount.objectOfHotelCount[key] > 0){
+                if(remainingHouseToDeduct > colorInMyColorCount.objectOfHotelCount[key]){
+                    
+                }
+                remainingHouselToDeduct = remainingHouseToDeduct - colorInMyColorCount.objectOfHotelCount[key];
+            }
+        }
     }
 
     buyHotel(){
@@ -221,8 +317,11 @@ class Player{
         var hotelPrice = this.houseCost();
         this.money -= hotelPrice;
         colorInMyColorCount.totalHotelCount++;
+        colorInMyColorCount.objectOfHotelCount[this.square.title]++;
         this.square.hotelCount++;
-        this.square.houseCount -= 4;
+        //this.square.houseCount -= 4;
+        var remainingHouseToDeduct = 4 - this.square.houseCount;
+        this.deductHouseCount(remainingHouseToDeduct);
         colorInMyColorCount.totalHouseCount -= 4;
         /*
         for(var i = 0; i < 4; i++){
@@ -279,6 +378,20 @@ class Player{
         this.myColorCount[property.color].totalHotelCount--;
     }
 
+    sellHouse(property) {
+        this.money += property.price / 4;
+        property.houseCount--;
+        this.myColorCount[property.color].totalHouseCount--;
+        this.myColorCount[property.color].arrayOfHouseCount[property.title]--;
+    }
+
+    sellHotel(property){
+        this.money += (property.price) * 5 / 4;
+        property.hotelCount--;
+        this.myColorCount[property.color].totalHotelCount--;
+    }
+
+
     calculateRent( property, renter) {
         // Currently basic rent only
         let rent = 0;
@@ -314,7 +427,11 @@ class Player{
                     count++;
                 }
             }
-            if(count >= 2){
+            if(count === 4){
+                rent = 20 * renter.diceTotal;
+            } else if (count ===3){
+                rent = 15 * renter.diceTotal;
+            } else if(count === 2){
                 rent = 10 * renter.diceTotal;
             } else {
                 rent = 4 * renter.diceTotal;
