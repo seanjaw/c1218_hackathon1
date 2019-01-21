@@ -405,8 +405,6 @@ class Player{
         dom.addClass('player');
         dom.css({
             'background-image': `url(${this.avatar})`,
-            'background-size': 'contain',
-            'background-repeat': 'no-repeat'
         });
 
         $('body').append(dom);
@@ -415,14 +413,6 @@ class Player{
 
     updateDisplay() {
         this.square.squareDom.append(this.playerDom);
-        this.playerDom.css({
-            position: 'absolute',
-            bottom: 0,
-            left: 5,
-            height: '60px',
-            width: '60px',
-            'z-index': 4
-        });
         $(this.domElmPlayerInfo).text("Money $" + this.money);
         this.highlightPropertiesOwned();
     } 
