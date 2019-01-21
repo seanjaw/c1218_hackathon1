@@ -180,7 +180,7 @@ class Player{
     }
 
     rolldice(){
-        //to:do not hard coded make number of die up there. 
+        //TODO: not hard coded make number of die up there. 
         let rollArray= [];
         let total = 0;
         
@@ -363,14 +363,6 @@ class Player{
         this.deductHouseCount(remainingHouseToDeduct);
         colorInMyColorCount.totalHouseCount -= 4;
         game.displayCurrentMoney();
-        /*
-        for(var i = 0; i < 4; i++){
-            if(i >= colorInMyColorCount.arrayOfHouseCount.length){
-                i = i - colorInMyColorCount.arrayOfHouseCount.length;
-            }
-            colorInMyColorCount.arrayOfHouseCount[i] -= 1;
-        }
-        */
     }
 
     buyProperty() {
@@ -523,7 +515,6 @@ class Player{
         }
         game.displayCurrentMoney();
         this.turnEndCallback();
-        this.displayCurrentMoney();
     }
 
     /*
