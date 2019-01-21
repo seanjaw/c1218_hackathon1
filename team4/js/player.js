@@ -187,9 +187,11 @@ class Player{
 
     rewardFromPassingGo() {
         this.money += 200;
+        game.displayCurrentMoney();
     }
     payTax() {
         this.money -= 200;
+        game.displayCurrentMoney();
     }
 
     freeParking() {
@@ -258,6 +260,7 @@ class Player{
         } else {
             game.showLocationFrame();
         }
+        game.displayCurrentMoney();
     }
 
     /*
@@ -292,6 +295,7 @@ class Player{
             }
         }
         squareToAddHouse.houseCount++;
+        game.displayCurrentMoney();
     }
 
     deductHouseCount(remainingHouseToDeduct) {
@@ -321,6 +325,7 @@ class Player{
 
             }
         }
+        game.displayCurrentMoney();
     }
 
     buyHotel(){
@@ -340,6 +345,7 @@ class Player{
         colorInMyColorCount.arrayOfHouseCount[this.square.title] = 0;
         this.deductHouseCount(remainingHouseToDeduct);
         colorInMyColorCount.totalHouseCount -= 4;
+        game.displayCurrentMoney();
         /*
         for(var i = 0; i < 4; i++){
             if(i >= colorInMyColorCount.arrayOfHouseCount.length){
@@ -369,6 +375,7 @@ class Player{
 
             console.log('Buy property: ', this.square.title, ' for $', this.square.price);
         }
+        game.displayCurrentMoney();
     }
 
     sellHouse(property) {
@@ -384,6 +391,7 @@ class Player{
         property.hotelCount--;
         this.myColorCount[property.color].totalHotelCount--;
         this.myColorCount[property.color].objectOfHotelCount[property.title]--;
+        game.displayCurrentMoney();
     }
 
 
@@ -432,7 +440,7 @@ class Player{
                 rent = 4 * renter.diceTotal;
             }
         }
-
+        game.displayCurrentMoney();
         return rent;
     }
 
@@ -453,9 +461,9 @@ class Player{
         for(var i = 0; i < this.square.owner.properties.length; i++){
             console.log(this.square.owner.properties[i].type);
         }
+        game.displayCurrentMoney();
         this.turnEndCallback();
-
-
+        this.displayCurrentMoney();
     }
 
     /*
@@ -470,7 +478,7 @@ class Player{
             }
         }
         this.addMoney(actualAmount);
-
+        game.displayCurrentMoney();
         this.turnEndCallback();
     }
 
@@ -482,6 +490,7 @@ class Player{
     addMoney( amount ) {
         this.money += amount;
         console.log('In addMoney');
+        game.displayCurrentMoney();
     }
 
     /**
@@ -498,6 +507,7 @@ class Player{
         this.money -= amountToRemove;
 
         console.log('In removeMoney');
+        game.displayCurrentMoney();
         return amountToRemove;
     }
 
