@@ -170,10 +170,10 @@ class Player{
         } else if (PROPERTY_TYPES.indexOf(this.square.type) !== -1 && this.square.owner !== null) {
             if(this.square.owner === this && this.square.type !== 'street'){
                 return;
-            }else if(this.square.owner === this && this.suqare.type !== 'utility'){
+            }else if(this.square.owner === this && this.square.type !== 'utility'){
                 game.showBuyFrame();
             } else {
-                this.showRentModal();
+                game.showRentFrame();
             }
         } else if (this.square.type === 'community-chest') {
             let card = game.communityChestCards.pop();
@@ -405,8 +405,6 @@ class Player{
         dom.addClass('player');
         dom.css({
             'background-image': `url(${this.avatar})`,
-            'background-size': 'contain',
-            'background-repeat': 'no-repeat'
         });
 
         $('body').append(dom);
@@ -415,14 +413,6 @@ class Player{
 
     updateDisplay() {
         this.square.squareDom.append(this.playerDom);
-        this.playerDom.css({
-            position: 'absolute',
-            bottom: 0,
-            left: 5,
-            height: '60px',
-            width: '60px',
-            'z-index': 4
-        });
         $(this.domElmPlayerInfo).text("Money $" + this.money);
         this.highlightPropertiesOwned();
     } 
@@ -433,26 +423,6 @@ class Player{
             let domToChangeColor = this.properties[propertyIndex].squareDom;
             $(domToChangeColor).css("box-shadow", "inset 0 0 1em 0.25em " + color);
         }
-    }
-
-    showRentModal() {
-        let square = this.square;
-        let rent = square.owner.calculateRent(square, this);
-
-        let message =  `${this.name} pay ${square.owner.name} rent of \$${rent} for ${square.title}`;
-        let dialog = $('<div>').text(message);
-
-        let okCallback = () => {
-            dialog.dialog('close');
-            this.payRent();
-        };
-
-        dialog.dialog({
-            modal: true, 
-            dialogClass: "no-close", 
-            height: 300,
-            buttons: [{text: "OK", click: okCallback}]
-        });
     }
 
     //Creating new player list with accordion settings

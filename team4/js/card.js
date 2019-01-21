@@ -51,4 +51,5 @@ class Card{
             .append(chestBorderDiv);
         return chestDiv;
     }
+
 }

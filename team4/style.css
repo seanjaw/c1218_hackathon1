@@ -511,15 +511,18 @@ h1 {
 }
 
 .player {
-    background-image: url('images/sailor moon.png');
-    position: relative;
+    position: absolute;
+    bottom: 0;
+    left: 5;
+    height: 90px;
+    width: 90px;
+    z-index: 4;
+
     background-size: contain;
     background-repeat: no-repeat;
-    top: 5%;
-    left: 5%;
-    height: 55px;
-    width: 55px;
-    z-index: 9999;
+
+    -webkit-filter: drop-shadow(5px 5px 5px #222);
+    filter: drop-shadow(5px 5px 5px #222);
 }
 
 .venusJupiterText {
@@ -877,6 +880,7 @@ h1 {
 
 /* css for deed card */
 .deed{
+    font-family: arial, helvetica, sans-serif;
     width: 220px;
     height: 250px;
     border: 1px solid black;
@@ -996,11 +1000,11 @@ h1 {
     align-items: flex-end;
     justify-content: center;
     width: 100%;
-    height: 60px;
+    height: 85px;
 }
 .action-dialog .avatar .image {
-    height: 50px;
-    width: 50px;
+    height: 70px;
+    width: 70px;
     background-image: url('player-icons/1-face.png');
     background-position: center;
     background-color: #FBF176;
@@ -1011,6 +1015,7 @@ h1 {
 .action-dialog .avatar .name {
     font-family: 'Anton', sans-serif;
     text-align: center;
+    width: 70px;    
     font-size: .8em;
 }
 .action-dialog .action {
@@ -1027,28 +1032,51 @@ h1 {
     font-size: 1.5em;
     padding: 5px;
 }
+.action-dialog .action > .title  span {
+    display: block;
+    line-height: 2;
+}
 .action-dialog .action > .content {
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+.action-dialog .action > .content .image {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    height: 100%;
+    width: 100%;
+}
 .action-dialog .action .buttons {
     box-sizing: border-box;
     text-align: center;
     width: 100%;
-    height: 50px;
+    height: 70px;
     padding: 5px;
 }
 .action-dialog .action .buttons button {
-    margin: 0px 5px;
-    padding: 6px 12px;
+    margin: 0px 7px;
+    padding: 12px 12px;
     border-radius: 4px;
     cursor: pointer;
     border: 1px solid transparent;
-    background-color: #010532;
+    /* background-color: #010532; */
+    background-color: #E2001A;
+    font-family: 'Anton', sans-serif;
+    font-size: 1.2em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-color: black;
+
     color: white;
 }
+
+.action-dialog .action .buttons button:hover, .action-dialog .action .buttons button:focus {
+    background-color: #c0392b;
+}
+
 /*duplicate right class and propinfo>.image class*/
 .right {
     width: 30%;
@@ -1067,4 +1095,49 @@ h1 {
     background-position: center;
     height: 100%;
     width: 30%;
+}
+
+/* css for railroad */
+.railroadCard{
+    width: 220px;
+    height: 250px;
+    border: 1px solid black;
+    position: flex;
+    padding: 5px;
+
+}
+.railroadCard p,{
+    padding: 0px;
+    margin: 0;
+    
+}
+.railroadCard .title{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.railroadImageSizing{
+    width: 40%;
+}
+
+.railroadCard .content{
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+.railroadCard .left{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width:25%;
+}
+
+.railroadCard .right{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+    width:75%;
 }
