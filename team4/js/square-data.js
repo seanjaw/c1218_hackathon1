@@ -17,7 +17,7 @@ street	Sailor Mercury	140	10;20;50;150;450;625;750	pink	bbacf47ead84bd053b6ae390
 utility	Electric Company	150			
 street	Chibiusa	140	10;20;50;150;450;625;750	pink	Little-Princess-Serenity-sailor-mini-moon-rini-9658735-200-239.gif
 street	Sailor Venus	160	12;24;60;180;500;700;900	pink	sailor%20moon%20pic18.png
-railroad	Railroad	200	50;100;150;200		
+utility	Water Works	150		
 street	Sailor Mars	180	14;28;70;200;550;750;950	orange	tumblr_mkph7z6fmA1r49apoo1_500.png
 community-chest	LOVE				
 street	Sailor Jupiter	180	14;28;70;200;550;750;950	orange	sailor%20moon%20pic15.png
@@ -37,7 +37,7 @@ street	Eating Usagi	300	26;52;130;390;900;1100;1275	green	sailor%20moon%20pic.pn
 street	Kamen	300	26;52;130;390;900;1100;1275	green	sailor%20moon%20pic24.png
 community-chest	LOVE				
 street	Queen Serenity	320	28;56;150;450;1000;1200;1400	green	Neo_Queen_Serenity.png
-railroad	Railroad	200	50;100;150;200		
+utility	Electric Company	150		
 chance	FRIENDSHIP				
 street	Mercury and Mars	350	35;70;175;500;1100;1300;1500	grey	sailor%20moon%20pic10.png
 luxury-tax	Attack				
