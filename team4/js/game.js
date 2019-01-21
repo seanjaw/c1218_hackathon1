@@ -53,9 +53,11 @@ class Game{
         }
         
         this.displayCurrentMoney();
-
-        this.showDiceFrame();
-
+        if(this.players[this.currentPlayerIndex].money === 0){
+            this.showLostFrame()
+        } else {
+            this.showDiceFrame();
+        }
     }
   
     /**
