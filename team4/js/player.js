@@ -50,6 +50,10 @@ class Player{
                 arrayOfHouseCount: {
                     'Luna': 0,
                     'Sailor Pluto': 0
+                },
+                objectOfHotelCount: {
+                    'Luna': 0,
+                    'Sailor Pluto': 0
                 }
             },
             blue: {
@@ -59,12 +63,22 @@ class Player{
                     'Sailor Neptune': 0,
                     'Sailor Uranus': 0,
                     'Sailor Saturn': 0
+                },
+                objectOfHotelCount: {
+                    'Sailor Neptune': 0,
+                    'Sailor Uranus': 0,
+                    'Sailor Saturn': 0
                 }
             },
             pink: {
                 colorCount: 0,
                 totalHouseCount: 0,
                 arrayOfHouseCount: {
+                    'Sailor Mercury': 0,
+                    'Chibiusa': 0,
+                    'Sailor Venus': 0
+                },
+                objectOfHotelCount: {
                     'Sailor Mercury': 0,
                     'Chibiusa': 0,
                     'Sailor Venus': 0
@@ -78,6 +92,11 @@ class Player{
                     'Sailor Mars': 0,
                     'Sailor Jupiter': 0,
                     'Sailor Moon': 0
+                },
+                objectOfHotelCount: {
+                    'Sailor Mars': 0,
+                    'Sailor Jupiter': 0,
+                    'Sailor Moon': 0
                 }
             },
             yellow: {
@@ -85,6 +104,11 @@ class Player{
                 totalHouseCount: 0,
                 totalHotelCount: 0,
                 arrayOfHouseCount: {
+                    'Tuxedo': 0,
+                    'Usagi': 0,
+                    'Jupiter and Venus': 0
+                },
+                objectOfHotelCount: {
                     'Tuxedo': 0,
                     'Usagi': 0,
                     'Jupiter and Venus': 0
@@ -98,6 +122,11 @@ class Player{
                     'Sad Jupiter': 0,
                     'Happy Venus': 0,
                     'Artemis': 0
+                },
+                objectOfHotelCount: {
+                    'Sad Jupiter': 0,
+                    'Happy Venus': 0,
+                    'Artemis': 0
                 }
             },
             green: {
@@ -108,6 +137,11 @@ class Player{
                     'Eating Usagi': 0,
                     'Kamen': 0,
                     'Queen Serenity': 0
+                },
+                objectOfHotelCount: {
+                    'Eating Usagi': 0,
+                    'Kamen': 0,
+                    'Queen Serenity': 0
                 }
             },
             grey: {
@@ -115,6 +149,10 @@ class Player{
                 totalHouseCount: 0,
                 totalHotelCount: 0,
                 arrayOfHouseCount: {
+                    'Mercury and Mars': 0,
+                    'Princess': 0
+                },
+                objectOfHotelCount: {
                     'Mercury and Mars': 0,
                     'Princess': 0
                 }
@@ -247,13 +285,32 @@ class Player{
         squareToAddHouse.houseCount++;
     }
 
+    deductHouseCount(remainingHouseToDeduct) {
+        var colorInMyColorCount = this.myColorCount[this.square.color];
+        for(var key in colorInMyColorCount.objectOfHotelCount){
+            if(remainingHouseToDeduct === 0){
+                break;
+            }
+            if(colorInMyColorCount.objectOfHotelCount[key] > 0){
+                colorInMyColorCount.objectOfHotelCount[key]--;
+                remainingHouseToDeduct--;
+            }
+        }
+        if(remainingHouseToDeduct > 0){
+            this.deductHouseCount(remainingHouseToDeduct);
+        }
+    }
+
     buyHotel(){
         var colorInMyColorCount = this.myColorCount[this.square.color];
         var hotelPrice = this.houseCost();
         this.money -= hotelPrice;
         colorInMyColorCount.totalHotelCount++;
+        colorInMyColorCount.objectOfHotelCount[this.square.title]++;
         this.square.hotelCount++;
-        this.square.houseCount -= 4;
+        //this.square.houseCount -= 4;
+        var remainingHouseToDeduct = 4 - this.square.houseCount;
+        this.deductHouseCount(remainingHouseToDeduct);
         colorInMyColorCount.totalHouseCount -= 4;
         /*
         for(var i = 0; i < 4; i++){
@@ -263,7 +320,6 @@ class Player{
             colorInMyColorCount.arrayOfHouseCount[i] -= 1;
         }
         */
-
 
     }
 

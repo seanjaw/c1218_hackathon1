@@ -89,41 +89,27 @@ class Game{
     makeSellPropertyTable() {
         var player = game.currentPlayer;
         var divToHoldTable = $('<div>');
-        var table = document.createElement('table');
-        var index = 0;
-        var cellIndex = 0;
+        var table = $('<table>');
+        var firstRow = $('<tr>');
+        var firstRowTitle = $('<td>').text('Title');
+        var firstRowHouse = $('<td>').text('House');
+        var firstRowHotel = $('<td>').text('Hotel');
+        firstRow.append(firstRowTitle, firstRowHouse,firstRowHotel);
         for(var key in player.myColorCount){
             for(var insideKey in player.myColorCount[key].arrayOfHouseCount){
-                console.log(player.myColorCount[key].arrayOfHouseCount[insideKey]);
-                console.log(insideKey);
                 if( player.myColorCount[key].arrayOfHouseCount[insideKey] > 0){
-                    var row = table.insertRow(index);
-                    //title
-                    var cell0 = row.insertCell(0);
-                    // number of house
-                    var cell1 = row.insertCell(1);
-                    //button
-                    var cell2 = row.insertCell(2);
-                    var value = player.myColorCount[key].arrayOfHouseCount[insideKey];
-                    var buttonElement = document.createElement("BUTTON").innerText('Sell 1 House');
-                    for(var index = 0; index < game.squares.length; index++){
-                        if(game.squares[index].title === insideKey){
-                            var squareToSellHouse = game.squares[index];
-                            break;
-                        }
-                    }
-                    $(buttonElement).onClick(function(){
-                        game.currentPlayer.sellHouse(squareToSellHouse);
-                    });
-                    //var inputElement = document.createElement("INPUT");
-                    //inputElement.setAttribute("type", "number");
-                    //$(inputElement).css('width', '100px');
-                    cell0.innerHTML = insideKey;
-                    cell1.innerHTML = value;
-                   // cell2.innerHTML = inputElement;
 
-                    $(cell2).append(inputElement);
-                    index++;
+                    var row = $('<tr>');
+                    var cellTitle = $('<td>').text(insideKey).addClass('title');
+                    var cellValue = $('<td>').text(player.myColorCount[key].arrayOfHouseCount[insideKey]).addClass('value');
+                    var cellButton = $('<td>');
+                    var button = $('<button>').text('Sell 1 House');
+                    cellButton.append(button);
+                    row.append(cellTitle, cellValue, cellButton);
+
+                    $(button).click(this.sellButtonClickHandler);
+
+                    table.append(row);
                 }
             }
         }
@@ -131,6 +117,22 @@ class Game{
         return divToHoldTable;
     }
 
+    sellButtonClickHandler(){
+        if($(this).parents('tr').find('.value').text() === '0'){
+            return;
+        }
+        var title = $(this).parents('tr').find('.title').text();
+        console.log(title);
+        for(var index = 0; index < game.squares.length; index++){
+            if(game.squares[index].title === title){
+                var squareToSellHouse = game.squares[index];
+                break;
+            }
+        }
+        game.currentPlayer.sellHouse(squareToSellHouse);
+        var value = $(this).parents('tr').find('.value').text() - 1;
+        $(this).parents('tr').find('.value').text(value);
+    }
     /**
      * Show dialog that allows current player to conduct business or select End Turn
      */
