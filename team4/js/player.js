@@ -140,7 +140,7 @@ class Player{
             this.jailCount++;
             this.updateDisplay();
         }
-
+        this.updateDisplay();
     }
 
     move( amount ){
@@ -190,6 +190,7 @@ class Player{
         } else {
             game.showLocationFrame();
         }
+        this.updateDisplay();
     }
 
     /*
@@ -211,6 +212,8 @@ class Player{
         var indexOfHouseToAdd = colorInMyColorCount.arrayOfHouseCount.indexOf(minimum);
         colorInMyColorCount.arrayOfHouseCount[indexOfHouseToAdd]++;
         this.square.houseCount++;
+
+        this.updateDisplay();
     }
 
     buyHotel(){
@@ -224,6 +227,7 @@ class Player{
         this.square.hotelCount++;
         this.square.houseCount -= 4;
         colorInMyColorCount.totalHouseCount -= 4;
+        this.updateDisplay();
         /*
         for(var i = 0; i < 4; i++){
             if(i >= colorInMyColorCount.arrayOfHouseCount.length){
@@ -265,6 +269,7 @@ class Player{
 
             console.log('Buy property: ', this.square.title, ' for $', this.square.price);
         }
+        this.updateDisplay();
     }
 
     sellHouse(property) {
@@ -277,6 +282,7 @@ class Player{
         this.money += (property.price) * 5 / 4;
         property.hotelCount--;
         this.myColorCount[property.color].totalHotelCount--;
+        this.updateDisplay();
     }
 
     calculateRent( property, renter) {
@@ -320,7 +326,7 @@ class Player{
                 rent = 4 * renter.diceTotal;
             }
         }
-
+        this.updateDisplay();
         return rent;
     }
 
@@ -342,7 +348,7 @@ class Player{
             console.log(this.square.owner.properties[i].type);
         }
         this.turnEndCallback();
-
+        this.updateDisplay();
 
     }
 
@@ -360,6 +366,7 @@ class Player{
         this.addMoney(actualAmount);
 
         this.turnEndCallback();
+        this.updateDisplay();
     }
 
     /**
@@ -370,6 +377,7 @@ class Player{
     addMoney( amount ) {
         this.money += amount;
         console.log('In addMoney');
+        this.updateDisplay();
     }
 
     /**
@@ -386,6 +394,7 @@ class Player{
         this.money -= amountToRemove;
 
         console.log('In removeMoney');
+        this.updateDisplay();
         return amountToRemove;
     }
 
@@ -421,6 +430,7 @@ class Player{
         this.square.squareDom.append(this.playerDom);
         $(this.domElmPlayerInfo).text("Money $" + this.money);
         this.highlightPropertiesOwned();
+        console.log("Updated Display - MS");
     } 
 
     highlightPropertiesOwned(){
