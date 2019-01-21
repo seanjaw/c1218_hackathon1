@@ -173,7 +173,8 @@ class Game{
         let buttons = {
             'End Turn': game.handlePlayerTurnEnd,
         };
-        this.currentPlayer.updateDisplay();
+        this.displayCurrentMoney();
+        // this.currentPlayer.updateDisplay();
         this.showFrame(title, content, buttons);
     }
 
